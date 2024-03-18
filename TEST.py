@@ -1,6 +1,6 @@
 import csv
-from pylatex import Document, NoEscape
-
+from pylatex import Document, Tabular, NoEscape
+from pylatex.utils import italic
 def create_custom_latex_table(csv_file_path, latex_file_path):
     # Start a new document
     doc = Document()
@@ -10,6 +10,10 @@ def create_custom_latex_table(csv_file_path, latex_file_path):
     # Note: Ensure your LaTeX document preamble includes necessary packages.
     custom_table_preamble = """
 \\usepackage{tabularray}
+\\usepackage[ngerman]{babel}
+\\usepackage[T1]{fontenc}
+\\usepackage{fontspec}
+\\usepackage[official]{eurosym}
 \\usepackage{colortbl}
 \\usepackage{xcolor}
 \\usepackage{array}
@@ -60,4 +64,4 @@ create_custom_latex_table(csv_file_path, latex_file_path)
 
 # TODO: Fully code the styles in Pylatex >> Learn how to do it on little examles and try to mimmic this in the style above.
 # TODO: transform all the styels>> BAD APPROACH, try to find good ways to work on the styles without transforming all of them to PyLatex 
-# TODO: after making sure of the style >> extract the tex and try it on the whole project
+# TODO: after making sure of the style >> extract the tex and try it on the whole project																			
