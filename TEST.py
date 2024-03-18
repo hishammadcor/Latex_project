@@ -10,9 +10,10 @@ def create_custom_latex_table(csv_file_path, latex_file_path):
     # Note: Ensure your LaTeX document preamble includes necessary packages.
     custom_table_preamble = """
 \\usepackage{tabularray}
-\\UseTblrLibrary{booktabs, siunitx}
-\\NewColumnType{Q}[1]{X[#1]}
-\\definecolor{green40}{RGB}{0,255,0}
+\\usepackage{colortbl}
+\\usepackage{xcolor}
+\\usepackage{array}
+\\definecolor{green40}{RGB}{ 196, 229, 218}
 """
 
     # Include the custom preamble in the document
@@ -49,9 +50,14 @@ def create_custom_latex_table(csv_file_path, latex_file_path):
     doc.append(NoEscape(table_environment))
 
     # Generate the LaTeX document
-    doc.generate_tex(latex_file_path)
+    doc.generate_pdf(latex_file_path)
 
 # Example usage
 csv_file_path = 'test.csv'
 latex_file_path = 'test'
 create_custom_latex_table(csv_file_path, latex_file_path)
+
+
+# TODO: Fully code the styles in Pylatex >> Learn how to do it on little examles and try to mimmic this in the style above.
+# TODO: transform all the styels>> BAD APPROACH, try to find good ways to work on the styles without transforming all of them to PyLatex 
+# TODO: after making sure of the style >> extract the tex and try it on the whole project
