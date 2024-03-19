@@ -1,65 +1,42 @@
 import csv
-from pylatex import Document, Tabular, NoEscape
-from pylatex.utils import italic
-def create_custom_latex_table(csv_file_path, latex_file_path):
-    # Start a new document
-    doc = Document()
+import pandas as pd
+import numpy as np
+from pylatex import Document, Tabular, math 
+from pylatex.utils import italic, NoEscape
+import string
 
-    # Custom LaTeX table setup using your style
-    # Define your custom column types and table settings here.
-    # Note: Ensure your LaTeX document preamble includes necessary packages.
-    custom_table_preamble = """
-\\usepackage{tabularray}
-\\usepackage[ngerman]{babel}
-\\usepackage[T1]{fontenc}
-\\usepackage{fontspec}
-\\usepackage[official]{eurosym}
-\\usepackage{colortbl}
-\\usepackage{xcolor}
-\\usepackage{array}
-\\definecolor{green40}{RGB}{ 196, 229, 218}
-"""
+file = "test.csv"
+df = pd.read_csv(file, delimiter=";")
+columns = df.columns
+array = df.to_numpy()
 
-    # Include the custom preamble in the document
-    doc.preamble.append(NoEscape(custom_table_preamble))
+doc = Document()
 
-    # Prepare the table environment with your specifications
-    table_environment = """
-\\begin{{tblr}}{{
-      column type = {{
-                      @{{}}
-                      Q[l, wd=12.0cm]
-                      Q[c, 1, bg=green40]
-                      Q[c, 1]
-                      Q[c, 1, bg=green40]
-                      Q[c, 1]
-                      @{{}}
-                    }},
-      highlight_italics first row,
-      every nth row = {{1}}{{before row = \\hline}},
-    }}
-"""
+# Define the table with explicit column widths and alignments
+# Here we use 'l' for left alignment as a placeholder; you will need to adjust this based on your exact needs
+# For coloring even columns, you would manually apply background colors to each cell in those columns if PyLaTeX does not support conditional column styling
+with doc.create(Tabular('lcccc')) as table:
+    # Add the header row with italic formatting
+    table.add_row([NoEscape(r'\textit{' + col + r'}') for col in columns], strict=False)
+    table.add_hline()
+    
+    for row in array:
+        # Manually apply coloring or other styles to individual cells as needed
+        # This loop assumes 'array' is an iterable of iterables, each inner iterable representing a row
+        formatted_row = [row[0]]  # First cell unmodified
+        for i, cell in enumerate(row[1:], start=1):
+            # Example conditional formatting for even columns (by index)
+            if i % 2 == 0:  # Assuming even columns need specific styling
+                formatted_row.append(NoEscape(r'\textcolor{green}{' + str(cell) + r'}'))
+            else:
+                formatted_row.append(cell)
+        table.add_row(formatted_row, strict=False)
+        table.add_hline()
 
-    # Read the CSV data and append rows to the table environment
-    with open(csv_file_path, 'r') as csvfile:
-        reader = csv.reader(csvfile)
-        table_content = ""
-        for row in reader:
-            # Join the row items with & and end with \\
-            table_content += " & ".join(row) + " \\\\\n"
-        # Finalize the table environment
-        table_environment = table_environment.format(table_content)
+doc.generate_pdf("fixed_report", clean_tex=False)
 
-    # Add the complete table environment to the document
-    doc.append(NoEscape(table_environment))
 
-    # Generate the LaTeX document
-    doc.generate_pdf(latex_file_path)
 
-# Example usage
-csv_file_path = 'test.csv'
-latex_file_path = 'test'
-create_custom_latex_table(csv_file_path, latex_file_path)
 
 
 # TODO: Fully code the styles in Pylatex >> Learn how to do it on little examles and try to mimmic this in the style above.

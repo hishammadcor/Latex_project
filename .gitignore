@@ -5,3 +5,4 @@
 *.gz
 *.fdb*
 *.tex
+*pylatex*
