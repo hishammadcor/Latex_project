@@ -5,4 +5,4 @@
 *.gz
 *.fdb*
 *.tex
-*pylatex*
+*.synctex*
