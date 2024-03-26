@@ -29,4 +29,10 @@
   reach a good regex to do !
 - There is other option of using bad code, like using for loops over and over again to iterate on a csv file and 
   then insert each value in its right place inside the table. This an approach but its a bad and expensive approach.
-- 
+
+## On 26.03.2024:
+- Finally!! There is a perfect output for the style92, and it works perfectly!!
+- Next, I should add more styles and I think I will start with simpler one like style33
+- But still, yes we solved the problem or parsing csv files! but still, we need to add al the styles! and this not 
+  operational in the long run.
+- But, we still have time, this is a great start tho!! :)
