@@ -46,3 +46,8 @@
   very simple. Just by counting the number of "Unnamed" after each column name, we could insert the "\multicolumn{# 
   of unnamed+1}{"column name"}" and HUREKAAAA multicolumn problem idea is solved!!
 - NOW lets go for the code, which I think will not be finished today, but we will try
+- WOOOOOOOOOOOOOOOOOOOOOOOOOOOOW!!!! it worked perfectlllly..... 
+- I provided logic to ChatGPT for to code, until reaching a FULLY WORKING COMPILER!! on any table on any style. 
+  الحمد لله.
+- Now I have put a TODO for next week, is to make a function that iterates on csv files in a directory and extract 
+  them into latex files.
