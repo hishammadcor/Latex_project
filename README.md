@@ -36,3 +36,13 @@
 - But still, yes we solved the problem or parsing csv files! but still, we need to add al the styles! and this not 
   operational in the long run.
 - But, we still have time, this is a great start tho!! :)
+
+## On 28.03.2024:
+- So I had this idea just at 3 AM this morning while sleeping, I did not even think in the project at all!! But what 
+  we could say?! HUMAN MIND ><)
+- SO, the idea basically came from a bug!! HHAHAHA! When I use pandas to extract out the column names from CSV files,
+  in the case of multi-columns, there is empty column names, pandas name it "Unnamed: #".
+- FROM THIS, we could actually compute how many multi-columns we have, which makes automating the styles easier and 
+  very simple. Just by counting the number of "Unnamed" after each column name, we could insert the "\multicolumn{# 
+  of unnamed+1}{"column name"}" and HUREKAAAA multicolumn problem idea is solved!!
+- NOW lets go for the code, which I think will not be finished today, but we will try
