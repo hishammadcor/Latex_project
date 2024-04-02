@@ -51,3 +51,8 @@
   الحمد لله.
 - Now I have put a TODO for next week, is to make a function that iterates on csv files in a directory and extract 
   them into latex files.
+## On 02.04.2024
+- A lot of complications related to alignments and numbers scientific notations.
+- COLUMN margins>>> I need still to specify column margin for each style. This we need me to configure the code according to 9 styles till now!!
+- still evey thing is not clear but until next time ISA
+- ALso I need to fix problems with INiLLIei
