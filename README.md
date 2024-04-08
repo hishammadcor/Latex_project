@@ -24,7 +24,7 @@
 - The original Project have a problem with text overflow in the tables, especially in the multi-column problems. The 
   problem is in my enthronement, as the main project is fine!\
 - I will try intelligi environment and see. TEXMAKER is bad!!!
-- Intelligi worked perfectlly. Now I am trying to find an algorithm to iterate on the latex string in python.
+- Intelligi worked perfectly. Now I am trying to find an algorithm to iterate on the latex string in python.
 - I tried to use regex, we revisited regex again :(, but I am not good at it, so I think it will take some time till I 
   reach a good regex to do !
 - There is other option of using bad code, like using for loops over and over again to iterate on a csv file and 
@@ -58,6 +58,12 @@
 - still evey thing is not clear but until next time ISA
 - ALso I need to fix problems with INiLLIei
 
-## On05.04.2024
-- Did not do much. I still cannot reach the report style. I compiled the whole project with my syle and there a major difference. 
+## On 05.04.2024
+- Did not do much. I still cannot reach the report style. I compiled the whole project with my style and there a major difference. 
 - I think the problem will be because the pageplot layout, until next time.
+
+## On 08.04.2024
+- Manage to add specific function the determines the first column according to the style number.
+- Add it to the main function and it works perfectly.
+- The problem is, when I try to insert the output table in the main project, it does not see the new defined column types and also it does not follow the main project style.
+- Next time I will see this problem and discuss it with MR. Philip.
