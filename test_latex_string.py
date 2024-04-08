@@ -1,13 +1,23 @@
 import pandas as pd
 
-# import csv file
-CSV_file = pd.read_csv('style92.csv', delimiter=r'[\t]*;[\t]*', engine='python')  # the regex gets only the values
-# and delete all the unnecessary spaces
-columns = CSV_file.columns
-values = CSV_file.values.tolist()  # get all the values into a list
+
+def choose_first_column_style(file_name):
+    # A dictionary mapping certain phrases to letters A - I
+    phrase_to_letter = {
+        '33': 'A',
+        '31': 'A',
+        '34': 'A',
+        '92': 'A',
+        '32': 'B'
+        # Add more mappings as necessary
+    }
+    for phrase, letter in phrase_to_letter.items():
+        if phrase in file_name:
+            return letter
+    return 'I'  # Default to 'A' if no specific phrase is found
 
 
-def generate_full_tabular_with_names_and_rows(column_names, row_values):
+def generate_full_tabular_with_names_and_rows(column_names, row_values, file_name):
     """
     Generates a complete LaTeX table code including headers and rows based on the provided column names and row
     values. The function dynamically handles multicolumn scenarios based on the presence of "Unnamed" columns
@@ -26,8 +36,11 @@ def generate_full_tabular_with_names_and_rows(column_names, row_values):
     and applying appropriate LaTeX formatting. Real column names are incorporated directly into the table header,
     while row values are formatted and inserted according to the column structure. `np.nan` values in `row_values`
     result in blank cells in the output table.
+    Additional Parameters:
+    - file_name (str): The name of the CSV file being processed, used to determine the first column letter.
     """
 
+    first_column_letter = choose_first_column_style(file_name)
     column_definitions = []  # Stores LaTeX column specifications
     header_commands = []  # Stores header column names with formatting
     body_commands = []  # Stores the data rows
@@ -39,7 +52,8 @@ def generate_full_tabular_with_names_and_rows(column_names, row_values):
         count = 1  # Counts "Unnamed" columns for multicolumn span, starting with 1 for the current column
         if not column_names[i].startswith("Unnamed"):
             real_column_index += 1  # Increment for each real (non-"Unnamed") column encountered
-            column_type = 'l' if real_column_index == 1 else ('s' if real_column_index % 2 == 0 else 'c')
+            column_type = first_column_letter if real_column_index == 1 else (
+                'S' if real_column_index % 2 == 0 else 'Y')
 
             # Check ahead for consecutive "Unnamed" columns to determine multicolumn span
             j = i + 1
@@ -49,7 +63,7 @@ def generate_full_tabular_with_names_and_rows(column_names, row_values):
 
             # Formatting for multicolumn if necessary
             if count > 1:
-                multicolumn_type = 's' if real_column_index % 2 == 0 else 'c'
+                multicolumn_type = 'S' if real_column_index % 2 == 0 else 'Y'
                 header_commands.append(
                     f"\\multicolumn{{{count}}}{{{multicolumn_type}}}{{\\textit{{{column_names[i]}}}}}")
                 column_definitions.extend([multicolumn_type] * count)  # Extend column definition for multicolumn span
@@ -71,15 +85,22 @@ def generate_full_tabular_with_names_and_rows(column_names, row_values):
         body_commands.append(' & '.join(processed_row) + ' \\\\ \\hline')  # Construct each row command
 
     # Construct the full LaTeX table
-    tabular_header = '\\begin{tabular}{' + ''.join(column_definitions) + '}'
+    tabular_header = '\\begin{tabularx}{\\textwidth}{' + ''.join(column_definitions) + '}'
     tabular_body = "\n".join(body_commands)
-    full_table = f"{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline\n{tabular_body}\n\\end{{tabular}}"
+    full_table = f"{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline\n{tabular_body}\n\\end{{tabularx}}"
 
     return full_table
 
 
-latex_table = generate_full_tabular_with_names_and_rows(columns, values)
+# import csv file
+CSV_file = pd.read_csv('style32.csv', delimiter=r'[\t]*;[\t]*', engine='python')  # the regex gets only the values
+# and delete all the unnecessary spaces
+columns = CSV_file.columns
+values = CSV_file.values.tolist()  # get all the values into a list
+csv_file_name = 'style32.csv'
+latex_table = generate_full_tabular_with_names_and_rows(columns, values, csv_file_name)
 
 print(latex_table)
 
-# TODO: add a funtion that iterates on the CSV files, transfrom them into LaTex files.
+# TODO: Add a function that iterates on the CSV files, transform them into LaTex files.
+# TODO: Extract the styles numbers form CSV files.
