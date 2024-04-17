@@ -85,9 +85,9 @@ def generate_full_tabular_with_names_and_rows(column_names, row_values, file_nam
         body_commands.append(' & '.join(processed_row) + ' \\\\ \\hline')  # Construct each row command
 
     # Construct the full LaTeX table
-    tabular_header = '\\begin{tabularx}{\\textwidth}{' + ''.join(column_definitions) + '}'
+    tabular_header = '\\input{setup/styles}\n\\begin{tabularx}{\\textwidth}{' + ''.join(column_definitions) + '}'
     tabular_body = "\n".join(body_commands)
-    full_table = f"{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline\n{tabular_body}\n\\end{{tabularx}}"
+    full_table = f"{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline\n{tabular_body}\n\\end{{tabularx}} \\normalspacing \\vspace{{0.5cm}}"
 
     return full_table
 
