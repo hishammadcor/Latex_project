@@ -67,3 +67,9 @@
 - Add it to the main function and it works perfectly.
 - The problem is, when I try to insert the output table in the main project, it does not see the new defined column types and also it does not follow the main project style.
 - Next time I will see this problem and discuss it with MR. Philip.
+
+# On 17.04.2024
+- Solved the problem related to last time. Now the tables work on the main project. 
+- Added a style file to each table, done automatically.
+- there is a problem to the indentation of the first column in the table. I do not how to solve it, but it will ISA.
+- Next time I should finish the ToDos.
