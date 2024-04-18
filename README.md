@@ -73,3 +73,7 @@
 - Added a style file to each table, done automatically.
 - there is a problem to the indentation of the first column in the table. I do not how to solve it, but it will ISA.
 - Next time I should finish the ToDos.
+
+# On 18.04.2024
+- The TODOS are all done the code is now ready to be used on the whole project
+- I made a separate file for the new concept to use Alphabet letter as specification for the column types.
