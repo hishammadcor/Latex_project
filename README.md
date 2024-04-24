@@ -77,3 +77,8 @@
 # On 18.04.2024
 - The TODOS are all done the code is now ready to be used on the whole project
 - I made a separate file for the new concept to use Alphabet letter as specification for the column types.
+
+# On 24.04.2024
+- Used library called "siunitx" in LaTex which allows you to perfectly know how to manipulate the numbers
+- the problem is the styling can not be handled well while using.
+- I will try to fix the style tomorrow, but the library handles all the special cases perfectly.
