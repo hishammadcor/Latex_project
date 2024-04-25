@@ -82,3 +82,7 @@
 - Used library called "siunitx" in LaTex which allows you to perfectly know how to manipulate the numbers
 - the problem is the styling can not be handled well while using.
 - I will try to fix the style tomorrow, but the library handles all the special cases perfectly.
+
+# On 25.04.2024
+- Managed to solve the problems in the past day and every thing works fine in both my environment and the project environment. Scientific notation DONE
+- Next would to determine the styles and column sizes because the column sizes are a very different due to using two libraries together, Taburalx and siunitx. Both of them have their unique environment and handling ways to column sizes
