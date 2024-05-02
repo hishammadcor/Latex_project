@@ -85,4 +85,10 @@
 
 # On 25.04.2024
 - Managed to solve the problems in the past day and every thing works fine in both my environment and the project environment. Scientific notation DONE
-- Next would to determine the styles and column sizes because the column sizes are a very different due to using two libraries together, Taburalx and siunitx. Both of them have their unique environment and handling ways to column sizes
+- Next would to determine the styles and column sizes because the column sizes are a very different due to using two libraries together, Taburalx and siunitx. Both of them have their unique environment and handling ways to column sizes.
+
+# On 02.05.2024
+- I dived into the core code of the two packages _Siunitx_ and _TabularX_.
+- Turned out by skimming the code documentation of _TabularX_ it has some number features like the ones in _Siunitx_, like approximating, aligning numbers around the decimal point...etc
+- Next Wednesday, I am going to try those options and see if it fits all the requirements needed for the scientific notations needed in the report.
+- I hope it works, as I would save a lot of time coding in pure LaTeX :(. Until next Time....
