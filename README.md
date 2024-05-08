@@ -92,3 +92,10 @@
 - Turned out by skimming the code documentation of _TabularX_ it has some number features like the ones in _Siunitx_, like approximating, aligning numbers around the decimal point...etc
 - Next Wednesday, I am going to try those options and see if it fits all the requirements needed for the scientific notations needed in the report.
 - I hope it works, as I would save a lot of time coding in pure LaTeX :(. Until next Time....
+
+# On 08.05.2024
+- I tried to use the potential of _TabularX_ in cases of alignment around the thousands or decimals separators.
+- It worked, but it needs to be added to every number in the table.Also, the alignment around the thousands separator does not work.
+- There is a new approach I would like to try, which is to use _Python_ to manipulate the numbers by rounding don the decimals deleting them or according to the case, then add the thousands' separator.
+- This is easily will be done next time in python, the problem is, I can not align the numbers around the separator without using _Siunitx_
+- I also tried to use macros. The macros need to be added to each number specifically as the new column type generalize the function on all the entries. Which is very bad.
