@@ -99,3 +99,10 @@
 - There is a new approach I would like to try, which is to use _Python_ to manipulate the numbers by rounding don the decimals deleting them or according to the case, then add the thousands' separator.
 - This is easily will be done next time in python, the problem is, I can not align the numbers around the separator without using _Siunitx_
 - I also tried to use macros. The macros need to be added to each number specifically as the new column type generalize the function on all the entries. Which is very bad.
+
+# On 15.05.2024
+- Problems. The multicolumn command does not work in _TabularX_ for centring the Title of the multi-columns.
+- By putting c in the multicolumn command it works, but then comes the coloring problem!
+- SO, I think a solution to such a problem is to make the multicolumn type to always be c and add the color to the text. This will solve the problem. 
+- Yeah, it solved the problem.
+- I won't change anything in the compiler until I tell Mr. Philip.
