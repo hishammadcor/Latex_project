@@ -106,3 +106,8 @@
 - SO, I think a solution to such a problem is to make the multicolumn type to always be c and add the color to the text. This will solve the problem. 
 - Yeah, it solved the problem.
 - I won't change anything in the compiler until I tell Mr. Philip.
+
+# 22.05.2024
+- Modified the compiler as mentioned last time
+- Trying to modify the _siunitx.sty_ with the _tabularx_ width logic.
+- Tried a lot of tries with the help of chatgpt put still no hope. But I am optimistic to modify the _siunitx_ column width logic.
