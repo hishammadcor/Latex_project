@@ -5,7 +5,7 @@ import os
 def choose_first_column_style(file_name):
     # A dictionary mapping certain phrases to letters A - I
     phrase_to_letter = {
-        '33': 'A',
+        '32': 'A',
         '31': 'A',
         '34': 'A',
         '92': 'A',
@@ -98,8 +98,10 @@ def generate_full_tabular(dir_path):
                     if count > 1:
                         multicolumn_type = 'S' if real_column_index % 2 == 0 else 'Y'
                         header_commands.append(
-                            f"\\multicolumn{{{count}}}{{{multicolumn_type}}}{{\\textit{{{column_names[i]}}}}}")
-                        column_definitions.extend([multicolumn_type] * count)  # Extend column definition for multicolumn
+                            f"\\multicolumn{{{count}}}{{{'c'}}}{{\\textit{{{column_names[i]}}}}}")
+                        # TODO: \cellcolor{green40} add the cell color to the multi column when the column type is S
+                        column_definitions.extend([multicolumn_type] * count)  # Extend column definition for
+                        # multicolumn
                         # span
                     else:
                         header_commands.append(f"\\textit{{{column_names[i]}}}")
@@ -119,7 +121,8 @@ def generate_full_tabular(dir_path):
                 body_commands.append(' & '.join(processed_row) + ' \\\\ \\hline')  # Construct each row command
 
             # Construct the full LaTeX table
-            tabular_header = '\\input{setup/styles}\n\\begin{tabularx}{\\textwidth}{' + ''.join(column_definitions) + '}'
+            tabular_header = '\\input{setup/styles}\n\\begin{tabularx}{\\textwidth}{' + ''.join(
+                column_definitions) + '}'
             tabular_body = "\n".join(body_commands)
             full_table = (f"{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline\n{tabular_body}\n\\end{{"
                           f"tabularx}} \n \\normalspacing \n \\vspace{{0.5cm}}")
@@ -130,6 +133,8 @@ def generate_full_tabular(dir_path):
             with open(latex_file_path, 'w') as latex_file:
                 latex_file.write(full_table)
 
-    return "-----------DONE-----------"
-directory_path = "C:/Users/s2hialii/Desktop/Latex_project/"
+    return '-----------DONE-----------'
+
+
+directory_path = "C:/Users/s2hialii/Desktop/Latex_project"
 generate_full_tabular(directory_path)
