@@ -111,3 +111,10 @@
 - Modified the compiler as mentioned last time
 - Trying to modify the _siunitx.sty_ with the _tabularx_ width logic.
 - Tried a lot of tries with the help of chatgpt put still no hope. But I am optimistic to modify the _siunitx_ column width logic.
+
+# 23.05.2024
+- While searching for ways on stackoverflow to mitigate the two libraries together, I found a library called _tabularray_.
+- It looks promising, but I need more time to make sure that it can replace _TabularX_.
+- I tried some tables with it. It works with the main style of the project, the problem is in the automation of the table and column widths!
+- But I think if I dig deeper I could solve such an issue! as it's a parameters problem, at least for now :)
+- Until next time....
