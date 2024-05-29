@@ -118,3 +118,8 @@
 - I tried some tables with it. It works with the main style of the project, the problem is in the automation of the table and column widths!
 - But I think if I dig deeper I could solve such an issue! as it's a parameters problem, at least for now :)
 - Until next time....
+
+# 29.05.2024
+- Returned back to square 1
+- The library does not fit the table in the whole page width!
+- Nothing I could do again!
