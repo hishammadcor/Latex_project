@@ -125,4 +125,7 @@
 - Nothing I could do again!
 
 # 05.06.2024
--
+- Developing a UI to make any one use it
+- solve the problem of column names if the first column title is empty
+- Now I need to deploy it on desktop.
+- Maybe for next time..
