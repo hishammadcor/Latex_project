@@ -123,3 +123,6 @@
 - Returned back to square 1
 - The library does not fit the table in the whole page width!
 - Nothing I could do again!
+
+# 05.06.2024
+-
