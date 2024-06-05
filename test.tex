@@ -1,0 +1,122 @@
+\documentclass{book}
+
+\usepackage{fontspec}
+\usepackage[table]{xcolor}
+\usepackage{colortbl}
+\usepackage{xstring}
+\usepackage{array}
+\usepackage{geometry}
+\usepackage{siunitx}
+\usepackage{tabularx} % Import the tabularx package
+\pagestyle{fancy}
+\definecolor{green40}{RGB}{196, 229, 218}
+
+\geometry{
+    a4paper,																									% set paper dimensions
+    twoside,
+%
+    inner			= 2.50cm,																					% inner (twosided) = left	= lmargin
+    outer			= 2.50cm,																					% outer (twosided) = right	= rmargin
+    top				= 2.5cm,																					% top margin from top paper edge to upper textarea edge
+    bottom			= 2.00cm,																					% bottom margin excluding footer
+%
+%	includehead,																								% do not include header into textarea
+    headsep			= 1.00cm,																					% distance between textarea and header
+    headheight		= 12pt,																						% needs to support 8pt and 10pt text
+%
+    nomarginpar,																								% no additional outer margins
+}
+%
+\sisetup{
+    output-decimal-marker={,},
+    group-separator={.},
+    group-four-digits = true,
+    table-number-alignment = center,
+    table-format=4.0,
+    round-mode=places,
+    round-precision = 0,
+    round-direction = down,
+    detect-all
+}
+
+\newcolumntype{B}{>{\raggedright}p{12.0cm}}
+\begin{document}
+
+%        \begin{tabularx}{\textwidth}{S}
+%            \textbf{Amount} & \textbf{Cost}\\
+%            1234,56   & 234567,89  \\
+%            10000,00 & 20000,00  \\
+%            123456,78 & 789123,45 \\
+%        \end{tabularx}
+
+
+
+    \begin{tabularx}{\textwidth}{BSSSS}
+        \textit{- befragte fortgeschrittene Masterstudierende (Lehramt)-} & \textit{M} & \textit{SD} & \textit{MD} & \textit{N} \\ \hline
+        Ich besitze ein fundiertes Wissen zur fachdidaktischen Forschung. & 3,7 & 1,4 & 4 & 38 \\ \hline
+        Ich kann fachwissenschaftliche Inhalte unter didaktischen Aspekten analysieren. & 4,2 & 1,3 & 4,5 & 38 \\ \hline
+        Ich verfüge über ein fachdidaktisches Methodenrepertoire, um das Fach angemessen zu unterrichten. & 3,9 & 1,3 & 4 & 38 \\ \hline
+        Die fachdidaktischen Veranstaltungen meines Faches 1 konkretisieren die Inhalte regelmäßig an Beispielen aus der schulischen Praxis. & 3,0 & 1,2 & 3 & 37 \\ \hline
+        Die fachdidaktischen Veranstaltungen meines Faches 1 bieten mir die Möglichkeit, bildungswissenschaftliche Erkenntnisse praktisch anzuwenden. & 2,6 & 1,4 & 2 & 38 \\ \hline
+        Die fachdidaktischen Veranstaltungen meines Faches 1 erlauben es mir, Erfahrungen aus meinen Praktika zu thematisieren. & 3,0 & 1,4 & 3 & 37 \\ \hline
+        Die fachdidaktischen Veranstaltungen meines Faches 1 bieten Anknüpfungspunkte zu fachdidaktischen Inhalten. & 3,2 & 1,5 & 3 & 38 \\ \hline
+    \end{tabularx}
+    \normalspacing
+    \vspace{0.5cm}
+
+%    \begin{tabularx}{\textwidth}{FSYYSSS}
+%        \textit{Studium} & \textit{N} & \multicolumn{2}{c}{\textit{Geschlecht}} & \multicolumn{3}{c}{\cellcolor{green40}\textit{Staatsangehörigkeit}} \\ \hline
+%        &  & weiblich & männlich & deutsch & europäisch & außereuropäisch \\ \hline
+%        1-Fach-Studiengang/2-Fach-Studiengang & 76 & 50\% & 47\% & 81\% & 13\% & 4\% \\ \hline
+%        Lehramt & 50 & 54\% & 44\% & 98\% & 0\% & 2\% \\
+%    \end{tabularx}
+%    \normalspacing
+%    \vspace{1cm}
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%    \normalspacing
+%    \begin{tabularx}{\textwidth}{AsYsY}
+%            \textit{- befragte Bachelorstudierende (Studieneingang) -} & \textit{M} & \textit{SD} & \textit{MD} & \textit{N} \\ \hline
+%            Webseite der Universität Trier & 34,615 & 1,3244 & 5000 & 336 \\ \hline
+%            Informationsveranstaltungen & 444,52 & 441,24 & 50000 & 2634 \\ \hline
+%            Einführungs- und Orientierungsveranstaltungen & 4,64 & 1,33 & 50 & 299 \\ \hline
+%    Informationsbroschüren & 4,06 & 1,36 & 400 & 231 \\ \hline
+%    \end{tabularx}
+
+%    \vspace{5.0cm}
+%
+%    \begin{tabularx}{\textwidth}{FSYSY}
+%        \textit{- befragte fortgeschrittene Masterstudierende (Lehramt)-} & \textit{M} & \textit{SD} & \textit{MD} & \textit{N} \\ \hline
+%        Ich besitze ein fundiertes Wissen zur fachdidaktischen Forschung. & 3,7 & 1,4 & 4 & 38 \\ \hline
+%        Ich kann fachwissenschaftliche Inhalte unter didaktischen Aspekten analysieren. & 4,2 & 1,3 & 4,5 & 38 \\ \hline
+%        Ich verfüge über ein fachdidaktisches Methodenrepertoire, um das Fach angemessen zu unterrichten. & 3,9 & 1,3 & 4 & 38 \\ \hline
+%        Die fachdidaktischen Veranstaltungen meines Faches 1 konkretisieren die Inhalte regelmäßig an Beispielen aus der schulischen Praxis. & 3,0 & 1,2 & 3 & 37 \\ \hline
+%        Die fachdidaktischen Veranstaltungen meines Faches 1 bieten mir die Möglichkeit, bildungswissenschaftliche Erkenntnisse praktisch anzuwenden. & 2,6 & 1,4 & 2 & 38 \\ \hline
+%        Die fachdidaktischen Veranstaltungen meines Faches 1 erlauben es mir, Erfahrungen aus meinen Praktika zu thematisieren. & 3,0 & 1,4 & 3 & 37 \\ \hline
+%        Die fachdidaktischen Veranstaltungen meines Faches 1 bieten Anknüpfungspunkte zu fachdidaktischen Inhalten. & 3,2 & 1,5 & 3 & 38 \\ \hline
+%    \end{tabularx}
