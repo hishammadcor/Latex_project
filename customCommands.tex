@@ -1,0 +1,1110 @@
+%-----------------------------------------------------------------------------------%
+%	colors
+%-----------------------------------------------------------------------------------%
+\usepackage{colortbl}
+\usepackage{xcolor}
+\definecolor{blue100}{RGB}{  0, 122, 195}
+\definecolor{blue80}{RGB}{  51, 149, 207}
+\definecolor{blue60}{RGB}{ 102, 175, 219}
+\definecolor{blue40}{RGB}{ 153, 202, 231}
+\definecolor{blue20}{RGB}{ 204, 228, 243}
+
+\definecolor{green100}{RGB}{107, 191, 163}
+\definecolor{green80}{RGB}{ 137, 204, 181}
+\definecolor{green60}{RGB}{ 166, 217, 200}
+\definecolor{green40}{RGB}{ 196, 229, 218}
+\definecolor{green20}{RGB}{ 225, 242, 237}
+
+%-----------------------------------------------------------------------------------%
+%	headline
+%-----------------------------------------------------------------------------------%
+\usepackage{soul}																								% for (ul) underline paragraphs
+
+\newcommand{\headline}[1]{
+	\needspace{2.5cm}
+	\subsubsection*{#1}
+}
+
+\newcommand{\subheadline}[1]{
+	\textit{#1}
+	\vspace{6pt}
+	\newline
+}
+
+\newcommand{\fett}[1]{%																									% makes a paragraph bold
+\textbf{\small #1}%
+}
+
+\newcommand{%																											% makes a paragraph italics
+\kursiv}[1]{\textit{#1}%
+}
+
+\newcommand{\unterstrichen}[1]{																					% makes a paragraph underlined
+	\ul{#1}
+}
+
+\usepackage{needspace}
+\newcommand{\tblheadline}[1]{
+	\needspace{1.0cm}																							% add a pseudo margin after headline to make space for following table
+	\par																										% otherwise headline starts inline with previous text
+	{																											% need to be contained, to only affect headline
+		\setmainfont{Segoe UI}																					% set font family
+		\fontsize{9pt}{10pt}																					% set font size, spacing does not work...	ToDo Überschrift ist kleiner als in der Tabelle
+		\selectfont
+		\textbf{#1}																								% make text bold
+		\normalspacing
+	}
+}
+
+\newcommand{\tblcaption}[1]{																					% ToDo: Zeilenhöhe und Abstand zur Tabelle pasts nicht
+	\vspace*{-1.0cm}
+	\newline
+	{
+		\fontsize{8pt}{8.8pt}																					% set font size, spacing does not work...
+		\setmainfont{Segoe UI}																					% set font family
+		\selectfont
+		\textit{#1}																								% make text bold
+		\normalspacing
+	}
+	\par
+}
+
+%--------------------------------------------------------------------------------------------------------%
+%	table from csv file
+%--------------------------------------------------------------------------------------------------------%
+\usepackage{tabularray}
+\usepackage{colortbl}
+\usepackage{array}
+
+\newcommand{\tbl}[2]{
+
+	\ifnum#1=10
+		\styleten{#2}
+	\else \ifnum#1=11
+		\styleeleven{#2}
+	\else \ifnum#1=20
+		\styletwenty{#2}
+	\else \ifnum#1=21
+		\styletwentyone{#2}
+	\else \ifnum#1=22
+		\styletwentytwo{#2}
+	\else \ifnum#1=23
+		\styletwentythree{#2}
+	\else \ifnum#1=24
+		\styletwentyfour{#2}
+	\else \ifnum#1=25
+		\styletwentyfive{#2}
+	\else \ifnum#1=26
+		\styletwentysix{#2}
+	\else \ifnum#1=30
+		\stylethirty{#2}
+	\else \ifnum#1=31
+		\stylethirtyone{#2}																	
+	\else \ifnum#1=32
+		\stylethirtytwo{#2}
+	\else \ifnum#1=33
+		\stylethirtythree{#2}
+	\else \ifnum#1=34
+		\stylethirtyfour{#2}
+	\else \ifnum#1=35
+		\stylethirtyfive{#2}
+	\else \ifnum#1=36
+		\stylethirtysix{#2}
+	\else \ifnum#1=37
+		\stylethirtyseven{#2}
+	\else \ifnum#1=38
+		\stylethirtyeight{#2}
+	\else \ifnum#1=39
+		\stylethirtynine{#2}
+	\else \ifnum#1=40
+		\stylefourty{#2}		
+	\else \ifnum#1=80
+		\styleeighty{#2}
+	\else \ifnum#1=81
+		\styleeightyone{#2}
+	\else \ifnum#1=82
+		\styleeightytwo{#2}
+	\else \ifnum#1=83
+		\styleeightythree{#2}
+	\else \ifnum#1=85
+		\styleeightyfive{#2}
+	\else \ifnum#1=86
+		\styleeightysix{#2}
+	\else \ifnum#1=87
+		\styleeightyseven{#2}
+	\else \ifnum#1=88
+		\styleeightyeight{#2}
+	\else \ifnum#1=98
+		\styleninetyeight{#2}
+	\else \ifnum#1=89
+		\styleeightynine{#2}
+	\else \ifnum#1=90
+		\styleninety{#2}
+	\else \ifnum#1=91
+		\styleninetyone{#2}
+	\else \ifnum#1=92
+		\styleninetytwo{#2}
+	\else \ifnum#1=94
+		\styleninetyfour{#2}
+	\else \ifnum#1=95
+		\styleninetyfive{#2}
+	\else \ifnum#1=96
+		\styleninetysix{#2}
+	\else \ifnum#1=97
+		\styleninetyseven{#2}
+	\else																										% Backup-Style, alles automatisch skaliert
+		\styledefault{#2}
+	\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+	\normalspacing
+}
+
+\usepackage{multirow}
+
+%	general table styles
+%--------------------------------------------------------------------------------------------------------%
+\pgfplotstableset{
+	col sep                     = semicolon,
+    row sep                     = newline,
+    debug						= false,																		% if enabled, prints table code into log
+    string type,																								% cells contain strings/mixed data
+    percent is letter			= true,																			% percent is no comment within this table
+	trim cells					= true,																			% trim leading/trailing whitespaces
+	empty cells with			= {},																			% replace empty cells with empty string
+%
+    begin table					= {
+									 \setmainfont{Segoe UI}
+									 \selectfont
+									 \footnotesize																% set a font size by pt does not work...
+									 \selectfont
+                                    \setstretch{1.0}
+                                    \begin{tblr}																% use tblr to have alignment, width and coloring accessible
+                                  },
+    end table					= {
+                                    \end{tblr}
+                                    \normalspacing
+                                    \vspace{6pt}																% 28pt spacing after table
+                                    \newline
+                                  },
+%
+	header                      = false,																		% both lines needed to get rid of indices in empty header cells
+	every head row/.style       = { output empty row },
+%
+    highlight_italics/.append style={																			% highlight first column in italics
+        postproc cell content/.append code={
+                \pgfkeysalso{@cell content=\setmainfont{Segoe UI}\footnotesize\selectfont\textit{##1}}%
+        },
+    },
+    highlight_italics first row/.style={																		% highlight first row in italics
+        postproc cell content/.append code={
+            \count0=\pgfplotstablerow
+            \advance\count0 by1
+            \ifnum\count0=1
+                \pgfkeysalso{@cell content=\setmainfont{Segoe UI}\footnotesize\selectfont\textit{##1}}%
+            \fi
+        },
+    },
+%
+    highlight_bold/.append style={																				% highlight first column in bold
+        postproc cell content/.append code={
+                \pgfkeysalso{@cell content=\setmainfont{Segoe UI}\footnotesize\selectfont\textbf{##1}}%
+        },
+    },
+    highlight_bold first row/.style={																			% highlight first row in bold
+        postproc cell content/.append code={
+            \count0=\pgfplotstablerow
+            \advance\count0 by1
+            \ifnum\count0=1
+                \pgfkeysalso{@cell content=\setmainfont{Segoe UI}\footnotesize\selectfont\textbf{##1}}%
+            \fi
+        },
+    },
+%
+    highlight_bold_rotate first row/.style={																	% rotate first row by 90° and limit height to break CLDH into two lines as small as possible
+        postproc cell content/.append code={
+            \count0=\pgfplotstablerow
+            \advance\count0 by1
+            \ifnum\count0=1
+                \pgfkeysalso{@cell content=\setmainfont{Segoe UI}\footnotesize\selectfont\rotatebox{90}{\parbox{3.2cm}{\textbf{##1}}}}%
+            \fi
+        },
+    },
+%
+    highlight_bold_rotate_studienfaelle first row/.style={
+        postproc cell content/.append code={
+            \count0=\pgfplotstablerow
+            \advance\count0 by1
+            \ifnum\count0=1
+                \pgfkeysalso{@cell content=\setmainfont{Segoe UI}\footnotesize\selectfont{\textit{##1}}}%
+            \fi
+        },
+    },
+%
+    highlight_bold_rotate_studienverlauf first row/.style={
+        postproc cell content/.append code={
+            \count0=\pgfplotstablerow
+            \advance\count0 by1
+            \ifnum\count0=1
+                \pgfkeysalso{@cell content=\setmainfont{Segoe UI}\footnotesize\selectfont{\textit{##1}}}%
+            \fi
+        },
+    },
+}
+
+%	default style if no style matches
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styledefault}[1]{
+\pgfplotstabletypeset[
+	column type					= X,																			% body-cells alignment
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+	]{#1}
+}
+
+%	style 10
+%	- ToDo: try to merge cells within each Lehreinheit
+%	- ToDo: try to vertically and horizontally center text
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styleten}[1]{																						% Tabelle 1 von Désirée
+\setstretch{0.8}
+\pgfplotstabletypeset[
+	begin table					= {
+									\vspace{-1.2cm}																% make Germanistik fit on one page
+									 \setmainfont{Segoe UI}
+									 \selectfont
+									 \footnotesize
+									 \selectfont
+                                    \setstretch{1.0}
+                                    \begin{longtblr}
+                                  },
+    end table					= {
+                                    \end{longtblr}
+                                    \vspace{8pt}
+                                    \normalspacing
+                                  },
+	column type					= {
+										@{}
+										Q[l, wd=2cm]
+										Q[l, wd=14cm]
+										@{}
+								},
+    every first column/.style	= { highlight_bold },
+	highlight_bold first row,																					% Klassische Philologie: Zellen unter Lehreinheit verbinden
+    every row no 1/.style		= {before row=\hline},															% 	CLDH
+    every row no 2/.style		= {before row=\hline},															% 	Germanistik
+    every row no 15/.style		= {before row=\hline},															% 	Japanologie
+    every row no 19/.style		= {before row=\hline},															%	Klassische Philologie
+    every row no 22/.style		= {before row=\hline},															%	Medienwissenschaft
+    every row no 23/.style		= {before row=\hline},															%	Phonetik
+    ]{#1}
+\setstretch{1.0}
+}
+
+%	style 11
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styleeleven}[1]{																					% Tabelle 2 von Désirée
+\setstretch{0.8}
+\pgfplotstabletypeset[
+	begin table					= {
+									\vspace{-1.0cm}
+									 \setmainfont{Segoe UI}
+									 \selectfont
+									 \footnotesize
+									 \selectfont
+                                    \setstretch{1.0}
+                                    \begin{longtblr}
+                                  },
+    end table					= {
+                                    \end{longtblr}
+                                    \vspace{8pt}																% 8pt spacing after table
+                                    \normalspacing
+                                  },
+	column type					= {
+										@{}
+										X[l, 1]
+										X[l, 2]
+										X[l, 2]
+										X[l, 2]																	% letzte Spalte falsches Maß?
+										@{}
+								},
+    every first column/.style   = { highlight_bold },
+	highlight_bold first row,
+    every row no  1/.style		= {before row=\hline},															% Anglistik
+    every row no  2/.style		= {before row=\hline},															% Germanistik
+	every row no  5/.style		= {before row=\hline},															% Japanologie
+	every row no  8/.style		= {before row=\hline}, 															% Klassische Philologie
+	every row no 10/.style		= {before row=\hline},															% CLDH
+	every row no 11/.style		= {before row=\hline},															% Medienwissenschaft
+    ]{#1}
+\setstretch{1.0}
+}
+
+%	style 20
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styletwenty}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=4.5cm]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										@{}
+								},
+	highlight_bold_rotate first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+	]{#1}
+%	\vspace{-1.8cm}
+%	\vspace{-0.25cm}
+}
+
+%	style 21
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styletwentyone}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=4.5cm]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										@{}
+								},																						% body-cells alignment
+	every nth row				= {1}{before row = \hline},																% line on every other row, except last one
+	]{#1}
+}
+
+%	style 22
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styletwentytwo}[1]{
+\pgfplotstabletypeset[
+	col sep                     = ampersand,
+    row sep                     = crcr,
+	column type					= {
+										@{}
+										Q[l, wd=6.25cm]
+										Q[l, 1]
+										@{}
+								},																						% body-cells alignment
+	every nth row				= {1}{before row = \hline},																% line on every other row, except last one
+	]{#1}
+}
+
+%	style 23
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styletwentythree}[1]{
+\pgfplotstabletypeset[
+	col sep                     = ampersand,
+    row sep                     = crcr,
+	column type					= {
+										@{}
+										Q[l, wd=12.0 cm]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										@{}
+								},																		% body-cells alignment
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+	]{#1}
+}
+
+%	style 24
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styletwentyfour}[1]{
+\pgfplotstabletypeset[
+	begin table					= {
+									 \setmainfont{Georgia}
+									 \selectfont
+									 \footnotesize																% set a font size by pt does not work...
+									 \selectfont
+                                    \setstretch{1.0}
+                                    \begin{tblr}																% use tblr to have alignment, width and coloring accessible
+                                  },
+    end table					= {
+                                    \end{tblr}
+                                    \vspace{28pt}																% 28pt spacing after table
+                                    \normalspacing
+                                  },
+	col sep                    = ampersand,
+    row sep                    = crcr,
+	column type					= {
+										@{}
+										Q[l, 1]
+										@{}
+								},																		% body-cells alignment
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+	]{#1}
+}
+
+%	style 25
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styletwentyfive}[1]{
+\pgfplotstabletypeset[
+	col sep                     = ampersand,
+    row sep                     = crcr,
+	column type					= {
+										@{}
+										Q[l, wd=6.25cm]
+										Q[l, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[r, 2]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+	]{#1}
+}
+
+%	style 26
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styletwentysix}[1]{
+\pgfplotstabletypeset[
+	col sep                     = ampersand,
+    row sep                     = crcr,
+	column type					= {
+										@{}
+										Q[l, wd=6.25cm]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										@{}
+								},																		% body-cells alignment
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+	]{#1}
+}
+
+%	style 30
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\stylethirty}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+%	style 31
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\stylethirtyone}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=4.0cm]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+%	Style 32
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\stylethirtytwo}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=12.0cm]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+%	Style 33
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\stylethirtythree}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=4.0cm]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+%	Style 34
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\stylethirtyfour}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=4.0cm]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+
+%	style 35
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\stylethirtyfive}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=4.0cm]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+
+
+%	style 36
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\stylethirtysix}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=4.0cm]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+
+%	style 37
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\stylethirtyseven}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=12.0cm]
+										Q[c, 1, bg=green40]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+
+%	style 38
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\stylethirtyeight}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=12.0cm]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+%	style 39
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\stylethirtynine}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=12.0cm]
+										Q[c, 1, bg=green40]
+										@{}
+								},
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+%	Style 40
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\stylefourty}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=8.0cm]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+%	style 80
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styleeighty}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=3.7cm]
+										Q[c, 1, bg=green40]
+										Q[c, 1.3]
+										Q[c, 1, bg=green40]
+										Q[l, 4]
+										Q[l, 2, bg=green40]
+										Q[c, 2]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+%	style 81
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styleeightyone}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=2.35cm]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+%	style 82
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styleeightytwo}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, 6]
+										Q[l, 6, bg=green40]
+										Q[c, 2]
+										Q[c, 2, bg=green40]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+%	style 83
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styleeightythree}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, 4]
+										Q[l, 4, bg=green40]
+										Q[l, 6]
+										Q[c, 0.5, bg=green40]
+										Q[c, 0.5]
+										Q[c, 0.5, bg=green40]										
+										Q[c, 0.5]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+
+%	style 85
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styleeightyfive}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=4.0cm]
+										Q[r, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+
+%	style 86
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styleeightysix}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=4.0cm]
+										Q[r, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+
+%	style 87
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styleeightyseven}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=4.0cm]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+%	style 88
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styleeightyeight}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, 4cm]
+										Q[c, 1cm, bg=green40]
+										Q[c, 1cm, bg=green40]
+										Q[c, 1cm, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+%	style 98
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styleninetyeight}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, 4cm]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+%	style 89
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styleeightynine}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, 4cm]
+										Q[c, 1cm, bg=green40]
+										Q[c, 1cm, bg=green40]
+										Q[c, 1cm, bg=green40]
+										Q[c, 1]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+%	style 90
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styleninety}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=4.0cm]
+										Q[l, 1, bg=green40]
+										Q[l, 1, bg=green40]
+										Q[l, 1, bg=green40]
+										Q[l, 1]
+										Q[l, 1]
+										Q[l, 1]
+										Q[l, 1, bg=green40]
+										Q[l, 1, bg=green40]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+
+%	style 91
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styleninetyone}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=4.0cm]
+										Q[l, 2, bg=green40]																% w.
+										Q[l, 1, bg=green40]																% ges.
+										Q[l, 2]
+										Q[l, 1]
+										Q[l, 2, bg=green40]
+										Q[l, 1, bg=green40]
+										Q[l, 2]
+										Q[l, 1]
+										Q[l, 2, bg=green40]
+										Q[l, 1, bg=green40]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+
+%	style 92
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styleninetytwo}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=4.0cm]
+										Q[c, 1, bg=green40]
+										Q[c, 2]
+										Q[c, 2]
+										Q[c, 2, bg=green40]
+										Q[c, 2, bg=green40]
+										Q[c, 2, bg=green40]
+										@{}
+								},
+	highlight_italics first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+    ]{#1}
+}
+
+%	style 94
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styleninetyfour}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=2.35cm]
+										Q[c, wd=3.185cm, bg=green40]
+										Q[c, wd=2.93cm]
+										Q[c, wd=2.92cm, bg=green40]
+										Q[c, 1]
+										@{}
+								},
+	highlight_bold_rotate_studienfaelle first row,
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+	]{#1}
+	\vspace{-1.45cm}
+%	\vspace{-1.37cm}
+%	\vspace{-0.95cm}
+%	\hline
+%	\vspace{-0.21cm}
+}
+
+%	style 95
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styleninetyfive}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=2.35cm]
+										Q[c, wd=0.78cm, bg=green40]
+										Q[r, wd=0.78cm, bg=green40]
+										Q[r, wd=0.78cm, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										@{}
+								},																		% body-cells alignment
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+	]{#1}
+}
+
+%	style 96
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styleninetysix}[1]{
+\pgfplotstabletypeset[
+		column type					= {
+										@{}
+										Q[l, wd=2.35cm]
+										Q[c, wd=3.185cm, bg=green40]
+										Q[c, wd=2.45cm]
+										Q[c, 1, bg=green40]
+										Q[c, 1]
+										Q[c, 1, bg=green40]
+										Q[c, wd=2.45cm]
+										@{}
+								},
+	highlight_bold_rotate_studienverlauf first row,
+	every nth row				= {1}{before row = \hline},																% line on every other row, except last one
+	]{#1}
+\vspace{-1.45cm}
+%\vspace{-1.37cm}
+%	\vspace{-0.76cm}
+%	\hline
+%	\vspace{-0.20cm}
+}
+
+%	style 97
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\styleninetyseven}[1]{
+\pgfplotstabletypeset[
+	column type					= {
+										@{}
+										Q[l, wd=2.35cm]																	% Studienjahr
+										Q[c, wd=0.78cm, bg=green40]														% ges
+										Q[r, wd=0.78cm, bg=green40]														% w
+										Q[r, wd=0.78cm, bg=green40]														% d
+										Q[c, 1]																			% M
+										Q[c, 1]																			% SD
+										Q[r, 1, bg=green40]																% Studium in <= RSZ
+										Q[r, 1]																			% Studium in <= RSZ + bis zu 2 Semestern
+										Q[r, 1, bg=green40]																% Abschlussquote
+										Q[c, 1]																			% M
+										Q[c, 1]																			% SD
+										@{}
+								},																		% body-cells alignment
+	every nth row				= {1}{before row = \hline},														% line on every other row, except last one
+	]{#1}
+}
+
+%--------------------------------------------------------------------------------------------------------%
+%	image
+%--------------------------------------------------------------------------------------------------------%
+\usepackage{float}
+\newcommand{\img}[1]{
+    \begin{figure}[H]
+        \includegraphics[
+            width = 0.6\textwidth,
+        ]{#1}
+	\centering
+   \end{figure}
+}
+
+\newcommand{\imgMaxWidth}[1]{
+	\begin{figure}[H]
+		\includegraphics[
+			width = \textwidth,
+		]{#1}
+	\centering
+	\end{figure}
+}
+
+\newcommand{\imgFullsize}[1]{
+	\begin{picture}(0,0)																						%environment to be able to use absolute positioning
+		\put(-1.3cm, -25.25cm){																					% move image to be centered and within top/bottom margins
+			\includegraphics[
+				width = 1.15\textwidth,																			% scale as big as possible
+			]{#1}
+		}
+	\end{picture}
+	\clearpage																									% makes image appear on page after headline
+}
+
+\newcommand{\imgFloat}[1]{
+	\begin{wrapfigure}{R}{0.5\textwidth}
+		\begin{center}
+			\includegraphics[
+				width = 0.75\textwidth,																			% half the size of the text-area
+			]{#1}
+		\end{center}
+	\end{wrapfigure}
+}
+
+%--------------------------------------------------------------------------------------------------------%
+%	misc
+%--------------------------------------------------------------------------------------------------------%
+\newcommand{\redaktionelleAnmerkung}[1]{
+	\normalspacing
+	\textcolor{blue100}{\textit{#1}}
+}
+
+\newcommand{\personenbezogeneDaten}[1]{
+	\ifnum\zensierePersonenbezogeneDaten=0%
+		#1%
+	\else%
+		\normalspacing
+		\par
+		\textcolor{blue100}{\textit{Dieses Kapitel entfällt in der gekürzten Fassung, da es personenbezogene Daten enthält.}}
+	\fi
+}
+
+\newcommand{\loremipsum}{
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
+\par
+Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. 
+\par
+Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. 
+}
