@@ -129,3 +129,10 @@
 - solve the problem of column names if the first column title is empty
 - Now I need to deploy it on desktop.
 - Maybe for next time..
+
+# 06.06.2024
+- Solved the problem of column styles repetition in the second method.
+- Learning, again, how to make packages for specific use.
+- TODO: deploy the UI. The process will be different in different OS.
+- Added the cell color in the multicolumn in the first method and the second when the column type is 'S'.
+- Looked at the custom try to find a way to transfer all in code it in to Alphabet.
