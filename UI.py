@@ -129,8 +129,13 @@ class LaTeXTableGenerator:
 
                     if count > 1:
                         multicolumn_type = column_type
-                        header_commands.append(f"\\multicolumn{{{count}}}{{{'c'}}}{{\\textit{{{column_names[i]}}}}}")
-                        column_definitions.extend([multicolumn_type] * count)
+                        if real_column_index % 2 == 0:
+                            header_commands.append(f"\\multicolumn{{{count}}}{{{'c'}}}{{\\cellcolor{{{'green40'}}}\\textit{{{column_names[i]}}}}}")
+                            column_definitions.extend([multicolumn_type] * count)
+                        else:
+                            header_commands.append(f"\\multicolumn{{{count}}}{{{'c'}}}{{\\textit{{{column_names[i]}}}}}")
+                            column_definitions.extend([multicolumn_type] * count)
+
                     else:
                         header_commands.append(f"\\textit{{{column_names[i]}}}")
                         column_definitions.append(column_type)
@@ -156,7 +161,10 @@ class LaTeXTableGenerator:
                         j += 1
 
                     if count > 1:
-                        header_commands.append(f"\\multicolumn{{{count}}}{{{'c'}}}{{\\textit{{{column_names[i]}}}}}")
+                        if real_column_index % 2 == 0:
+                            header_commands.append(f"\\multicolumn{{{count}}}{{{'c'}}}{{\\cellcolor{{{'green40'}}}\\textit{{{column_names[i]}}}}}")
+                        else:
+                            header_commands.append(f"\\multicolumn{{{count}}}{{{'c'}}}{{\\textit{{{column_names[i]}}}}}")
                     else:
                         header_commands.append(f"\\textit{{{column_names[i]}}}")
 
