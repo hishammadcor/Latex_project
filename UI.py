@@ -3,6 +3,7 @@ import pandas as pd
 import tkinter as tk
 from tkinter import filedialog, messagebox
 
+
 class LaTeXTableGenerator:
     def __init__(self, dir_path, method='choose_first_column_style'):
         self.dir_path = dir_path
@@ -66,44 +67,106 @@ class LaTeXTableGenerator:
         with open(latex_file_path, 'w') as latex_file:
             latex_file.write(full_table)
 
+    # def process_columns(self, column_names, first_column_letter, style_column):
+    #     column_definitions = []
+    #     header_commands = []
+    #     real_column_index = 0
+    #     i = 0
+    #
+    #     while i < len(column_names):
+    #         count = 1
+    #         if not column_names[i].startswith("Unnamed"):
+    #             real_column_index += 1
+    #
+    #             if self.method == 'choose_first_column_style':
+    #                 column_type = first_column_letter if real_column_index == 1 else (
+    #                     'S' if real_column_index % 2 == 0 else 'Y')
+    #             elif self.method == 'column_style':
+    #                 column_type = style_column
+    #
+    #             j = i + 1
+    #             while j < len(column_names) and column_names[j].startswith("Unnamed"):
+    #                 count += 1
+    #                 j += 1
+    #
+    #             if count > 1:
+    #                 multicolumn_type = column_type
+    #                 header_commands.append(f"\\multicolumn{{{count}}}{{{'c'}}}{{\\textit{{{column_names[i]}}}}}")
+    #                 column_definitions.extend([multicolumn_type] * count)
+    #             else:
+    #                 header_commands.append(f"\\textit{{{column_names[i]}}}")
+    #                 column_definitions.append(column_type)
+    #
+    #             i = j - 1
+    #         else:
+    #             if real_column_index == 0:
+    #                 header_commands.append(' ')
+    #                 column_type = first_column_letter
+    #
+    #         i += 1
+    #
+    #     column_definitions = column_definitions[:len(column_names)]
+    #
+    #     return column_definitions, header_commands
     def process_columns(self, column_names, first_column_letter, style_column):
         column_definitions = []
         header_commands = []
         real_column_index = 0
         i = 0
 
-        while i < len(column_names):
-            count = 1
-            if not column_names[i].startswith("Unnamed"):
-                real_column_index += 1
+        if self.method == 'choose_first_column_style':
+            while i < len(column_names):
+                count = 1
+                if not column_names[i].startswith("Unnamed"):
+                    real_column_index += 1
+                    column_type = first_column_letter if real_column_index == 1 else (
+                        'S' if real_column_index % 2 == 0 else 'Y')
 
-                if self.method == 'choose_first_column_style':
-                    column_type = first_column_letter if real_column_index == 1 else ('S' if real_column_index % 2 == 0 else 'Y')
-                elif self.method == 'column_style':
-                    column_type = style_column  # Use style_column directly without alternating
+                    j = i + 1
+                    while j < len(column_names) and column_names[j].startswith("Unnamed"):
+                        count += 1
+                        j += 1
 
-                j = i + 1
-                while j < len(column_names) and column_names[j].startswith("Unnamed"):
-                    count += 1
-                    j += 1
+                    if count > 1:
+                        multicolumn_type = column_type
+                        header_commands.append(f"\\multicolumn{{{count}}}{{{'c'}}}{{\\textit{{{column_names[i]}}}}}")
+                        column_definitions.extend([multicolumn_type] * count)
+                    else:
+                        header_commands.append(f"\\textit{{{column_names[i]}}}")
+                        column_definitions.append(column_type)
 
-                if count > 1:
-                    multicolumn_type = column_type
-                    header_commands.append(f"\\multicolumn{{{count}}}{{{'c'}}}{{\\textit{{{column_names[i]}}}}}")
-                    column_definitions.extend([multicolumn_type] * count)
+                    i = j - 1
                 else:
-                    header_commands.append(f"\\textit{{{column_names[i]}}}")
-                    column_definitions.append(column_type)
+                    if real_column_index == 0:
+                        header_commands.append(' ')
+                        column_type = first_column_letter
 
-                i = j - 1
-            else:
-                if real_column_index == 0:
-                    header_commands.append(' ')
-                    column_type = first_column_letter
+                i += 1
 
-            i += 1
+        elif self.method == 'column_style':
+            column_type = style_column
+            while i < len(column_names):
+                count = 1
+                if not column_names[i].startswith("Unnamed"):
+                    real_column_index += 1
 
-        column_definitions = column_definitions[:len(column_names)]
+                    j = i + 1
+                    while j < len(column_names) and column_names[j].startswith("Unnamed"):
+                        count += 1
+                        j += 1
+
+                    if count > 1:
+                        header_commands.append(f"\\multicolumn{{{count}}}{{{'c'}}}{{\\textit{{{column_names[i]}}}}}")
+                    else:
+                        header_commands.append(f"\\textit{{{column_names[i]}}}")
+
+                    i = j - 1
+                else:
+                    if real_column_index == 0:
+                        header_commands.append(' ')
+
+                i += 1
+            column_definitions.append(column_type)
 
         return column_definitions, header_commands
 
@@ -138,10 +201,12 @@ class LaTeXTableGeneratorUI:
         self.method_label = tk.Label(root_window, text="Choose the method to apply:")
         self.method_label.pack(pady=5)
 
-        self.choose_first_radio = tk.Radiobutton(root_window, text="Choose First Column Style", variable=self.method, value='choose_first_column_style')
+        self.choose_first_radio = tk.Radiobutton(root_window, text="Choose First Column Style", variable=self.method,
+                                                 value='choose_first_column_style')
         self.choose_first_radio.pack(anchor=tk.W)
 
-        self.column_style_radio = tk.Radiobutton(root_window, text="Column Style", variable=self.method, value='column_style')
+        self.column_style_radio = tk.Radiobutton(root_window, text="Column Style", variable=self.method,
+                                                 value='column_style')
         self.column_style_radio.pack(anchor=tk.W)
 
         self.process_button = tk.Button(root_window, text="Generate LaTeX Tables", command=self.process_directory)
