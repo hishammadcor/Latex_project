@@ -154,13 +154,20 @@
     - [x] Add a text cell to the GUI interface to allow the users to add the letters combination of the tables columns.
     - [ ] Predefined specific letters, if found in the letter combination then this column will have special number operations like approximations, thousands separators...etc
     - [ ] Make a full documentation on the Column letters style. (We have 27 Uppercase letters and 27 Lower case letters "Lower case used for colored columns")
-    - [ ] After seeing how could I help after 01.07.2024 Monday's meeting with our colleague, Preprocessing the UNI-Portal CSV files.
+    - [x] After seeing how could I help after 01.07.2024 Monday's meeting with our colleague, Preprocessing the UNI-Portal CSV files.
     - [ ] Deploy the UI on windows.
-  
+    - [ ] Check box for removing/putting _\hline_ after the header of a multicolumn table or not.
+    - [ ] Check box for making the first of the table italic or not
+    - [ ] Process the header title and footer of the table form the csv file to be added at the beginning end of the table (Should be written as latex command).
+
 # 27.06.2024
-- Begin to do the tasks mentioned in 26.6.2024 meeting
+- Begin to organize the tasks mentioned in 26.6.2024 meeting
 - Adding a text cell DONE
 - Adding a text cell will not process all the files automatically! they will need to choose every file and determine its letter combination.
 - There is a miss in the column style and some errors raised.
 - I think the problem related to reading the text entered form the text box in the GUI.
 - Trying to solve these problems for next time
+
+# 03.07.2024
+- Begin to organize the tasks mentioned in 01.07.2024 meeting
+-
