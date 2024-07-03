@@ -157,7 +157,7 @@
     - [x] After seeing how could I help after 01.07.2024 Monday's meeting with our colleague, Preprocessing the UNI-Portal CSV files.
     - [ ] Deploy the UI on windows.
     - [ ] Check box for removing/putting _\hline_ after the header of a multicolumn table or not.
-    - [ ] Check box for making the first of the table italic or not
+    - [x] Check box for making the first row of the table italic or not
     - [ ] Process the header title and footer of the table form the csv file to be added at the beginning end of the table (Should be written as latex command).
 
 # 27.06.2024
