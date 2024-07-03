@@ -170,4 +170,4 @@
 
 # 03.07.2024
 - Begin to organize the tasks mentioned in 01.07.2024 meeting
--
+- Done some of the Todos up there. The ones related to check boxes.
