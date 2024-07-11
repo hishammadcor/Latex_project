@@ -150,15 +150,7 @@
   - presented the solutions.
   - The team chose the second solution _column style base solution_ 
   - Brainstorming on some of the presented challenges for our colleagues on these solutions.
-  - Number of enhancements were presented to add to the solutions chosen:
-    - [x] Add a text cell to the GUI interface to allow the users to add the letters combination of the tables columns.
-    - [ ] Predefined specific letters, if found in the letter combination then this column will have special number operations like approximations, thousands separators...etc
-    - [ ] Make a full documentation on the Column letters style. (We have 27 Uppercase letters and 27 Lower case letters "Lower case used for colored columns")
-    - [x] After seeing how could I help after 01.07.2024 Monday's meeting with our colleague, Preprocessing the UNI-Portal CSV files.
-    - [ ] Deploy the UI on windows.
-    - [x] Check box for removing/putting _\hline_ after the header of a multicolumn table or not.
-    - [x] Check box for making the first row of the table italic or not
-    - [ ] Process the header title and footer of the table form the csv file to be added at the beginning end of the table (Should be written as latex command).
+  - Number of enhancements were presented to add to the solutions chosen >> In ToDos File.
 
 # 27.06.2024
 - Begin to organize the tasks mentioned in 26.6.2024 meeting
@@ -171,3 +163,9 @@
 # 03.07.2024
 - Begin to organize the tasks mentioned in 01.07.2024 meeting
 - Done some of the Todos up there. The ones related to check boxes.
+
+# 11.07.2024
+- Meeting with Philip to discuss the table structures and the letters that will be used.
+- We have Format style (Numbers) Layout style (Letters).
+- See the ToDo.md for the ToDos.
+- Next time I will start to reorganize project by making files for each class and then main file. Make sure the blueprint is okay.
