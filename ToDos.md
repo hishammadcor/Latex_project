@@ -8,6 +8,7 @@ ToDos needed to be done on the project:
 - [ ] Make a full documentation on the Column letters style. (We have 27 Uppercase letters and 27 Lower case letters "Lower case used for colored columns")
 - [ ] Deploy the UI on windows.
 - [ ] Process the header table title and add check box for the caption of the table form the csv file to be added to the table (Should be written as latex command).
+- [ ] Make unit testing
 - [ ] _Optional_ Table view for the CSV in the UI. This would be easy for the Format style in  case of row.
 - [x] Check box for removing/putting _\hline_ after the header of a multicolumn table or not.
 - [x] Check box for making the first row of the table italic or not
