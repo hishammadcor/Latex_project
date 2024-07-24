@@ -6,3 +6,7 @@
 *.fdb*
 *.tex
 *.synctex*
+/out
+*.sty
+/.idea
+/venv

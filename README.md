@@ -123,3 +123,49 @@
 - Returned back to square 1
 - The library does not fit the table in the whole page width!
 - Nothing I could do again!
+
+# 05.06.2024
+- Developing a UI to make any one use it
+- solve the problem of column names if the first column title is empty
+- Now I need to deploy it on desktop.
+- Maybe for next time..
+
+# 06.06.2024
+- Solved the problem of column styles repetition in the second method.
+- Learning, again, how to make packages for specific use.
+- TODO: deploy the UI. The process will be different in different OS.
+- Added the cell color in the multicolumn in the first method and the second when the column type is 'S'.
+- Looked at the custom try to find a way to transfer all in code it in to Alphabet.
+
+# 12.06.2024
+- Not much done. Spent the day try to recompile the main project but the environment failed.
+- The UI is ready to be presented in the next meeting. 
+- SPENT THE WHOLE DAY FACING THE ELECTRICITY PROBLEM AND INTERNET PROBLEM. I BEGIN TO HATE MY COUNTRY OF ORIGIN!!!!
+
+# 13.06.2024
+- Same as the day before without any success :(
+
+# 26.06.2024
+- Meeting with the team:
+  - presented the solutions.
+  - The team chose the second solution _column style base solution_ 
+  - Brainstorming on some of the presented challenges for our colleagues on these solutions.
+  - Number of enhancements were presented to add to the solutions chosen >> In ToDos File.
+
+# 27.06.2024
+- Begin to organize the tasks mentioned in 26.6.2024 meeting
+- Adding a text cell DONE
+- Adding a text cell will not process all the files automatically! they will need to choose every file and determine its letter combination.
+- There is a miss in the column style and some errors raised.
+- I think the problem related to reading the text entered form the text box in the GUI.
+- Trying to solve these problems for next time
+
+# 03.07.2024
+- Begin to organize the tasks mentioned in 01.07.2024 meeting
+- Done some of the Todos up there. The ones related to check boxes.
+
+# 11.07.2024
+- Meeting with Philip to discuss the table structures and the letters that will be used.
+- We have Format style (Numbers) Layout style (Letters).
+- See the ToDo.md for the ToDos.
+- Next time I will start to reorganize project by making files for each class and then main file. Make sure the blueprint is okay.

@@ -9,7 +9,6 @@ def choose_first_column_style(file_name):
         '31': 'A',
         '34': 'A',
         '92': 'A',
-        '32': 'B'
         # Add more mappings as necessary
     }
     for phrase, letter in phrase_to_letter.items():
