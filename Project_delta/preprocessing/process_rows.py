@@ -34,11 +34,11 @@ class ProcessRows:
                 else:
                     return value
             except ValueError:
-                return value 
+                return value
 
-        def format_row(row):
-            return pd.Series([apply_format(value, fmt) for value, fmt in zip(row, format_string)], index=row.index)
+        def format_row(row, style):
+            return pd.Series([apply_format(value, style) for value in row], index=row.index)
 
-        formatted_data = data.apply(format_row, axis=1)
-    
+        formatted_data = data.apply(lambda row: format_row(row, format_string[row.name % len(format_string)]), axis=1)
+
         return formatted_data
