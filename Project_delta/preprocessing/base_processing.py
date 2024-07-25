@@ -10,7 +10,7 @@ class Processing:
         self.layout_style = layout_style
         self.first_row_italic = first_row_italic
 
-    def process_file(self, file_name, horizontal_line) -> None:
+    def process_file(self, file_name, horizontal_line, format_style, choose_which) -> None:
         # noinspection PyTypeChecker
         csv_file = pd.read_csv(
             os.path.join(self.dir_path, file_name),
@@ -18,12 +18,18 @@ class Processing:
             engine='python'
         )
         column_names = csv_file.columns
-        row_values = csv_file.values.tolist()
 
         from .process_columns import ProcessColumns
         from .process_rows import ProcessRows
 
         column_definitions, header_commands = ProcessColumns.columns(column_names, self.layout_style, self.first_row_italic)
+
+        if choose_which == 'column':
+            row_values = ProcessColumns.format_style(csv_file, format_style).values.tolist()
+        elif choose_which == 'row':
+            row_values = ProcessRows.format_style(csv_file,format_style).values.tolist()
+        else:
+            row_values = csv_file.values.tolist()
 
         body_commands = ProcessRows.rows(row_values)
 
