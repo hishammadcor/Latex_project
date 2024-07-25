@@ -38,11 +38,25 @@ class LaTeXTableGeneratorUI:
 
         # Radio buttons for choosing where to apply format style
         self.choose_which_var = tk.StringVar(value="column")
-        self.column_radio = tk.Radiobutton(self.radio_frame, text="Columns", variable=self.choose_which_var, value="column")
+        self.column_radio = tk.Radiobutton(self.radio_frame, text="Columns", variable=self.choose_which_var,
+                                           value="column")
         self.row_radio = tk.Radiobutton(self.radio_frame, text="Rows", variable=self.choose_which_var, value="row")
 
         self.column_radio.pack(anchor='w', pady=2)
         self.row_radio.pack(anchor='w', pady=2)
+
+        self.censored_var = tk.BooleanVar(value=False)
+        self.censored_check = tk.Checkbutton(self.main_frame, text="Is there Data to be censored? if not leave unchecked",
+                                             variable=self.censored_var, command=self.toggle_censored_entries)
+        self.censored_check.pack(pady=5, anchor='w')
+
+        self.trigger_column_label = tk.Label(self.main_frame, text="Enter Trigger column number")
+        self.trigger_column_entry = tk.Entry(self.main_frame, width=10)
+
+        self.affected_columns_label = tk.Label(self.main_frame, text="Enter Affected columns numbers")
+        self.affected_columns_entry = tk.Entry(self.main_frame, width=10)
+
+        self.toggle_censored_entries()
 
         self.first_row_italic_var = tk.BooleanVar(value=False)
         self.first_row_italic_check = tk.Checkbutton(self.main_frame, text="First Row Italic",
@@ -58,6 +72,18 @@ class LaTeXTableGeneratorUI:
         self.process_button.pack(anchor='w', pady=10)
         self.process_button.config(state=tk.DISABLED)
 
+    def toggle_censored_entries(self):
+        if self.censored_var.get():
+            self.trigger_column_label.pack(pady=5, after=self.censored_check)
+            self.trigger_column_entry.pack(pady=5, after=self.trigger_column_label)
+            self.affected_columns_label.pack(pady=5, after=self.trigger_column_entry)
+            self.affected_columns_entry.pack(pady=5, after=self.affected_columns_label)
+        else:
+            self.trigger_column_label.pack_forget()
+            self.trigger_column_entry.pack_forget()
+            self.affected_columns_label.pack_forget()
+            self.affected_columns_entry.pack_forget()
+
     def select_directory(self):
         self.directory_path = filedialog.askdirectory()
         if self.directory_path:
@@ -69,6 +95,10 @@ class LaTeXTableGeneratorUI:
         choose_which: str = self.choose_which_var.get()
         first_row_italic: bool = self.first_row_italic_var.get()
         horizontal_line: bool = self.horizontal_line_var.get()
-        generator = LaTeXTableGenerator(self.directory_path, layout_style, format_style, first_row_italic, horizontal_line, choose_which)
+        trigger_column = self.trigger_column_entry.get() if self.censored_var.get() else None
+        affected_columns = self.affected_columns_entry.get() if self.censored_var.get() else None
+
+        generator = LaTeXTableGenerator(self.directory_path, layout_style, format_style, first_row_italic,
+                                        horizontal_line, choose_which, trigger_column, affected_columns)
         result: str = generator.generate_full_tabular()
         messagebox.showinfo('Result', result)
