@@ -10,7 +10,9 @@ class LaTeXTableGenerator:
             format_style: str,
             first_row_italic: bool,
             horizontal_line: bool,
-            choose_which: str
+            choose_which: str,
+            trigger_column,
+            affected_columns
                     ) -> None:
 
         self.dir_path = dir_path
@@ -19,6 +21,8 @@ class LaTeXTableGenerator:
         self.first_row_italic = first_row_italic
         self.horizontal_line = horizontal_line
         self.choose_which = choose_which
+        self.trigger_column = trigger_column
+        self.affected_column = affected_columns
         self.processor = Processing(self.dir_path, self.layout_style, self.first_row_italic)
 
     @property
