@@ -52,3 +52,30 @@ class ProcessColumns:
             column_definitions.extend(['X'] * (len(column_names) - len(column_definitions)))
 
         return column_definitions, header_commands
+
+    @staticmethod
+    def format_style(data, format_string):
+        def apply_format(value, style):
+            try:
+                if style == '1':
+                    return str(value)
+                elif style == '2':
+                    return f"{int(float(value))}"
+                elif style == '3':
+                    return f"{int(float(value))}%"
+                elif style == '4':
+                    return f"{float(value):.1f}"
+                elif style == '5':
+                    return f"{float(value):.2f}"
+                else:
+                    return value
+            except ValueError:
+                return value
+
+        for col_idx, style in enumerate(format_string):
+            if col_idx < len(data.columns):
+                data.iloc[:, col_idx] = data.iloc[:, col_idx].apply(lambda x: apply_format(x, style))
+
+        return data
+
+
