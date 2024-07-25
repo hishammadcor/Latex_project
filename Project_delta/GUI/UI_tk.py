@@ -9,7 +9,6 @@ class LaTeXTableGeneratorUI:
         self.root_window.title("LaTeX Table Generator")
         self.directory_path = ""
 
-        # Configure grid layout to make the root window dynamic
         self.root_window.columnconfigure(0, weight=1)
         self.root_window.rowconfigure(0, weight=1)
 
@@ -34,11 +33,10 @@ class LaTeXTableGeneratorUI:
         self.format_style_entry = tk.Entry(self.main_frame, width=40)
         self.format_style_entry.pack(pady=5)
 
-        # Frame for the radio buttons
         self.radio_frame = tk.Frame(self.main_frame)
         self.radio_frame.pack(pady=5)
 
-        # Radio buttons for format style
+        # Radio buttons for choosing where to pply format style
         self.choose_which_var = tk.StringVar(value="column")
         self.column_radio = tk.Radiobutton(self.radio_frame, text="Columns", variable=self.choose_which_var, value="column")
         self.row_radio = tk.Radiobutton(self.radio_frame, text="Rows", variable=self.choose_which_var, value="row")

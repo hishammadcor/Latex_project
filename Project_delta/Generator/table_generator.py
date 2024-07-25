@@ -3,7 +3,16 @@ from Project_delta.preprocessing.base_processing import Processing
 
 
 class LaTeXTableGenerator:
-    def __init__(self, dir_path: str, layout_style: str, format_style: str, first_row_italic: bool, horizontal_line: bool, choose_which: str) -> None:
+    def __init__(
+            
+            self, dir_path: str,
+            layout_style: str,
+            format_style: str,
+            first_row_italic: bool,
+            horizontal_line: bool,
+            choose_which: str
+                    ) -> None:
+        
         self.dir_path = dir_path
         self.layout_style = layout_style
         self.format_style = format_style
