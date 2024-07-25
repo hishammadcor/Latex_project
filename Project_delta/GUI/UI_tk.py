@@ -36,7 +36,7 @@ class LaTeXTableGeneratorUI:
         self.radio_frame = tk.Frame(self.main_frame)
         self.radio_frame.pack(pady=5)
 
-        # Radio buttons for choosing where to pply format style
+        # Radio buttons for choosing where to apply format style
         self.choose_which_var = tk.StringVar(value="column")
         self.column_radio = tk.Radiobutton(self.radio_frame, text="Columns", variable=self.choose_which_var, value="column")
         self.row_radio = tk.Radiobutton(self.radio_frame, text="Rows", variable=self.choose_which_var, value="row")
@@ -64,11 +64,11 @@ class LaTeXTableGeneratorUI:
             self.process_button.config(state=tk.NORMAL)
 
     def process_directory(self):
-        layout_style = self.layout_style_entry.get()
-        format_style = self.format_style_entry.get()
-        choose_which = self.choose_which_var.get()
-        first_row_italic = self.first_row_italic_var.get()
-        horizontal_line = self.horizontal_line_var.get()
+        layout_style: str = self.layout_style_entry.get()
+        format_style: str = self.format_style_entry.get()
+        choose_which: str = self.choose_which_var.get()
+        first_row_italic: bool = self.first_row_italic_var.get()
+        horizontal_line: bool = self.horizontal_line_var.get()
         generator = LaTeXTableGenerator(self.directory_path, layout_style, format_style, first_row_italic, horizontal_line, choose_which)
-        result = generator.generate_full_tabular()
-        messagebox.showinfo("Result", result)
+        result: str = generator.generate_full_tabular()
+        messagebox.showinfo('Result', result)

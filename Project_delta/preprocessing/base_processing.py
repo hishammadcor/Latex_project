@@ -4,10 +4,10 @@ import pandas as pd
 
 class Processing:
 
-    def __init__(self, dir_path: str, column_styles: str, first_row_italic: bool):
+    def __init__(self, dir_path: str, layout_style: str, first_row_italic: bool, **args):
 
         self.dir_path = dir_path
-        self.column_styles = column_styles
+        self.layout_style = layout_style
         self.first_row_italic = first_row_italic
 
     def process_file(self, file_name, horizontal_line) -> None:
@@ -23,7 +23,7 @@ class Processing:
         from .process_columns import ProcessColumns
         from .process_rows import ProcessRows
 
-        column_definitions, header_commands = ProcessColumns.columns(column_names, self.column_styles, self.first_row_italic)
+        column_definitions, header_commands = ProcessColumns.columns(column_names, self.layout_style, self.first_row_italic)
 
         body_commands = ProcessRows.rows(row_values)
 

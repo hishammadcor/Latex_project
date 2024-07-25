@@ -16,3 +16,29 @@ class ProcessRows:
             body_commands.append(' & '.join(processed_row) + ' \\\\ \\hline')
 
         return body_commands
+
+    @staticmethod
+    def format_style(data, format_string):
+        def apply_format(value, style):
+            try:
+                if style == '1':
+                    return str(value)
+                elif style == '2':
+                    return f"{int(float(value))}"
+                elif style == '3':
+                    return f"{int(float(value))}%"
+                elif style == '4':
+                    return f"{float(value):.1f}"
+                elif style == '5':
+                    return f"{float(value):.2f}"
+                else:
+                    return value
+            except ValueError:
+                return value 
+
+        def format_row(row):
+            return pd.Series([apply_format(value, fmt) for value, fmt in zip(row, format_string)], index=row.index)
+
+        formatted_data = data.apply(format_row, axis=1)
+    
+        return formatted_data
