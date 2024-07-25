@@ -77,5 +77,3 @@ class ProcessColumns:
                 data.iloc[:, col_idx] = data.iloc[:, col_idx].apply(lambda x: apply_format(x, style))
 
         return data
-
-
