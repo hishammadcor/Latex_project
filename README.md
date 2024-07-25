@@ -170,9 +170,12 @@
 - See the ToDo.md for the ToDos.
 - Next time I will start to reorganize project by making files for each class and then main file. Make sure the blueprint is okay.
 
-# 25.07.2024
+# 24.07.2024
 - refactored the code by transforming it to classes
 - add the format text cell and the two radio buttons.
 - I need to add logic to use them in the main code.
 
-# 26.07.2024
+# 25.07.2024
+- Added the logic for the Format styling
+- Added the trigger tex boxes and censored check box
+- Next time, i need to add the logic of the feature above.
