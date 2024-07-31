@@ -178,4 +178,7 @@
 # 25.07.2024
 - Added the logic for the Format styling
 - Added the trigger tex boxes and censored check box
-- Next time, i need to add the logic of the feature above.
+- Next time, I need to add the logic of the feature above.
+
+# 31.07.2024
+- Added the logic for the censorship of certain numbers according to the condition in a certain column.

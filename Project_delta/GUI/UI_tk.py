@@ -21,13 +21,13 @@ class LaTeXTableGeneratorUI:
         self.select_button = tk.Button(self.main_frame, text="Select Directory", command=self.select_directory)
         self.select_button.pack(pady=10)
 
-        self.layout_style_label = tk.Label(self.main_frame, text="Enter Layout style (e.g., AaBbCcDd):")
+        self.layout_style_label = tk.Label(self.main_frame, text="Enter Layout style (e.g. AaBbCcDd):")
         self.layout_style_label.pack(pady=5)
 
         self.layout_style_entry = tk.Entry(self.main_frame, width=40)
         self.layout_style_entry.pack(pady=5)
 
-        self.format_style_label = tk.Label(self.main_frame, text="Enter Format style (e.g., 012345):")
+        self.format_style_label = tk.Label(self.main_frame, text="Enter Format style (e.g. 012345):")
         self.format_style_label.pack(pady=5)
 
         self.format_style_entry = tk.Entry(self.main_frame, width=40)
@@ -53,7 +53,7 @@ class LaTeXTableGeneratorUI:
         self.trigger_column_label = tk.Label(self.main_frame, text="Enter Trigger column number")
         self.trigger_column_entry = tk.Entry(self.main_frame, width=10)
 
-        self.affected_columns_label = tk.Label(self.main_frame, text="Enter Affected columns numbers")
+        self.affected_columns_label = tk.Label(self.main_frame, text="Enter Affected columns numbers (e.g. 1,2,5,6):")
         self.affected_columns_entry = tk.Entry(self.main_frame, width=10)
 
         self.toggle_censored_entries()
@@ -95,10 +95,11 @@ class LaTeXTableGeneratorUI:
         choose_which: str = self.choose_which_var.get()
         first_row_italic: bool = self.first_row_italic_var.get()
         horizontal_line: bool = self.horizontal_line_var.get()
+        censored: bool = self.censored_var.get()
         trigger_column = self.trigger_column_entry.get() if self.censored_var.get() else None
         affected_columns = self.affected_columns_entry.get() if self.censored_var.get() else None
 
         generator = LaTeXTableGenerator(self.directory_path, layout_style, format_style, first_row_italic,
-                                        horizontal_line, choose_which, trigger_column, affected_columns)
-        result: str = generator.generate_full_tabular()
+                                        horizontal_line, choose_which, censored, trigger_column, affected_columns)
+        result = generator.generate_full_tabular
         messagebox.showinfo('Result', result)
