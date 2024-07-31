@@ -7,7 +7,7 @@ class ProcessColumns:
     def columns(column_names, column_styles, first_row_italic) -> tuple[list[Any], list[str]]:
         column_definitions = list(column_styles)[:len(column_names)]
         header_commands = []
-        real_column_index = 0
+        real_column_index = 1
         i = 0
 
         while len(column_names) > i:
@@ -29,7 +29,10 @@ class ProcessColumns:
                             header_commands.append(
                                 f"\\multicolumn{{{count}}}{{{'c'}}}{{\\textit{{{column_names[i]}}}}}")
                     else:
-                        header_commands.append(f"\\textit{{{column_names[i]}}}")
+                        if i % 2 == 0:  # Check if the index is even
+                            header_commands.append(f"\\cellcolor{{{'green40'}}}\\textit{{{column_names[i]}}}")
+                        else:
+                            header_commands.append(f"\\textit{{{column_names[i]}}}")
 
                 else:
                     if count > 1:
@@ -39,11 +42,14 @@ class ProcessColumns:
                         else:
                             header_commands.append(f"\\multicolumn{{{count}}}{{{'c'}}}{{{{{column_names[i]}}}}}")
                     else:
-                        header_commands.append(f"{{{column_names[i]}}}")
+                        if i % 2 == 0:
+                            header_commands.append(f"\\cellcolor{{{'green40'}}}{{{column_names[i]}}}")
+                        else:
+                            header_commands.append(f"{{{column_names[i]}}}")
 
                 i = j - 1
             else:
-                if real_column_index == 0:
+                if real_column_index == 1:
                     header_commands.append(' ')
             i += 1
 
@@ -55,17 +61,17 @@ class ProcessColumns:
 
     @staticmethod
     def format_style(data, format_string):
-        def apply_format(value, style):
+        def apply_format(value, styling):
             try:
-                if style == '1':
+                if styling == '1':
                     return str(value)
-                elif style == '2':
+                elif styling == '2':
                     return f"{int(float(value))}"
-                elif style == '3':
-                    return f"{int(float(value))}%"
-                elif style == '4':
+                elif styling == '3':
+                    return f"{int(float(value))}\\%"
+                elif styling == '4':
                     return f"{float(value):.1f}"
-                elif style == '5':
+                elif styling == '5':
                     return f"{float(value):.2f}"
                 else:
                     return value
