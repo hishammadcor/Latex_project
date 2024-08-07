@@ -1,6 +1,5 @@
 import os
-
-from ..preprocessing.base import Processing
+import Project_delta
 
 
 class LaTeXTableGenerator:
@@ -10,6 +9,8 @@ class LaTeXTableGenerator:
             layout_style: str,
             format_style: str,
             first_row_italic: bool,
+            first_row_bold: bool,
+            first_row_90_degree: bool,
             horizontal_line: bool,
             choose_which: str,
             censored: bool,
@@ -21,28 +22,20 @@ class LaTeXTableGenerator:
         self.layout_style = layout_style
         self.format_style = format_style
         self.first_row_italic = first_row_italic
+        self.first_row_bold = first_row_bold
+        self.first_row_90_degree = first_row_90_degree
         self.horizontal_line = horizontal_line
         self.choose_which = choose_which
         self.censored = censored
         self.trigger_column = trigger_column
         self.affected_columns = affected_columns
-        self.processor = Processing(self.dir_path)
 
     @property
     def generate_full_tabular(self):
         try:
             for file_name in os.listdir(self.dir_path):
                 if file_name.endswith('.csv'):
-                    self.processor.process_file(file_name,
-                                                self.first_row_italic,
-                                                self.horizontal_line,
-                                                self.layout_style,
-                                                self.format_style,
-                                                self.choose_which,
-                                                self.censored,
-                                                self.trigger_column,
-                                                self.affected_columns
-                                                )
+                    Project_delta.Processing(file_name,self)
             done = '-----------DONE-----------'
             return done
         except Exception as e:
