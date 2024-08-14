@@ -185,4 +185,7 @@
 
 # 08.08.2024
 - Finished the 90 degree column table syntax
-- Test it tomorrow.
+- Test it Next time.
+
+# 14.08.2024
+- Test for the D column gone successfully

@@ -19,6 +19,7 @@ class ProcessColumns:
                 while j < len(column_names) and column_names[j].startswith("Unnamed"):
                     count += 1
                     j += 1
+
                 if first_row_90_degree:
                     if first_row_italic:
                         if count > 1:
@@ -43,7 +44,7 @@ class ProcessColumns:
                             if i % 2 == 0:  # Check if the index is even
                                 header_commands.append(f"\\cellcolor{{{'green40'}}}\\rotatebox{'90'}{{\\textbf{{{column_names[i]}}}}}}}")
                             else:
-                                header_commands.append(f"\\rotatebox{'90'}{{\\textit{{{column_names[i]}}}}}")
+                                header_commands.append(f"\\rotatebox{'90'}{{\\textbf{{{column_names[i]}}}}}")
 
                 elif not first_row_90_degree:
                     if first_row_italic:
