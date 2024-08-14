@@ -182,3 +182,10 @@
 
 # 31.07.2024
 - Added the logic for the censorship of certain numbers according to the condition in a certain column.
+
+# 08.08.2024
+- Finished the 90 degree column table syntax
+- Test it Next time.
+
+# 14.08.2024
+- Test for the D column gone successfully

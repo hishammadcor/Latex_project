@@ -4,7 +4,7 @@ from typing import Any
 class ProcessColumns:
 
     @staticmethod
-    def columns(column_names, column_styles, first_row_italic) -> tuple[list[Any], list[str]]:
+    def normal_columns(column_names, column_styles, first_row_italic, first_row_bold, first_row_90_degree) -> tuple[list[Any], list[str]]:
         column_definitions = list(column_styles)[:len(column_names)]
         header_commands = []
         real_column_index = 1
@@ -20,19 +20,54 @@ class ProcessColumns:
                     count += 1
                     j += 1
 
-                if first_row_italic:
-                    if count > 1:
-                        if real_column_index % 2 == 0:
-                            header_commands.append(
-                                f"\\multicolumn{{{count}}}{{{'c'}}}{{\\cellcolor{{{'green40'}}}\\textit{{{column_names[i]}}}}}")
+                if first_row_90_degree:
+                    if first_row_italic:
+                        if count > 1:
+                            if real_column_index % 2 == 0:
+                                header_commands.append(
+                                    f"\\multicolumn{{{count}}}{{{'c'}}}{{\\cellcolor{{{'green40'}}}\\rotatebox{'90'}{{\\textit{{{column_names[i]}}}}}}}")
+                            else:
+                                header_commands.append(
+                                    f"\\multicolumn{{{count}}}{{{'c'}}}{{\\rotatebox{'90'}{{\\textit{{{column_names[i]}}}}}}}")
                         else:
-                            header_commands.append(
-                                f"\\multicolumn{{{count}}}{{{'c'}}}{{\\textit{{{column_names[i]}}}}}")
-                    else:
-                        if i % 2 == 0:  # Check if the index is even
-                            header_commands.append(f"\\cellcolor{{{'green40'}}}\\textit{{{column_names[i]}}}")
+                            header_commands.append(f"\\rotatebox{'90'}{{\\textit{{{column_names[i]}}}}}")
+
+                    elif first_row_bold:
+                        if count > 1:
+                            if real_column_index % 2 == 0:
+                                header_commands.append(
+                                    f"\\multicolumn{{{count}}}{{{'c'}}}{{\\cellcolor{{{'green40'}}}\\rotatebox{'90'}{{\\textbf{{{column_names[i]}}}}}}}")
+                            else:
+                                header_commands.append(
+                                    f"\\multicolumn{{{count}}}{{{'c'}}}{{\\rotatebox{'90'}{{\\textbf{{{column_names[i]}}}}}}}")
+                        else:
+                            if i % 2 == 0:  # Check if the index is even
+                                header_commands.append(f"\\cellcolor{{{'green40'}}}\\rotatebox{'90'}{{\\textbf{{{column_names[i]}}}}}}}")
+                            else:
+                                header_commands.append(f"\\rotatebox{'90'}{{\\textbf{{{column_names[i]}}}}}")
+
+                elif not first_row_90_degree:
+                    if first_row_italic:
+                        if count > 1:
+                            if real_column_index % 2 == 0:
+                                header_commands.append(
+                                    f"\\multicolumn{{{count}}}{{{'c'}}}{{\\cellcolor{{{'green40'}}}\\textit{{{column_names[i]}}}}}")
+                            else:
+                                header_commands.append(
+                                    f"\\multicolumn{{{count}}}{{{'c'}}}{{\\textit{{{column_names[i]}}}}}")
                         else:
                             header_commands.append(f"\\textit{{{column_names[i]}}}")
+
+                    elif first_row_bold:
+                        if count > 1:
+                            if real_column_index % 2 == 0:
+                                header_commands.append(
+                                    f"\\multicolumn{{{count}}}{{{'c'}}}{{\\cellcolor{{{'green40'}}}\\textbf{{{column_names[i]}}}}}")
+                            else:
+                                header_commands.append(
+                                    f"\\multicolumn{{{count}}}{{{'c'}}}{{\\textbf{{{column_names[i]}}}}}")
+                        else:
+                            header_commands.append(f"\\textbf{{{column_names[i]}}}")
 
                 else:
                     if count > 1:
@@ -42,10 +77,7 @@ class ProcessColumns:
                         else:
                             header_commands.append(f"\\multicolumn{{{count}}}{{{'c'}}}{{{{{column_names[i]}}}}}")
                     else:
-                        if i % 2 == 0:
-                            header_commands.append(f"\\cellcolor{{{'green40'}}}{{{column_names[i]}}}")
-                        else:
-                            header_commands.append(f"{{{column_names[i]}}}")
+                        header_commands.append(f"{{{column_names[i]}}}")
 
                 i = j - 1
             else:
