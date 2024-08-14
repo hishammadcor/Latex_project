@@ -189,3 +189,4 @@
 
 # 14.08.2024
 - Test for the D column gone successfully
+- Added table header and caption features

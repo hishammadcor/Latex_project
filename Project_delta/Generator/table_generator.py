@@ -12,6 +12,7 @@ class LaTeXTableGenerator:
             first_row_bold: bool,
             first_row_90_degree: bool,
             horizontal_line: bool,
+            table_caption: bool,
             choose_which: str,
             censored: bool,
             trigger_column,
@@ -25,6 +26,7 @@ class LaTeXTableGenerator:
         self.first_row_bold = first_row_bold
         self.first_row_90_degree = first_row_90_degree
         self.horizontal_line = horizontal_line
+        self.table_caption = table_caption
         self.choose_which = choose_which
         self.censored = censored
         self.trigger_column = trigger_column
