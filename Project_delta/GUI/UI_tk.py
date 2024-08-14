@@ -64,11 +64,10 @@ class LaTeXTableGeneratorUI:
                                                      variable=self.first_row_italic_var)
         self.first_row_italic_check.pack(anchor='w', pady=5)
 
-
         self.first_row_90_degree_var = tk.BooleanVar(value=False)
         self.first_row_90_degree_check = tk.Checkbutton(self.main_frame,
-                                                   text="First row is 90 degree rotated",
-                                                   variable=self.first_row_90_degree_var)
+                                                        text="First row is 90 degree rotated",
+                                                        variable=self.first_row_90_degree_var)
         self.first_row_90_degree_check.pack(anchor='w', pady=5)
 
         self.first_row_bold_var = tk.BooleanVar(value=False)
@@ -81,6 +80,11 @@ class LaTeXTableGeneratorUI:
         self.horizontal_line_check = tk.Checkbutton(self.main_frame, text="Remove Horizontal Line under the First Row",
                                                     variable=self.horizontal_line_var)
         self.horizontal_line_check.pack(pady=5, anchor='w')
+
+        self.table_caption_var = tk.BooleanVar(value=False)
+        self.table_caption_check = tk.Checkbutton(self.main_frame, text="Table Caption",
+                                                  variable=self.table_caption_var)
+        self.table_caption_check.pack(pady=5, anchor='w')
 
         self.process_button = tk.Button(self.main_frame, text="Generate LaTeX Tables", command=self.process_directory)
         self.process_button.pack(anchor='w', pady=10)
@@ -111,11 +115,23 @@ class LaTeXTableGeneratorUI:
         first_row_90_degree: bool = self.first_row_90_degree_var.get()
         first_row_bold: bool = self.first_row_bold_var.get()
         horizontal_line: bool = self.horizontal_line_var.get()
+        table_caption: bool = self.table_caption_var.get()
         censored: bool = self.censored_var.get()
         trigger_column = self.trigger_column_entry.get() if self.censored_var.get() else None
         affected_columns = self.affected_columns_entry.get() if self.censored_var.get() else None
 
-        generator = LaTeXTableGenerator(self.directory_path, layout_style, format_style, first_row_italic, first_row_bold, first_row_90_degree,
-                                        horizontal_line, choose_which, censored, trigger_column, affected_columns)
+        generator = LaTeXTableGenerator(self.directory_path,
+                                        layout_style,
+                                        format_style,
+                                        first_row_italic,
+                                        first_row_bold,
+                                        first_row_90_degree,
+                                        horizontal_line,
+                                        table_caption,
+                                        choose_which,
+                                        censored,
+                                        trigger_column,
+                                        affected_columns
+                                        )
         result = generator.generate_full_tabular
         messagebox.showinfo('Result', result)
