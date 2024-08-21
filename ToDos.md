@@ -6,7 +6,7 @@ ToDos needed to be done on the project:
 - [x] 2 Text boxes for the trigger column and the censored columns
 - [x] Code a function specified for the letter D, as the letter D is 90 degree orientation.
 - [ ] Make a full documentation on the Column letters style. (We have 27 Uppercase letters and 27 Lower case letters "Lower case used for colored columns")
-- [ ] Deploy the UI on windows.
+- [x] Deploy the UI on windows.
 - [x] Process the header table title and add check box for the caption of the table form the csv file to be added to the table (Should be written as latex command).
 - [ ] Make unit testing
 - [ ] _Optional_ Table view for the CSV in the UI. This would be easy for the Format style in  case of row.
