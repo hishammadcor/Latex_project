@@ -1,6 +1,6 @@
 
 import tkinter as tk
-from GUI.UI_tk import LaTeXTableGeneratorUI
+from Project_delta.GUI.UI_tk import LaTeXTableGeneratorUI
 
 
 if __name__ == "__main__":
