@@ -21,12 +21,12 @@ class Processing:
             header_title = csv_file.columns[0]
             caption = csv_file.columns[-1]
             main_data = csv_file.drop(columns=[header_title, caption])
-            column_names = main_data.columns
+            column_names = main_data.columns.str.strip()
 
         else:
             header_title = csv_file.columns[0]
             main_data = csv_file.drop(columns=[header_title])
-            column_names = main_data.columns
+            column_names = main_data.columns.str.strip()
 
         from .process_columns import ProcessColumns
         from .process_rows import ProcessRows
@@ -63,12 +63,15 @@ class Processing:
             tabular_header = '\\input{setup/styles}\n \\begin{tabularx}{\\textwidth}{' + ''.join(
                 column_definitions) + '}'
             tabular_body = "\n".join(body_commands)
+
             if self.generator.table_caption:
-                full_table = (f"\\tblheadline{{{header_title}}}\n{tabular_header}\n{' & '.join(header_commands)} \\\\ \n{tabular_body}\n\\end{{"
-                              f"tabularx}} \n \\tblcaption{{{caption}}}\n \\normalspacing \n \\vspace{{0.5cm}}")
+                full_table = (
+                    f"\\tblheadline{{{header_title}}}\n{tabular_header}\n{' & '.join(header_commands)} \\\\ \n{tabular_body}\n\\end{{"
+                    f"tabularx}} \n \\tblcaption{{{caption}}}\n \\normalspacing \n \\vspace{{0.5cm}}")
             else:
-                full_table = (f"\\tblheadline{{{header_title}}}\n{tabular_header}\n{' & '.join(header_commands)} \\\\ \n{tabular_body}\n\\end{{"
-                              f"tabularx}} \n \\normalspacing \n \\vspace{{0.5cm}}")
+                full_table = (
+                    f"\\tblheadline{{{header_title}}}\n{tabular_header}\n{' & '.join(header_commands)} \\\\ \n{tabular_body}\n\\end{{"
+                    f"tabularx}} \n \\normalspacing \n \\vspace{{0.5cm}}")
 
         else:
             tabular_header = '\\input{setup/styles}\n\\begin{tabularx}{\\textwidth}{' + ''.join(
@@ -83,7 +86,6 @@ class Processing:
                 full_table = (
                     f'\\tblheadline{{{header_title}}}\n{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline \n{tabular_body}\n\\end{{'
                     f'tabularx}} \n \\normalspacing \n \\vspace{{0.5cm}}')
-
 
         latex_file_name = os.path.splitext(self.file_name)[0] + '.tex'
         latex_file_path = os.path.join(self.generator.dir_path, latex_file_name)
