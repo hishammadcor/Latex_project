@@ -40,7 +40,7 @@ class Processing:
                                                                             )
 
         if self.generator.censored:
-            data = censored_numbers(csv_file, self.generator.trigger_column, self.generator.affected_columns)
+            data = censored_numbers(main_data, self.generator.trigger_column, self.generator.affected_columns)
 
             if self.generator.choose_which == 'column':
                 row_values = ProcessColumns.format_style(data, self.generator.format_style).values.tolist()
@@ -51,11 +51,11 @@ class Processing:
 
         else:
             if self.generator.choose_which == 'column':
-                row_values = ProcessColumns.format_style(csv_file, self.generator.format_style).values.tolist()
+                row_values = ProcessColumns.format_style(main_data, self.generator.format_style).values.tolist()
             elif self.generator.choose_which == 'row':
-                row_values = ProcessRows.format_style(csv_file, self.generator.format_style).values.tolist()
+                row_values = ProcessRows.format_style(main_data, self.generator.format_style).values.tolist()
             else:
-                row_values = csv_file.values.tolist()
+                row_values = main_data.values.tolist()
 
         body_commands = ProcessRows.rows(row_values)
 
