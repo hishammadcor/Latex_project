@@ -26,7 +26,7 @@ class ProcessRows:
                 elif style == '2':
                     return f"{int(float(value))}"
                 elif style == '3':
-                    return f"{int(float(value))}%"
+                    return f"{int(float(value))}\\%"
                 elif style == '4':
                     return f"{float(value):.1f}"
                 elif style == '5':
