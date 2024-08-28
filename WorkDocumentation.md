@@ -198,3 +198,7 @@
 - Fixed some bugs.
 - Add some user error tests in side the code.
 - Fixed the spaces issue after and before the column names.
+
+# 27.08.2024
+- Fixed some bugs related to the data after deleting the header/caption columns
+- There would be some edits related to the column title names after running latex, it does not wrapp and overflow the cell. We need to add the column name under the \hyphenation{COLUMNNAME with the seprators like *Ab-schluss-quote*}. Tried a lot of colutions but this is the only solution.
