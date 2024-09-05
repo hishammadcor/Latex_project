@@ -205,3 +205,9 @@
 
 # 29.08.2024
 - Made sure that the app LaTeX output is working with the main project.
+
+# 04.09.2024
+- Fixed the importing of styles file into the main project issue
+
+# 05.09.2024
+- Make the documentation for the column styles and format style, and added it to the README.md file.
