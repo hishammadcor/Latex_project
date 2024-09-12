@@ -1,8 +1,15 @@
 from typing import Any
 import pandas as pd
+import locale
 
 
 class ProcessColumns:
+
+    try:
+        locale.setlocale(locale.LC_ALL, 'German_Germany.1252') # this is locale windows settings
+        # locale.setlocale(locale.LC_ALL, 'de_DE.UTF-8') # I think this is linux/macOS locale settings # Adjust based on your system
+    except locale.Error:
+        print("Locale not supported or settings are not correctly adjusted, return to class ProcessRows and ProcessColumns.")
 
     @staticmethod
     def normal_columns(column_names, column_styles, first_row_italic, first_row_bold, first_row_90_degree) -> tuple[list[Any], list[str]]:
@@ -109,14 +116,14 @@ class ProcessColumns:
 
                 if pd.isna(value):
                     return '-'
-                elif styling == '2':
-                    return f"{int(float_value)}"
-                elif styling == '3':
-                    return f"{int(float_value)}\\%"
-                elif styling == '4':
-                    return f"{float_value:.1f}"
-                elif styling == '5':
-                    return f"{float_value:.2f}"
+                elif style == '2':
+                    return locale.format_string("%d", int(float_value), grouping=True)
+                elif style == '3':
+                    return locale.format_string("%d", int(float_value), grouping=True) + '\\%'
+                elif style == '4':
+                    return locale.format_string("%.1f", float_value, grouping=True)
+                elif style == '5':
+                    return locale.format_string("%.2f", float_value, grouping=True)
                 else:
                     return str(value)
             except (ValueError, TypeError, OverflowError):
