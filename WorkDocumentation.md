@@ -211,3 +211,14 @@
 
 # 05.09.2024
 - Make the documentation for the column styles and format style, and added it to the README.md file.
+
+# 11.09.2024
+- Meeting with Philipp to discuss the issues and new features.
+- Documented all the bugs and the new features to add, begin work tomorrow on it.
+
+# 12.09.2024
+- Fixed the CSV encoding problem.
+- Deleting the \hline form the last row
+- Add thousands grouping, and fixing the decimal point to be in German Format (comma)
+- Fixing when the cell is empty for all style numbers to replace with dash (-) except for style number 1 replace with empty space.
+- Add note to the UI that if the rows option is chosen in the format style to begin counting from second row.
