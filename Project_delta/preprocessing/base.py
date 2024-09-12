@@ -14,7 +14,8 @@ class Processing:
         csv_file = pd.read_csv(
             os.path.join(self.generator.dir_path, self.file_name),
             delimiter=r'[\t]*;[\t]*',
-            engine='python'
+            engine='python',
+            encoding='utf-8'
         )
 
         if self.generator.table_caption:
