@@ -41,9 +41,11 @@ class LaTeXTableGeneratorUI:
         self.column_radio = tk.Radiobutton(self.radio_frame, text="Columns", variable=self.choose_which_var,
                                            value="column")
         self.row_radio = tk.Radiobutton(self.radio_frame, text="Rows", variable=self.choose_which_var, value="row")
+        self.row_note = tk.Label(self.radio_frame, text="Note if Rows is chosen: Start counting from the second row. eg. If the table has 6 rows, enter only 5 format style numbers.", font=("Arial", 10, "italic"), fg="gray", wraplength=300)
 
         self.column_radio.pack(anchor='w', pady=2)
         self.row_radio.pack(anchor='w', pady=2)
+        self.row_note.pack(anchor='w', pady=2)
 
         self.censored_var = tk.BooleanVar(value=False)
         self.censored_check = tk.Checkbutton(self.main_frame,
