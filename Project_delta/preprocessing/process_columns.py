@@ -1,4 +1,5 @@
 from typing import Any
+import pandas as pd
 
 
 class ProcessColumns:
@@ -99,20 +100,23 @@ class ProcessColumns:
     def format_style(data, format_string):
         def apply_format(value, styling):
             try:
+                if pd.isna(value):
+                    return '-'
+                float_value = float(value)
                 if styling == '1':
                     return str(value)
                 elif styling == '2':
-                    return f"{int(float(value))}"
+                    return f"{int(float_value)}"
                 elif styling == '3':
-                    return f"{int(float(value))}\\%"
+                    return f"{int(float_value)}\\%"
                 elif styling == '4':
-                    return f"{float(value):.1f}"
+                    return f"{float_value:.1f}"
                 elif styling == '5':
-                    return f"{float(value):.2f}"
+                    return f"{float_value:.2f}"
                 else:
-                    return value
-            except ValueError:
-                return value
+                    return str(value)
+            except (ValueError, TypeError, OverflowError):
+                return str(value)
 
         if all(no.isdigit() for no in format_string) and format_string:
             for col_idx, style in enumerate(format_string):
