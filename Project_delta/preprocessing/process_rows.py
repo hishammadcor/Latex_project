@@ -24,11 +24,15 @@ class ProcessRows:
     def format_style(data, format_string):
         def apply_format(value, style):
             try:
-                if pd.isna(value):
-                    return '-'
+
                 float_value = float(value)
                 if style == '1':
+                    if pd.isna(value):
+                        return ''
                     return str(value)
+
+                if pd.isna(value):
+                    return '-'
                 elif style == '2':
                     return f"{int(float_value)}"
                 elif style == '3':
