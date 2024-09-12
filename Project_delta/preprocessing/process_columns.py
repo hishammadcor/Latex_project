@@ -100,11 +100,15 @@ class ProcessColumns:
     def format_style(data, format_string):
         def apply_format(value, styling):
             try:
+
+                float_value = float(value)
+                if style == '1':
+                    if pd.isna(value):
+                        return ''
+                    return str(value)
+
                 if pd.isna(value):
                     return '-'
-                float_value = float(value)
-                if styling == '1':
-                    return str(value)
                 elif styling == '2':
                     return f"{int(float_value)}"
                 elif styling == '3':
