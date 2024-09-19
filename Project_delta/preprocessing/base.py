@@ -90,5 +90,5 @@ class Processing:
 
         latex_file_name = os.path.splitext(self.file_name)[0] + '.tex'
         latex_file_path = os.path.join(self.generator.dir_path, latex_file_name)
-        with open(latex_file_path, 'w') as latex_file:
+        with open(latex_file_path, 'w', encoding='utf-8') as latex_file:
             latex_file.write(full_table)
