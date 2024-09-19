@@ -41,7 +41,9 @@ class LaTeXTableGeneratorUI:
         self.column_radio = tk.Radiobutton(self.radio_frame, text="Columns", variable=self.choose_which_var,
                                            value="column")
         self.row_radio = tk.Radiobutton(self.radio_frame, text="Rows", variable=self.choose_which_var, value="row")
-        self.row_note = tk.Label(self.radio_frame, text="Note if Rows is chosen: Start counting from the second row. eg. If the table has 6 rows, enter only 5 format style numbers.", font=("Arial", 10, "italic"), fg="gray", wraplength=300)
+        self.row_note = tk.Label(self.radio_frame,
+                                 text="Note if Rows is chosen: Start counting from the second row. eg. If the table has 6 rows, enter only 5 format style numbers.",
+                                 font=("Arial", 10, "italic"), fg="gray", wraplength=300)
 
         self.column_radio.pack(anchor='w', pady=2)
         self.row_radio.pack(anchor='w', pady=2)
@@ -83,10 +85,15 @@ class LaTeXTableGeneratorUI:
                                                     variable=self.horizontal_line_var)
         self.horizontal_line_check.pack(pady=5, anchor='w')
 
-        self.table_caption_var = tk.BooleanVar(value=False)
-        self.table_caption_check = tk.Checkbutton(self.main_frame, text="Table Caption",
-                                                  variable=self.table_caption_var)
-        self.table_caption_check.pack(pady=5, anchor='w')
+        self.remove_table_caption_var = tk.BooleanVar(value=False)
+        self.remove_table_caption_check = tk.Checkbutton(self.main_frame, text="Remove Table Caption",
+                                                         variable=self.remove_table_caption_var)
+        self.remove_table_caption_check.pack(pady=5, anchor='w')
+
+        self.remove_table_headline_var = tk.BooleanVar(value=False)
+        self.remove_table_headline_check = tk.Checkbutton(self.main_frame, text="Remove Table Headline",
+                                                          variable=self.remove_table_headline_var)
+        self.remove_table_headline_check.pack(pady=5, anchor='w')
 
         self.process_button = tk.Button(self.main_frame, text="Generate LaTeX Tables", command=self.process_directory)
         self.process_button.pack(anchor='w', pady=10)
@@ -117,7 +124,8 @@ class LaTeXTableGeneratorUI:
         first_row_90_degree: bool = self.first_row_90_degree_var.get()
         first_row_bold: bool = self.first_row_bold_var.get()
         horizontal_line: bool = self.horizontal_line_var.get()
-        table_caption: bool = self.table_caption_var.get()
+        remove_table_caption: bool = self.remove_table_caption_var.get()
+        remove_table_headline: bool = self.remove_table_headline_var.get()
         censored: bool = self.censored_var.get()
         trigger_column = self.trigger_column_entry.get() if self.censored_var.get() else None
         affected_columns = self.affected_columns_entry.get() if self.censored_var.get() else None
@@ -129,7 +137,8 @@ class LaTeXTableGeneratorUI:
                                         first_row_bold,
                                         first_row_90_degree,
                                         horizontal_line,
-                                        table_caption,
+                                        remove_table_caption,
+                                        remove_table_headline,
                                         choose_which,
                                         censored,
                                         trigger_column,

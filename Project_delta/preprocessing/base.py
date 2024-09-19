@@ -18,16 +18,15 @@ class Processing:
             encoding='utf-8'
         )
 
-        if self.generator.table_caption:
-            header_title = csv_file.columns[0]
-            caption = csv_file.columns[-1]
-            main_data = csv_file.drop(columns=[header_title, caption])
-            column_names = main_data.columns.str.strip()
+        header_title = csv_file.columns[0]
+        caption = csv_file.columns[-1]
+        main_data = csv_file.drop(columns=[header_title, caption])
+        column_names = main_data.columns.str.strip()
 
-        else:
-            header_title = csv_file.columns[0]
-            main_data = csv_file.drop(columns=[header_title])
-            column_names = main_data.columns.str.strip()
+        if not (header_title and not header_title.startswith('Unnamed')):
+            header_title = ''
+        if not (caption and not caption.startswith('Unnamed')):
+            caption = ''
 
         from .process_columns import ProcessColumns
         from .process_rows import ProcessRows
@@ -65,27 +64,49 @@ class Processing:
                 column_definitions) + '}'
             tabular_body = "\n".join(body_commands)
 
-            if self.generator.table_caption:
-                full_table = (
-                    f"\\tblheadline{{{header_title}}}\n{tabular_header}\n{' & '.join(header_commands)} \\\\ \n{tabular_body}\n\\end{{"
-                    f"tabularx}} \n \\tblcaption{{{caption}}}\n \\normalspacing \n \\vspace{{0.5cm}}")
-            else:
+            if self.generator.remove_table_caption and not self.generator.remove_table_headline:  # remove_caption & ^remove_headline
                 full_table = (
                     f"\\tblheadline{{{header_title}}}\n{tabular_header}\n{' & '.join(header_commands)} \\\\ \n{tabular_body}\n\\end{{"
                     f"tabularx}} \n \\normalspacing \n \\vspace{{0.5cm}}")
+
+            elif self.generator.remove_table_headline and not self.generator.remove_table_caption:  # ^remove_caption & remove_headline
+                full_table = (
+                    f'{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline \n{tabular_body}\n\\end{{'
+                    f'tabularx}} \n \\tblcaption{{{caption}}}\n \\normalspacing \n \\vspace{{0.5cm}}')
+
+            elif not self.generator.remove_table_headline and not self.generator.remove_table_caption:  # ^ remove_caption & ^remove_headline
+                full_table = (
+                    f"\\tblheadline{{{header_title}}}\n{tabular_header}\n{' & '.join(header_commands)} \\\\ \n{tabular_body}\n\\end{{"
+                    f"tabularx}} \n \\tblcaption{{{caption}}} \n \\normalspacing \n \\vspace{{0.5cm}}")
+
+            else:  # remove_caption & remove_headline
+                full_table = (
+                    f"{tabular_header}\n{' & '.join(header_commands)} \\\\ \n{tabular_body}\n\\end{{"
+                    f"tabularx}}  \n \\normalspacing \n \\vspace{{0.5cm}}")
 
         else:
             tabular_header = '\\input{"setup/styles"}\n\\begin{tabularx}{\\textwidth}{' + ''.join(
                 column_definitions) + '}'
             tabular_body = "\n".join(body_commands)
 
-            if self.generator.table_caption:
+            if self.generator.remove_table_caption and not self.generator.remove_table_headline:  # remove_caption & ^remove_headline
                 full_table = (
                     f'\\tblheadline{{{header_title}}}\n{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline \n{tabular_body}\n\\end{{'
-                    f'tabularx}} \n \\tblcaption{{{caption}}}\n \\normalspacing \n \\vspace{{0.5cm}}')
-            else:
+                    f'tabularx}}\n \\normalspacing \n \\vspace{{0.5cm}}')
+
+            elif self.generator.remove_table_headline and not self.generator.remove_table_caption:  # ^remove_caption & remove_headline
+                full_table = (
+                    f'{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline \n{tabular_body}\n\\end{{'
+                    f'tabularx}}\n \\tblcaption{{{caption}}} \n \\normalspacing \n \\vspace{{0.5cm}}')
+
+            elif not self.generator.remove_table_headline and not self.generator.remove_table_caption:  # ^ remove_caption & ^remove_headline
                 full_table = (
                     f'\\tblheadline{{{header_title}}}\n{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline \n{tabular_body}\n\\end{{'
+                    f'tabularx}} \n \\tblcaption{{{caption}}} \n \\normalspacing \n \\vspace{{0.5cm}}')
+
+            else:  # remove_caption & remove_headline
+                full_table = (
+                    f'{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline \n{tabular_body}\n\\end{{'
                     f'tabularx}} \n \\normalspacing \n \\vspace{{0.5cm}}')
 
         latex_file_name = os.path.splitext(self.file_name)[0] + '.tex'
