@@ -222,3 +222,13 @@
 - Add thousands grouping, and fixing the decimal point to be in German Format (comma)
 - Fixing when the cell is empty for all style numbers to replace with dash (-) except for style number 1 replace with empty space.
 - Add note to the UI that if the rows option is chosen in the format style to begin counting from second row.
+
+# 18.09.2024
+- Work on the evaluation task, finished eval1. still needs some work to do
+- Feeling tired and hazy, continue tomorrow.
+
+# 19.09.2024
+- Meet with Phil to discuss the issues he faced during testing the program.
+- Added the headline/caption check box, and recoded the logic that makes removing headlines special case.
+- make sure that latex files are written in UTF-8 encoding.
+
