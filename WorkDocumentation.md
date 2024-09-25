@@ -222,3 +222,8 @@
 - Add thousands grouping, and fixing the decimal point to be in German Format (comma)
 - Fixing when the cell is empty for all style numbers to replace with dash (-) except for style number 1 replace with empty space.
 - Add note to the UI that if the rows option is chosen in the format style to begin counting from second row.
+
+# 25.09.2024
+- Added the trigger value cell with default value is 5.
+- Add a note that says its less than the trigger value.
+- Write the path selected under the button
