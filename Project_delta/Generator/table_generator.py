@@ -16,6 +16,7 @@ class LaTeXTableGenerator:
             remove_table_headline:bool,
             choose_which: str,
             censored: bool,
+            trigger_number: str,
             trigger_column,
             affected_columns
     ) -> None:
@@ -31,6 +32,7 @@ class LaTeXTableGenerator:
         self.remove_table_headline = remove_table_headline
         self.choose_which = choose_which
         self.censored = censored
+        self.trigger_number = trigger_number
         self.trigger_column = trigger_column
         self.affected_columns = affected_columns
 
