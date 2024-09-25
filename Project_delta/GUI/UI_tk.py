@@ -58,8 +58,19 @@ class LaTeXTableGeneratorUI:
                                              variable=self.censored_var, command=self.toggle_censored_entries)
         self.censored_check.pack(pady=5, anchor='w')
 
+        self.trigger_number_var = tk.StringVar(value='5')
+
         self.trigger_number_label = tk.Label(self.main_frame, text="Enter Trigger Value")
-        self.trigger_number_entry = tk.Entry(self.main_frame, width=10)
+
+        self.trigger_number_frame = tk.Frame(self.main_frame)
+
+        self.note_label = tk.Label(self.trigger_number_frame, text="less than/kleiner als")
+        self.trigger_number_entry = tk.Entry(
+            self.trigger_number_frame, width=10, textvariable=self.trigger_number_var
+        )
+
+        self.note_label.pack(side=tk.LEFT, padx=(0, 5))
+        self.trigger_number_entry.pack(side=tk.LEFT)
 
         self.trigger_column_label = tk.Label(self.main_frame, text="Enter Trigger column number")
         self.trigger_column_entry = tk.Entry(self.main_frame, width=10)
@@ -108,14 +119,14 @@ class LaTeXTableGeneratorUI:
     def toggle_censored_entries(self):
         if self.censored_var.get():
             self.trigger_number_label.pack(pady=5, after=self.censored_check)
-            self.trigger_number_entry.pack(pady=5, after=self.trigger_number_label)
-            self.trigger_column_label.pack(pady=5, after=self.trigger_number_entry)
+            self.trigger_number_frame.pack(pady=5, after=self.trigger_number_label)
+            self.trigger_column_label.pack(pady=5, after=self.trigger_number_frame)
             self.trigger_column_entry.pack(pady=5, after=self.trigger_column_label)
             self.affected_columns_label.pack(pady=5, after=self.trigger_column_entry)
             self.affected_columns_entry.pack(pady=5, after=self.affected_columns_label)
         else:
             self.trigger_number_label.pack_forget()
-            self.trigger_number_entry.pack_forget()
+            self.trigger_number_frame.pack_forget()
             self.trigger_column_label.pack_forget()
             self.trigger_column_entry.pack_forget()
             self.affected_columns_label.pack_forget()
