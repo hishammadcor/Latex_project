@@ -40,7 +40,7 @@ class Processing:
                                                                             )
 
         if self.generator.censored:
-            data = censored_numbers(main_data, self.generator.trigger_column, self.generator.affected_columns)
+            data = censored_numbers(main_data, self.generator.trigger_number, self.generator.trigger_column, self.generator.affected_columns)
 
             if self.generator.choose_which == 'column':
                 row_values = ProcessColumns.format_style(data, self.generator.format_style).values.tolist()

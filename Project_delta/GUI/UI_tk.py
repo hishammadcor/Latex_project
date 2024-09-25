@@ -55,6 +55,9 @@ class LaTeXTableGeneratorUI:
                                              variable=self.censored_var, command=self.toggle_censored_entries)
         self.censored_check.pack(pady=5, anchor='w')
 
+        self.trigger_number_label = tk.Label(self.main_frame, text="Enter Trigger Value")
+        self.trigger_number_entry = tk.Entry(self.main_frame, width=10)
+
         self.trigger_column_label = tk.Label(self.main_frame, text="Enter Trigger column number")
         self.trigger_column_entry = tk.Entry(self.main_frame, width=10)
 
@@ -101,11 +104,15 @@ class LaTeXTableGeneratorUI:
 
     def toggle_censored_entries(self):
         if self.censored_var.get():
-            self.trigger_column_label.pack(pady=5, after=self.censored_check)
+            self.trigger_number_label.pack(pady=5, after=self.censored_check)
+            self.trigger_number_entry.pack(pady=5, after=self.trigger_number_label)
+            self.trigger_column_label.pack(pady=5, after=self.trigger_number_entry)
             self.trigger_column_entry.pack(pady=5, after=self.trigger_column_label)
             self.affected_columns_label.pack(pady=5, after=self.trigger_column_entry)
             self.affected_columns_entry.pack(pady=5, after=self.affected_columns_label)
         else:
+            self.trigger_number_label.pack_forget()
+            self.trigger_number_entry.pack_forget()
             self.trigger_column_label.pack_forget()
             self.trigger_column_entry.pack_forget()
             self.affected_columns_label.pack_forget()
@@ -127,6 +134,7 @@ class LaTeXTableGeneratorUI:
         remove_table_caption: bool = self.remove_table_caption_var.get()
         remove_table_headline: bool = self.remove_table_headline_var.get()
         censored: bool = self.censored_var.get()
+        trigger_number: str = self.trigger_number_entry.get() if self.censored_var.get() else None
         trigger_column = self.trigger_column_entry.get() if self.censored_var.get() else None
         affected_columns = self.affected_columns_entry.get() if self.censored_var.get() else None
 
@@ -141,6 +149,7 @@ class LaTeXTableGeneratorUI:
                                         remove_table_headline,
                                         choose_which,
                                         censored,
+                                        trigger_number,
                                         trigger_column,
                                         affected_columns
                                         )
