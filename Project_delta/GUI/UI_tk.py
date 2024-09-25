@@ -21,6 +21,9 @@ class LaTeXTableGeneratorUI:
         self.select_button = tk.Button(self.main_frame, text="Select Directory", command=self.select_directory)
         self.select_button.pack(pady=10)
 
+        self.directory_label = tk.Label(self.main_frame, text="No directory selected")
+        self.directory_label.pack(pady=5)
+
         self.layout_style_label = tk.Label(self.main_frame, text="Enter Layout style (e.g. AaBbCcDd):")
         self.layout_style_label.pack(pady=5)
 
@@ -114,6 +117,7 @@ class LaTeXTableGeneratorUI:
     def select_directory(self):
         self.directory_path = filedialog.askdirectory()
         if self.directory_path:
+            self.directory_label.config(text=f"Selected: {self.directory_path}")
             self.process_button.config(state=tk.NORMAL)
 
     def process_directory(self):
