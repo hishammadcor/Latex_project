@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from Project_delta.Generator.table_generator import LaTeXTableGenerator
+import pandas as pd
 
 
 class LaTeXTableGeneratorUI:
@@ -115,6 +116,17 @@ class LaTeXTableGeneratorUI:
         self.process_button = tk.Button(self.main_frame, text="Generate LaTeX Tables", command=self.process_directory)
         self.process_button.pack(anchor='w', pady=10)
         self.process_button.config(state=tk.DISABLED)
+
+    # def read_styles_file(self, csv_path):
+    #     style_settings = {}
+    #     styles_file = pd.read_csv(csv_path,
+    #                               delimiter=';',
+    #                               encoding='utf-8')
+    #
+    #     styles_names = [name for name in styles_file.columns if not name.startswith("Unnamed")]
+    #     for styleName in styles_names:
+    #         style_settings[styleName] =
+
 
     def toggle_censored_entries(self):
         if self.censored_var.get():
