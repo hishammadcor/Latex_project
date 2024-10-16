@@ -227,3 +227,15 @@
 - Added the trigger value cell with default value is 5.
 - Add a note that says its less than the trigger value.
 - Write the path selected under the button
+
+# 09.10.2024
+- Doing the envelopes task for the QM
+
+# 10.10.2024
+- Work on a new version form the app
+- Its to take a csv file with names of the tables, and pre-specified for the app variables. The app process this file and set the variables as specified from the file.
+
+# 16.10.2024
+- Applied the ideas for compiling the styles CSV.
+- Alot of bugs came up. 
+- Until next time
