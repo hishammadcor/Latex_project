@@ -239,3 +239,11 @@
 - Applied the ideas for compiling the styles CSV.
 - Alot of bugs came up. 
 - Until next time
+
+# 17.10.2024 
+- solved the bugs and the code works perfectly.
+- Now I need to add a scrolling to the UI as it's too long.
+- Also, I need to add the styles file path selected
+- Change the label and format combo box to normal entry!
+- Add a function that if there is a new style to give it a name and add to the csv file with its settings.
+- Until next time...
