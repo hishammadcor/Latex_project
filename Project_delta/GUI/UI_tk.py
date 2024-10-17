@@ -20,12 +20,12 @@ class LaTeXTableGeneratorUI:
         self.table_style_name_label = tk.Label(self.main_frame, text='Table style name')
         self.table_style_name_label.pack(pady=5)
 
+        self.load_table_styles_button = tk.Button(self.main_frame, text='Load Table Styles', command=self.load_style)
+        self.load_table_styles_button.pack(pady=10)
+
         self.table_style_name_combobox = ttk.Combobox(self.main_frame, values=[], width=40)
         self.table_style_name_combobox.pack(pady=5)
         self.table_style_name_combobox.bind("<<ComboboxSelected>>", self.on_style_name_selected)
-
-        self.load_table_styles_button = tk.Button(self.main_frame, text='Load Table Styles', command=self.load_style)
-        self.load_table_styles_button.pack(pady=10)
 
         self.label = tk.Label(self.main_frame, text="Select a directory containing CSV files:")
         self.label.pack(pady=10)
@@ -135,30 +135,33 @@ class LaTeXTableGeneratorUI:
         self.process_button.config(state=tk.DISABLED)
 
     def read_styles_file(self, csv_path):
-        style = {}
-        styles_file = pd.read_csv(csv_path,
-                                  delimiter=';',
-                                  encoding='utf-8')
+        styles_data = {}
+        styles = pd.read_csv(csv_path, delimiter=';', encoding='utf-8', header=None, skip_blank_lines=False)
 
-        styles_names = [name for name in styles_file.columns if not name.startswith("Unnamed")]
-        for styleName in styles_names:
-            style_settings = {}
-            style_data = styles_file[[styleName]]
+        styles = styles.fillna('').applymap(lambda x: str(x).strip())
 
-            style_data.reset_index(drop=True, inplace=True)
-            style_values = style_data[styleName].tolist()
+        styles['is_style_name'] = styles[1] == ''
 
-            for i in range(0, len(style_values), 2):
-                attribute = style_values[i]
-                if i + 1 < len(style_values):
-                    value = style_values[i + 1]
-                else:
-                    value = None  # Handle case where there is no matching value
-                style_settings[attribute] = value
+        style_names = styles.index[styles['is_style_name']].tolist()
 
-            style[styleName] = style_settings
+        for idx, style_idx in enumerate(style_names):
 
-        return style
+            style_name = styles.loc[style_idx, 0]
+
+            start = style_idx + 1
+            if idx + 1 < len(style_names):
+                end = style_names[idx + 1]
+            else:
+                end = len(styles)
+
+            settings_style = styles.iloc[start:end,[0,1]].copy()
+            settings_style = settings_style[(settings_style[0] != '') | (settings_style[1] != '')]
+
+            current_style = dict(zip(settings_style[0],settings_style[1]))
+
+            styles_data[style_name] = current_style
+
+        return styles_data
 
     def load_style(self):
         csv_file_path = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
@@ -179,7 +182,7 @@ class LaTeXTableGeneratorUI:
         mapping = {
             'Layout': ('layout_style_combobox', 'combobox'),
             'Format': ('format_style_combobox', 'combobox'),
-            'Orientation': ('choose_which_var', 'stringvar'),
+            'Orientation': ('choose_which_var', 'orientation'),
             'Censoring': ('censored_var', 'booleanvar'),
             'TriggerValue': ('trigger_number_var', 'stringvar'),
             'TriggerColumn': ('trigger_column_entry', 'entry'),
@@ -195,11 +198,14 @@ class LaTeXTableGeneratorUI:
             if key in settings:
                 value = settings[key]
                 if ui_element_type == 'combobox':
-                    getattr(self, ui_element_name).set(value)
+                   combobox = getattr(self, ui_element_name)
+                   combobox.set(value)
                 elif ui_element_type == 'stringvar':
-                    getattr(self, ui_element_name).set(value)
+                    stringvar = getattr(self, ui_element_name)
+                    stringvar.set(value)
                 elif ui_element_type == 'booleanvar':
-                    getattr(self, ui_element_name).set(value == '1')
+                    booleanvar = getattr(self, ui_element_name)
+                    booleanvar.set(value == '1')
                 elif ui_element_type == 'entry':
                     entry = getattr(self, ui_element_name)
                     entry.delete(0, tk.END)
@@ -269,3 +275,39 @@ class LaTeXTableGeneratorUI:
                                         )
         result = generator.generate_full_tabular
         messagebox.showinfo('Result', result)
+
+# if __name__ == "__main__":
+#     def read_styles_file(csv_path):
+#         styles_data = {}
+#         styles = pd.read_csv(csv_path, delimiter=';', encoding='utf-8', header=None, skip_blank_lines=False)
+#
+#         styles = styles.fillna('').applymap(lambda x: str(x).strip())
+#
+#         styles['is_style_name'] = styles[1] == ''
+#
+#         style_names = styles.index[styles['is_style_name']].tolist()
+#
+#         for idx, style_idx in enumerate(style_names):
+#
+#             style_name = styles.loc[style_idx, 0]
+#
+#             start = style_idx + 1
+#             if idx + 1 < len(style_names):
+#                 end = style_names[idx + 1]
+#             else:
+#                 end = len(styles)
+#
+#             settings_style = styles.iloc[start:end,[0,1]].copy()
+#             settings_style = settings_style[(settings_style[0] != '') | (settings_style[1] != '')]
+#
+#             current_style = dict(zip(settings_style[0],settings_style[1]))
+#
+#             styles_data[style_name] = current_style
+#
+#         return styles_data
+#
+#
+#
+#     csv_path = "U:/Latex_project/tex/StudienverlaufUndErfolg.csv"
+#     print(read_styles_file(csv_path))
+#     # read_styles_file(csv_path)
