@@ -247,3 +247,9 @@
 - Change the label and format combo box to normal entry!
 - Add a function that if there is a new style to give it a name and add to the csv file with its settings.
 - Until next time...
+
+# 24.10.2024
+- Changed the label and format combo to normal entry
+- Add the style file path above the selection button.
+- Still need to add scroll to the application Ui because it's too long for the viewer
+- Until next time...
