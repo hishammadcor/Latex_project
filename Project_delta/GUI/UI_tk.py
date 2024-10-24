@@ -23,6 +23,9 @@ class LaTeXTableGeneratorUI:
         self.load_table_styles_button = tk.Button(self.main_frame, text='Load Table Styles', command=self.load_style)
         self.load_table_styles_button.pack(pady=10)
 
+        self.styles_label = tk.Label(self.main_frame, text="No Styles File selected")
+        self.styles_label.pack(pady=5)
+
         self.table_style_name_combobox = ttk.Combobox(self.main_frame, values=[], width=40)
         self.table_style_name_combobox.pack(pady=5)
         self.table_style_name_combobox.bind("<<ComboboxSelected>>", self.on_style_name_selected)
@@ -39,20 +42,22 @@ class LaTeXTableGeneratorUI:
         self.layout_style_label = tk.Label(self.main_frame, text="Enter Layout style (e.g. AaBbCcDd):")
         self.layout_style_label.pack(pady=5)
 
-        self.layout_style_combobox = ttk.Combobox(self.main_frame, values=[], width=40)
-        self.layout_style_combobox.pack(pady=5)
+        # self.layout_style_combobox = ttk.Combobox(self.main_frame, values=[], width=40)
+        # self.layout_style_combobox.pack(pady=5)
 
-        # self.layout_style_entry = tk.Entry(self.main_frame, width=40)
-        # self.layout_style_entry.pack(pady=5)
+        self.layout_style_var = tk.StringVar()
+        self.layout_style_entry = tk.Entry(self.main_frame, textvariable=self.layout_style_var, width=40)
+        self.layout_style_entry.pack(pady=5)
 
         self.format_style_label = tk.Label(self.main_frame, text="Enter Format style (e.g. 012345):")
         self.format_style_label.pack(pady=5)
 
-        self.format_style_combobox = ttk.Combobox(self.main_frame, values=[], width=40)
-        self.format_style_combobox.pack(pady=5)
+        # self.format_style_combobox = ttk.Combobox(self.main_frame, values=[], width=40)
+        # self.format_style_combobox.pack(pady=5)
 
-        # self.format_style_entry = tk.Entry(self.main_frame, width=40)
-        # self.format_style_entry.pack(pady=5)
+        self.format_style_var = tk.StringVar()
+        self.format_style_entry = tk.Entry(self.main_frame, textvariable=self.format_style_var, width=40)
+        self.format_style_entry.pack(pady=5)
 
         self.radio_frame = tk.Frame(self.main_frame)
         self.radio_frame.pack(pady=5)
@@ -63,7 +68,7 @@ class LaTeXTableGeneratorUI:
                                            value="column")
         self.row_radio = tk.Radiobutton(self.radio_frame, text="Rows", variable=self.choose_which_var, value="row")
         self.row_note = tk.Label(self.radio_frame,
-                                 text="Note if Rows is chosen: Start counting from the second row. eg. If the table has 6 rows, enter only 5 format style numbers.",
+                                 text="Note if Rows is chosen: Start counting from the second row. e.g. If the table has 6 rows, enter only 5 format style numbers.",
                                  font=("Arial", 10, "italic"), fg="gray", wraplength=300)
 
         self.column_radio.pack(anchor='w', pady=2)
@@ -134,11 +139,12 @@ class LaTeXTableGeneratorUI:
         self.process_button.pack(anchor='w', pady=10)
         self.process_button.config(state=tk.DISABLED)
 
-    def read_styles_file(self, csv_path):
+    @staticmethod
+    def read_styles_file(csv_path):
         styles_data = {}
         styles = pd.read_csv(csv_path, delimiter=';', encoding='utf-8', header=None, skip_blank_lines=False)
 
-        styles = styles.fillna('').applymap(lambda x: str(x).strip())
+        styles = styles.fillna('').map(lambda x: str(x).strip())
 
         styles['is_style_name'] = styles[1] == ''
 
@@ -166,6 +172,8 @@ class LaTeXTableGeneratorUI:
     def load_style(self):
         csv_file_path = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
         if csv_file_path:
+            self.styles_label.config(text=f"Selected: {csv_file_path}")
+            self.process_button.config(state=tk.NORMAL)
             self.styles_data = self.read_styles_file(csv_file_path)
             style_names = list(self.styles_data.keys())
             self.table_style_name_combobox.config(values=style_names)
@@ -180,8 +188,8 @@ class LaTeXTableGeneratorUI:
     def apply_style_settings(self, settings):
 
         mapping = {
-            'Layout': ('layout_style_combobox', 'combobox'),
-            'Format': ('format_style_combobox', 'combobox'),
+            'Layout': ('layout_style_var', 'stringvar'),
+            'Format': ('format_style_var', 'stringvar'),
             'Orientation': ('choose_which_var', 'orientation'),
             'Censoring': ('censored_var', 'booleanvar'),
             'TriggerValue': ('trigger_number_var', 'stringvar'),
@@ -197,10 +205,10 @@ class LaTeXTableGeneratorUI:
         for key, (ui_element_name, ui_element_type) in mapping.items():
             if key in settings:
                 value = settings[key]
-                if ui_element_type == 'combobox':
-                   combobox = getattr(self, ui_element_name)
-                   combobox.set(value)
-                elif ui_element_type == 'stringvar':
+                # if ui_element_type == 'combobox':
+                #    combobox = getattr(self, ui_element_name)
+                #    combobox.set(value)
+                if ui_element_type == 'stringvar':
                     stringvar = getattr(self, ui_element_name)
                     stringvar.set(value)
                 elif ui_element_type == 'booleanvar':
@@ -244,8 +252,8 @@ class LaTeXTableGeneratorUI:
             self.process_button.config(state=tk.NORMAL)
 
     def process_directory(self):
-        layout_style: str = self.layout_style_combobox.get()
-        format_style: str = self.format_style_combobox.get()
+        layout_style: str = self.layout_style_var.get()
+        format_style: str = self.format_style_var.get()
         choose_which: str = self.choose_which_var.get()
         first_row_italic: bool = self.first_row_italic_var.get()
         first_row_90_degree: bool = self.first_row_90_degree_var.get()
@@ -275,39 +283,3 @@ class LaTeXTableGeneratorUI:
                                         )
         result = generator.generate_full_tabular
         messagebox.showinfo('Result', result)
-
-# if __name__ == "__main__":
-#     def read_styles_file(csv_path):
-#         styles_data = {}
-#         styles = pd.read_csv(csv_path, delimiter=';', encoding='utf-8', header=None, skip_blank_lines=False)
-#
-#         styles = styles.fillna('').applymap(lambda x: str(x).strip())
-#
-#         styles['is_style_name'] = styles[1] == ''
-#
-#         style_names = styles.index[styles['is_style_name']].tolist()
-#
-#         for idx, style_idx in enumerate(style_names):
-#
-#             style_name = styles.loc[style_idx, 0]
-#
-#             start = style_idx + 1
-#             if idx + 1 < len(style_names):
-#                 end = style_names[idx + 1]
-#             else:
-#                 end = len(styles)
-#
-#             settings_style = styles.iloc[start:end,[0,1]].copy()
-#             settings_style = settings_style[(settings_style[0] != '') | (settings_style[1] != '')]
-#
-#             current_style = dict(zip(settings_style[0],settings_style[1]))
-#
-#             styles_data[style_name] = current_style
-#
-#         return styles_data
-#
-#
-#
-#     csv_path = "U:/Latex_project/tex/StudienverlaufUndErfolg.csv"
-#     print(read_styles_file(csv_path))
-#     # read_styles_file(csv_path)
