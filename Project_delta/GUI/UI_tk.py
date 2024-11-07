@@ -42,18 +42,12 @@ class LaTeXTableGeneratorUI:
         self.layout_style_label = tk.Label(self.main_frame, text="Enter Layout style (e.g. AaBbCcDd):")
         self.layout_style_label.pack(pady=5)
 
-        # self.layout_style_combobox = ttk.Combobox(self.main_frame, values=[], width=40)
-        # self.layout_style_combobox.pack(pady=5)
-
         self.layout_style_var = tk.StringVar()
         self.layout_style_entry = tk.Entry(self.main_frame, textvariable=self.layout_style_var, width=40)
         self.layout_style_entry.pack(pady=5)
 
         self.format_style_label = tk.Label(self.main_frame, text="Enter Format style (e.g. 012345):")
         self.format_style_label.pack(pady=5)
-
-        # self.format_style_combobox = ttk.Combobox(self.main_frame, values=[], width=40)
-        # self.format_style_combobox.pack(pady=5)
 
         self.format_style_var = tk.StringVar()
         self.format_style_entry = tk.Entry(self.main_frame, textvariable=self.format_style_var, width=40)
@@ -140,7 +134,7 @@ class LaTeXTableGeneratorUI:
         self.process_button.config(state=tk.DISABLED)
 
     @staticmethod
-    def read_styles_file(csv_path):
+    def read_styles_file_row(csv_path):
         styles_data = {}
         styles = pd.read_csv(csv_path, delimiter=';', encoding='utf-8', header=None, skip_blank_lines=False)
 
@@ -169,12 +163,40 @@ class LaTeXTableGeneratorUI:
 
         return styles_data
 
+    @staticmethod
+    def read_styles_file_column(csv_path):
+        styles_data = {}
+
+        styles = pd.read_csv(csv_path, delimiter=';', encoding='utf-8', header=None, skip_blank_lines=False)
+        styles = styles.fillna('').map(lambda x: str(x).strip())
+
+        for col in range(0, len(styles.columns), 2):  # Assuming style names and settings are in pairs of columns
+            style_column = col
+            value_column = col + 1 if col + 1 < len(styles.columns) else col
+
+            style_name_indices = styles.index[(styles[style_column] != '') & (styles[value_column] == '')].tolist()
+
+            for idx, style_idx in enumerate(style_name_indices):
+                style_name = styles.loc[style_idx, style_column]
+
+                start = style_idx + 1
+                end = style_name_indices[idx + 1] if idx + 1 < len(style_name_indices) else len(styles)
+
+                settings_style = styles.iloc[start:end, [style_column, value_column]].copy()
+                settings_style = settings_style[(settings_style[style_column] != '') | (settings_style[value_column] != '')]
+
+                current_style = dict(zip(settings_style[style_column], settings_style[value_column]))
+                styles_data[style_name] = current_style
+
+        return styles_data
+
     def load_style(self):
         csv_file_path = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
         if csv_file_path:
             self.styles_label.config(text=f"Selected: {csv_file_path}")
             self.process_button.config(state=tk.NORMAL)
-            self.styles_data = self.read_styles_file(csv_file_path)
+            self.styles_data = self.read_styles_file_column(csv_file_path)
+            # self.styles_data = self.read_styles_file_row(csv_file_path)
             style_names = list(self.styles_data.keys())
             self.table_style_name_combobox.config(values=style_names)
             messagebox.showinfo("Success", "Table styles are loaded successfully")
@@ -186,7 +208,6 @@ class LaTeXTableGeneratorUI:
             self.apply_style_settings(settings)
 
     def apply_style_settings(self, settings):
-
         mapping = {
             'Layout': ('layout_style_var', 'stringvar'),
             'Format': ('format_style_var', 'stringvar'),
@@ -205,9 +226,7 @@ class LaTeXTableGeneratorUI:
         for key, (ui_element_name, ui_element_type) in mapping.items():
             if key in settings:
                 value = settings[key]
-                # if ui_element_type == 'combobox':
-                #    combobox = getattr(self, ui_element_name)
-                #    combobox.set(value)
+
                 if ui_element_type == 'stringvar':
                     stringvar = getattr(self, ui_element_name)
                     stringvar.set(value)
