@@ -253,3 +253,13 @@
 - Add the style file path above the selection button.
 - Still need to add scroll to the application Ui because it's too long for the viewer
 - Until next time...
+
+# 31.10.2024
+- Did not do much
+- Tried to enhance the UI desgin
+
+# 07.11.2024
+- changed the row csv approach to column. Easier in readability
+- Worked on enhancing the UI, maybe adding a scroll bar!
+- Still in progress...
+- The read styles from file is DONE. waiting for testing by Philip, and then I will merge to main.
