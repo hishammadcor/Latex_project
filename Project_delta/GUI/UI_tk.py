@@ -11,157 +11,141 @@ class LaTeXTableGeneratorUI:
         self.directory_path = ""
         self.styles_data = {}
 
+        # Configure grid layout for better structure
         self.root_window.columnconfigure(0, weight=1)
         self.root_window.rowconfigure(0, weight=1)
 
         self.main_frame = tk.Frame(root_window)
-        self.main_frame.pack(expand=True, fill=tk.BOTH, padx=20, pady=20)
+        self.main_frame.pack(expand=True, fill=tk.BOTH, padx=10, pady=10)
 
-        self.table_style_name_label = tk.Label(self.main_frame, text='Table style name')
-        self.table_style_name_label.pack(pady=5)
+        # Section 1: Table Styles
+        style_frame = tk.LabelFrame(self.main_frame, text="Table Style Selection", padx=10, pady=10)
+        style_frame.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
 
-        self.load_table_styles_button = tk.Button(self.main_frame, text='Load Table Styles', command=self.load_style)
-        self.load_table_styles_button.pack(pady=10)
+        self.load_table_styles_button = tk.Button(style_frame, text='Load Table Styles', command=self.load_style)
+        self.load_table_styles_button.grid(row=0, column=0, sticky="w", pady=5)
 
-        self.styles_label = tk.Label(self.main_frame, text="No Styles File selected")
-        self.styles_label.pack(pady=5)
+        self.styles_label = tk.Label(style_frame, text="No Styles File selected")
+        self.styles_label.grid(row=1, column=0, sticky="w", pady=5)
 
-        self.table_style_name_combobox = ttk.Combobox(self.main_frame, values=[], width=40)
-        self.table_style_name_combobox.pack(pady=5)
+        self.table_style_name_combobox = ttk.Combobox(style_frame, values=[], width=40)
+        self.table_style_name_combobox.grid(row=2, column=0, sticky="ew", pady=5)
         self.table_style_name_combobox.bind("<<ComboboxSelected>>", self.on_style_name_selected)
 
-        self.label = tk.Label(self.main_frame, text="Select a directory containing CSV files:")
-        self.label.pack(pady=10)
+        # Section 2: Directory Selection
+        directory_frame = tk.LabelFrame(self.main_frame, text="CSV Directory Selection", padx=10, pady=10)
+        directory_frame.grid(row=1, column=0, sticky="ew", padx=5, pady=5)
 
-        self.select_button = tk.Button(self.main_frame, text="Select Directory", command=self.select_directory)
-        self.select_button.pack(pady=10)
+        self.select_button = tk.Button(directory_frame, text="Select Directory", command=self.select_directory)
+        self.select_button.grid(row=0, column=0, sticky="w", pady=5)
 
-        self.directory_label = tk.Label(self.main_frame, text="No directory selected")
-        self.directory_label.pack(pady=5)
+        self.directory_label = tk.Label(directory_frame, text="No directory selected")
+        self.directory_label.grid(row=1, column=0, sticky="w", pady=5)
 
-        self.layout_style_label = tk.Label(self.main_frame, text="Enter Layout style (e.g. AaBbCcDd):")
-        self.layout_style_label.pack(pady=5)
+        # Section 3: Style Options
+        style_options_frame = tk.LabelFrame(self.main_frame, text="Table Style Options", padx=10, pady=10)
+        style_options_frame.grid(row=2, column=0, sticky="ew", padx=5, pady=5)
+
+        self.layout_style_label = tk.Label(style_options_frame, text="Layout Style (e.g. AaBbCcDd):")
+        self.layout_style_label.grid(row=0, column=0, sticky="w", pady=5)
 
         self.layout_style_var = tk.StringVar()
-        self.layout_style_entry = tk.Entry(self.main_frame, textvariable=self.layout_style_var, width=40)
-        self.layout_style_entry.pack(pady=5)
+        self.layout_style_entry = tk.Entry(style_options_frame, textvariable=self.layout_style_var, width=30)
+        self.layout_style_entry.grid(row=0, column=1, sticky="w", pady=5)
 
-        self.format_style_label = tk.Label(self.main_frame, text="Enter Format style (e.g. 012345):")
-        self.format_style_label.pack(pady=5)
+        self.format_style_label = tk.Label(style_options_frame, text="Format Style (e.g. 012345):")
+        self.format_style_label.grid(row=1, column=0, sticky="w", pady=5)
 
         self.format_style_var = tk.StringVar()
-        self.format_style_entry = tk.Entry(self.main_frame, textvariable=self.format_style_var, width=40)
-        self.format_style_entry.pack(pady=5)
+        self.format_style_entry = tk.Entry(style_options_frame, textvariable=self.format_style_var, width=30)
+        self.format_style_entry.grid(row=1, column=1, sticky="w", pady=5)
 
-        self.radio_frame = tk.Frame(self.main_frame)
-        self.radio_frame.pack(pady=5)
+        # Orientation Selection
+        orientation_frame = tk.LabelFrame(style_options_frame, text="Orientation")
+        orientation_frame.grid(row=2, column=0, columnspan=2, sticky="ew", pady=5)
 
-        # Radio buttons for choosing where to apply format style
         self.choose_which_var = tk.StringVar(value="column")
-        self.column_radio = tk.Radiobutton(self.radio_frame, text="Columns", variable=self.choose_which_var,
-                                           value="column")
-        self.row_radio = tk.Radiobutton(self.radio_frame, text="Rows", variable=self.choose_which_var, value="row")
-        self.row_note = tk.Label(self.radio_frame,
-                                 text="Note if Rows is chosen: Start counting from the second row. e.g. If the table has 6 rows, enter only 5 format style numbers.",
-                                 font=("Arial", 10, "italic"), fg="gray", wraplength=300)
+        self.column_radio = tk.Radiobutton(orientation_frame, text="Columns", variable=self.choose_which_var, value="column")
+        self.column_radio.grid(row=0, column=0, sticky="w", padx=5)
 
-        self.column_radio.pack(anchor='w', pady=2)
-        self.row_radio.pack(anchor='w', pady=2)
-        self.row_note.pack(anchor='w', pady=2)
+        self.row_radio = tk.Radiobutton(orientation_frame, text="Rows", variable=self.choose_which_var, value="row")
+        self.row_radio.grid(row=0, column=1, sticky="w", padx=5)
+
+        # Section 4: Additional Options
+        additional_options_frame = tk.LabelFrame(self.main_frame, text="Additional Options", padx=10, pady=10)
+        additional_options_frame.grid(row=3, column=0, sticky="ew", padx=5, pady=5)
 
         self.censored_var = tk.BooleanVar(value=False)
-        self.censored_check = tk.Checkbutton(self.main_frame,
-                                             text="Is there Data to be censored? if not leave unchecked",
-                                             variable=self.censored_var, command=self.toggle_censored_entries)
-        self.censored_check.pack(pady=5, anchor='w')
+        self.censored_check = tk.Checkbutton(additional_options_frame, text="Censor Data?", variable=self.censored_var, command=self.toggle_censored_entries)
+        self.censored_check.grid(row=0, column=0, sticky="w", pady=5)
 
+        # Trigger-related fields (appear when Censor Data is checked)
         self.trigger_number_var = tk.StringVar(value='5')
+        self.trigger_number_label = tk.Label(additional_options_frame, text="Trigger Value (e.g., less than):")
+        self.trigger_number_entry = tk.Entry(additional_options_frame, textvariable=self.trigger_number_var, width=10)
 
-        self.trigger_number_label = tk.Label(self.main_frame, text="Enter Trigger Value")
+        self.trigger_column_label = tk.Label(additional_options_frame, text="Trigger Column Number:")
+        self.trigger_column_entry = tk.Entry(additional_options_frame, width=10)
 
-        self.trigger_number_frame = tk.Frame(self.main_frame)
+        self.affected_columns_label = tk.Label(additional_options_frame, text="Affected Column Numbers (e.g., 1,2,5):")
+        self.affected_columns_entry = tk.Entry(additional_options_frame, width=20)
 
-        self.note_label = tk.Label(self.trigger_number_frame, text="less than/kleiner als")
-        self.trigger_number_entry = tk.Entry(
-            self.trigger_number_frame, width=10, textvariable=self.trigger_number_var
-        )
-
-        self.note_label.pack(side=tk.LEFT, padx=(0, 5))
-        self.trigger_number_entry.pack(side=tk.LEFT)
-
-        self.trigger_column_label = tk.Label(self.main_frame, text="Enter Trigger column number")
-        self.trigger_column_entry = tk.Entry(self.main_frame, width=10)
-
-        self.affected_columns_label = tk.Label(self.main_frame, text="Enter Affected columns numbers (e.g. 1,2,5,6):")
-        self.affected_columns_entry = tk.Entry(self.main_frame, width=10)
-
+        # Call toggle_censored_entries initially to set the correct visibility
         self.toggle_censored_entries()
 
+        # Additional options for formatting rows
         self.first_row_italic_var = tk.BooleanVar(value=False)
-        self.first_row_italic_check = tk.Checkbutton(self.main_frame, text="First Row Italic",
-                                                     variable=self.first_row_italic_var)
-        self.first_row_italic_check.pack(anchor='w', pady=5)
+        self.first_row_italic_check = tk.Checkbutton(additional_options_frame, text="First Row Italic", variable=self.first_row_italic_var)
+        self.first_row_italic_check.grid(row=4, column=0, sticky="w", pady=5)
 
         self.first_row_90_degree_var = tk.BooleanVar(value=False)
-        self.first_row_90_degree_check = tk.Checkbutton(self.main_frame,
-                                                        text="First row is 90 degree rotated",
-                                                        variable=self.first_row_90_degree_var)
-        self.first_row_90_degree_check.pack(anchor='w', pady=5)
+        self.first_row_90_degree_check = tk.Checkbutton(additional_options_frame, text="First Row 90° Rotated", variable=self.first_row_90_degree_var)
+        self.first_row_90_degree_check.grid(row=4, column=1, sticky="w", pady=5)
 
         self.first_row_bold_var = tk.BooleanVar(value=False)
-        self.first_row_bold_check = tk.Checkbutton(self.main_frame,
-                                                   text="First Row Bold (Mostly checked if First row is 90 degree rotated)",
-                                                   variable=self.first_row_bold_var)
-        self.first_row_bold_check.pack(anchor='w', pady=5)
+        self.first_row_bold_check = tk.Checkbutton(additional_options_frame, text="First Row Bold", variable=self.first_row_bold_var)
+        self.first_row_bold_check.grid(row=5, column=0, sticky="w", pady=5)
 
         self.horizontal_line_var = tk.BooleanVar(value=False)
-        self.horizontal_line_check = tk.Checkbutton(self.main_frame, text="Remove Horizontal Line under the First Row",
-                                                    variable=self.horizontal_line_var)
-        self.horizontal_line_check.pack(pady=5, anchor='w')
+        self.horizontal_line_check = tk.Checkbutton(additional_options_frame, text="Remove Horizontal Line", variable=self.horizontal_line_var)
+        self.horizontal_line_check.grid(row=5, column=1, sticky="w", pady=5)
 
         self.remove_table_caption_var = tk.BooleanVar(value=False)
-        self.remove_table_caption_check = tk.Checkbutton(self.main_frame, text="Remove Table Caption",
+        self.remove_table_caption_check = tk.Checkbutton(additional_options_frame, text="Remove Table Caption",
                                                          variable=self.remove_table_caption_var)
-        self.remove_table_caption_check.pack(pady=5, anchor='w')
+        self.remove_table_caption_check.grid(row=6, column=0, sticky="w", pady=5)
 
         self.remove_table_headline_var = tk.BooleanVar(value=False)
-        self.remove_table_headline_check = tk.Checkbutton(self.main_frame, text="Remove Table Headline",
+        self.remove_table_headline_check = tk.Checkbutton(additional_options_frame, text="Remove Table Headline",
                                                           variable=self.remove_table_headline_var)
-        self.remove_table_headline_check.pack(pady=5, anchor='w')
+        self.remove_table_headline_check.grid(row=6, column=1, sticky="w", pady=5)
 
+        # Section 5: Generate Button
         self.process_button = tk.Button(self.main_frame, text="Generate LaTeX Tables", command=self.process_directory)
-        self.process_button.pack(anchor='w', pady=10)
+        self.process_button.grid(row=4, column=0, sticky="e", pady=10)
         self.process_button.config(state=tk.DISABLED)
 
-    @staticmethod
-    def read_styles_file_row(csv_path):
-        styles_data = {}
-        styles = pd.read_csv(csv_path, delimiter=';', encoding='utf-8', header=None, skip_blank_lines=False)
+    def toggle_censored_entries(self):
+        if self.censored_var.get():  # Check if the Censor checkbox is checked
+            self.trigger_number_label.grid(row=1, column=0, sticky="w", pady=5)
+            self.trigger_number_entry.grid(row=1, column=1, sticky="w", pady=5)
+            self.trigger_column_label.grid(row=2, column=0, sticky="w", pady=5)
+            self.trigger_column_entry.grid(row=2, column=1, sticky="w", pady=5)
+            self.affected_columns_label.grid(row=3, column=0, sticky="w", pady=5)
+            self.affected_columns_entry.grid(row=3, column=1, sticky="w", pady=5)
+        else:
+            self.trigger_number_label.grid_forget()
+            self.trigger_number_entry.grid_forget()
+            self.trigger_column_label.grid_forget()
+            self.trigger_column_entry.grid_forget()
+            self.affected_columns_label.grid_forget()
+            self.affected_columns_entry.grid_forget()
 
-        styles = styles.fillna('').map(lambda x: str(x).strip())
-
-        styles['is_style_name'] = styles[1] == ''
-
-        style_names = styles.index[styles['is_style_name']].tolist()
-
-        for idx, style_idx in enumerate(style_names):
-
-            style_name = styles.loc[style_idx, 0]
-
-            start = style_idx + 1
-            if idx + 1 < len(style_names):
-                end = style_names[idx + 1]
-            else:
-                end = len(styles)
-
-            settings_style = styles.iloc[start:end,[0,1]].copy()
-            settings_style = settings_style[(settings_style[0] != '') | (settings_style[1] != '')]
-
-            current_style = dict(zip(settings_style[0],settings_style[1]))
-
-            styles_data[style_name] = current_style
-
-        return styles_data
+    def select_directory(self):
+        self.directory_path = filedialog.askdirectory()
+        if self.directory_path:
+            self.directory_label.config(text=f"Selected: {self.directory_path}")
+            self.process_button.config(state=tk.NORMAL)
 
     @staticmethod
     def read_styles_file_column(csv_path):
@@ -246,29 +230,8 @@ class LaTeXTableGeneratorUI:
                     else:
                         self.choose_which_var.set('column')
 
+        # self.root_window.after(100, self.toggle_censored_entries)
         self.toggle_censored_entries()
-
-    def toggle_censored_entries(self):
-        if self.censored_var.get():
-            self.trigger_number_label.pack(pady=5, after=self.censored_check)
-            self.trigger_number_frame.pack(pady=5, after=self.trigger_number_label)
-            self.trigger_column_label.pack(pady=5, after=self.trigger_number_frame)
-            self.trigger_column_entry.pack(pady=5, after=self.trigger_column_label)
-            self.affected_columns_label.pack(pady=5, after=self.trigger_column_entry)
-            self.affected_columns_entry.pack(pady=5, after=self.affected_columns_label)
-        else:
-            self.trigger_number_label.pack_forget()
-            self.trigger_number_frame.pack_forget()
-            self.trigger_column_label.pack_forget()
-            self.trigger_column_entry.pack_forget()
-            self.affected_columns_label.pack_forget()
-            self.affected_columns_entry.pack_forget()
-
-    def select_directory(self):
-        self.directory_path = filedialog.askdirectory()
-        if self.directory_path:
-            self.directory_label.config(text=f"Selected: {self.directory_path}")
-            self.process_button.config(state=tk.NORMAL)
 
     def process_directory(self):
         layout_style: str = self.layout_style_var.get()
