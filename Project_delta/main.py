@@ -1,4 +1,3 @@
-
 import tkinter as tk
 from Project_delta.GUI.UI_tk import LaTeXTableGeneratorUI
 

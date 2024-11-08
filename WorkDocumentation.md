@@ -227,3 +227,39 @@
 - Added the trigger value cell with default value is 5.
 - Add a note that says its less than the trigger value.
 - Write the path selected under the button
+
+# 09.10.2024
+- Doing the envelopes task for the QM
+
+# 10.10.2024
+- Work on a new version form the app
+- Its to take a csv file with names of the tables, and pre-specified for the app variables. The app process this file and set the variables as specified from the file.
+
+# 16.10.2024
+- Applied the ideas for compiling the styles CSV.
+- Alot of bugs came up. 
+- Until next time
+
+# 17.10.2024 
+- solved the bugs and the code works perfectly.
+- Now I need to add a scrolling to the UI as it's too long.
+- Also, I need to add the styles file path selected
+- Change the label and format combo box to normal entry!
+- Add a function that if there is a new style to give it a name and add to the csv file with its settings.
+- Until next time...
+
+# 24.10.2024
+- Changed the label and format combo to normal entry
+- Add the style file path above the selection button.
+- Still need to add scroll to the application Ui because it's too long for the viewer
+- Until next time...
+
+# 31.10.2024
+- Did not do much
+- Tried to enhance the UI desgin
+
+# 07.11.2024
+- changed the row csv approach to column. Easier in readability
+- Worked on enhancing the UI, maybe adding a scroll bar!
+- Still in progress...
+- The read styles from file is DONE. waiting for testing by Philip, and then I will merge to main.
