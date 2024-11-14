@@ -263,3 +263,12 @@
 - Worked on enhancing the UI, maybe adding a scroll bar!
 - Still in progress...
 - The read styles from file is DONE. waiting for testing by Philip, and then I will merge to main.
+
+# 08.11.2024
+- Finished the New UI
+- Next time I will make sure that is running smoothly.
+
+# 14.11.2024
+- UI tested and everything works perfectly
+- Working on collecting all the generated tex files from the converter to a main file to show the files before compiling the whole project.
+- till next time
