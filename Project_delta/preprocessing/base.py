@@ -113,3 +113,8 @@ class Processing:
         latex_file_path = os.path.join(self.generator.dir_path, latex_file_name)
         with open(latex_file_path, 'w', encoding='utf-8') as latex_file:
             latex_file.write(full_table)
+
+        # Generate the main.tex file in the same directory as the generated LaTeX files
+        from .preview_tex_files import PreviewTexFiles
+        base_directory = self.generator.dir_path
+        PreviewTexFiles(base_directory)
