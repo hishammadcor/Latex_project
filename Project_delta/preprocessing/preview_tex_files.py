@@ -19,8 +19,8 @@ class PreviewTexFiles:
         for root, dirs, files in os.walk(current_dir):
             for file in files:
                 if file.endswith('.tex') and file != self.output_file_name:
-                    full_path = os.path.join(root, file)
-                    tex_files.append(full_path.replace(os.sep, '/'))
+                    full_path = os.path.relpath(os.path.join(root, file), self.base_directory)
+                    tex_files.append(os.path.join('..', full_path).replace(os.sep, '/'))
         return tex_files
 
     def generate_main_tex(self):
