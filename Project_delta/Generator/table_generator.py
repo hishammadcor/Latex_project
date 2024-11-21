@@ -41,7 +41,13 @@ class LaTeXTableGenerator:
         try:
             for file_name in os.listdir(self.dir_path):
                 if file_name.endswith('.csv'):
-                    Project_delta.Processing(file_name,self)
+                    Project_delta.Processing(file_name, self)
+
+            # Generate the main.tex file in the same directory as the generated LaTeX files
+            from Project_delta.preprocessing.preview_tex_files import PreviewTexFiles
+            base_directory = self.dir_path
+            PreviewTexFiles(base_directory)
+
             done = '-----------DONE-----------'
             return done
         except Exception as e:
