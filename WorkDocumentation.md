@@ -272,3 +272,7 @@
 - UI tested and everything works perfectly
 - Working on collecting all the generated tex files from the converter to a main file to show the files before compiling the whole project.
 - till next time
+
+# 15.11.2024
+- Finished the main.tex file compilation
+- Compiled the project.
