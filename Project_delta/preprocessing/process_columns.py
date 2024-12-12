@@ -105,9 +105,9 @@ class ProcessColumns:
 
     @staticmethod
     def format_style(data, format_string):
-        def apply_format(value, styling):
+        def apply_format(value, style):
             try:
-
+                value = str(value).replace('%', '')
                 float_value = float(value)
                 if style == '1':
                     if pd.isna(value):
@@ -124,6 +124,8 @@ class ProcessColumns:
                     return locale.format_string("%.1f", float_value, grouping=True)
                 elif style == '5':
                     return locale.format_string("%.2f", float_value, grouping=True)
+                elif style == '6':
+                    return locale.format_string("%.2f", float_value, grouping=True) + '\\%'
                 else:
                     return str(value)
             except (ValueError, TypeError, OverflowError):

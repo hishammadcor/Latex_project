@@ -31,7 +31,7 @@ class ProcessRows:
     def format_style(data, format_string):
         def apply_format(value, style):
             try:
-
+                value = str(value).replace('%', '')
                 float_value = float(value)
                 if style == '1':
                     if pd.isna(value):
@@ -48,6 +48,8 @@ class ProcessRows:
                     return locale.format_string("%.1f", float_value, grouping=True)
                 elif style == '5':
                     return locale.format_string("%.2f", float_value, grouping=True)
+                elif style == '6':
+                    return locale.format_string("%.2f", float_value, grouping=True) + '\\%'
                 else:
                     return str(value)
             except (ValueError, TypeError, OverflowError):
@@ -67,11 +69,11 @@ class ProcessRows:
 if __name__ == "__main__":
 
     csv_file = pd.read_csv(
-        "U:/Latex_project/tex/style33.csv",
+        "tex/C-6-2_tbl10_Studienverlauf und -erfolg_GES_MA_1F_phil.csv",
         delimiter=r'[\t]*;[\t]*',
         engine='python',
         encoding='utf-8'
     )
 
-    row_values = ProcessRows.format_style(csv_file, "5555").values.tolist()
+    row_values = ProcessRows.format_style(csv_file, "33333").values.tolist()
     print(row_values)
