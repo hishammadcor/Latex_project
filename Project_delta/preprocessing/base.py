@@ -60,7 +60,9 @@ class Processing:
         body_commands = ProcessRows.rows(row_values)
 
         if self.generator.horizontal_line:
-            tabular_header = '\\input{"setup/styles"}\n \\begin{tabularx}{\\textwidth}{' + ''.join(
+            # tabular_header = '\\input{"setup/styles"}\n \\begin{tabularx}{\\textwidth}{' + ''.join(
+            tabular_header = '\\begin{tabularx}{\\textwidth}{' + ''.join(
+
                 column_definitions) + '}'
             tabular_body = "\n".join(body_commands)
 
@@ -85,7 +87,9 @@ class Processing:
                     f"tabularx}}  \n \\normalspacing \n \\vspace{{0.5cm}}")
 
         else:
-            tabular_header = '\\input{"setup/styles"}\n\\begin{tabularx}{\\textwidth}{' + ''.join(
+            # tabular_header = '\\input{"setup/styles"}\n\\begin{tabularx}{\\textwidth}{' + ''.join(
+            tabular_header = '\\begin{tabularx}{\\textwidth}{' + ''.join(
+
                 column_definitions) + '}'
             tabular_body = "\n".join(body_commands)
 
