@@ -18,7 +18,8 @@ class LaTeXTableGenerator:
             censored: bool,
             trigger_number: str,
             trigger_column,
-            affected_columns
+            affected_columns,
+            style_dir_path
     ) -> None:
 
         self.dir_path = dir_path
@@ -35,6 +36,7 @@ class LaTeXTableGenerator:
         self.trigger_number = trigger_number
         self.trigger_column = trigger_column
         self.affected_columns = affected_columns
+        self.style_dir_path = style_dir_path
 
     @property
     def generate_full_tabular(self):
@@ -46,7 +48,7 @@ class LaTeXTableGenerator:
             # Generate the main.tex file in the same directory as the generated LaTeX files
             from Project_delta.preprocessing.preview_tex_files import PreviewTexFiles
             base_directory = self.dir_path
-            PreviewTexFiles(base_directory)
+            PreviewTexFiles(base_directory, self.style_dir_path)
 
             done = '-----------DONE-----------'
             return done

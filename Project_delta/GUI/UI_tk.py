@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 from Project_delta.Generator.table_generator import LaTeXTableGenerator
 import pandas as pd
-
+import os
 
 class LaTeXTableGeneratorUI:
     def __init__(self, root_window):
@@ -10,6 +10,7 @@ class LaTeXTableGeneratorUI:
         self.root_window.title("LaTeX Table Generator")
         self.directory_path = ""
         self.styles_data = {}
+        self.styles_data_path = ""
 
         # Configure grid layout for better structure
         self.root_window.columnconfigure(0, weight=1)
@@ -177,6 +178,7 @@ class LaTeXTableGeneratorUI:
     def load_style(self):
         csv_file_path = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
         if csv_file_path:
+            self.styles_data_path = os.path.dirname(os.path.abspath(csv_file_path))
             self.styles_label.config(text=f"Selected: {csv_file_path}")
             self.process_button.config(state=tk.NORMAL)
             self.styles_data = self.read_styles_file_column(csv_file_path)
@@ -247,7 +249,7 @@ class LaTeXTableGeneratorUI:
         trigger_number: str = self.trigger_number_entry.get() if self.censored_var.get() else None
         trigger_column = self.trigger_column_entry.get() if self.censored_var.get() else None
         affected_columns = self.affected_columns_entry.get() if self.censored_var.get() else None
-
+        styles_dir_path = self.styles_data_path
         generator = LaTeXTableGenerator(self.directory_path,
                                         layout_style,
                                         format_style,
@@ -261,7 +263,8 @@ class LaTeXTableGeneratorUI:
                                         censored,
                                         trigger_number,
                                         trigger_column,
-                                        affected_columns
+                                        affected_columns,
+                                        styles_dir_path
                                         )
         result = generator.generate_full_tabular
         messagebox.showinfo('Result', result)

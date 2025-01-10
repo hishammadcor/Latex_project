@@ -1,16 +1,16 @@
 import os
 
-
 class PreviewTexFiles:
-    def __init__(self, base_directory, output_file_name='main.tex'):
+    def __init__(self, base_directory, styles_absolute_path, output_file_name='main.tex'):
         self.base_directory = base_directory
         self.output_file_name = output_file_name
-        self.main_tex_content = r"""\input{../setup/pageSetup}                                                            
-\input{../setup/customCommands}                                                  
-\input{../setup/styles}
+        self.styles_absolute_path = styles_absolute_path
+        self.main_tex_content = f"""\input{{{os.path.join(styles_absolute_path, 'setup', 'pageSetup')}}}                                                             
+\input{{{os.path.join(styles_absolute_path, 'setup', 'customCommands')}}}                                                  
+\input{{{os.path.join(styles_absolute_path, 'setup', 'styles')}}} 
 
-\begin{document}
-    \section*{Vorschau der Tabellen}
+\begin{{document}}
+    \section*{{Vorschau der Tabellen}}
 
 """
         self.generate_main_tex()
