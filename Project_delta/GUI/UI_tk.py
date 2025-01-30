@@ -72,29 +72,47 @@ class LaTeXTableGeneratorUI:
         self.row_radio = tk.Radiobutton(orientation_frame, text="Rows", variable=self.choose_which_var, value="row")
         self.row_radio.grid(row=0, column=1, sticky="w", padx=5)
 
-        # Section 4: Additional Options
-        additional_options_frame = tk.LabelFrame(self.main_frame, text="Additional Options", padx=10, pady=10)
-        additional_options_frame.grid(row=3, column=0, sticky="ew", padx=5, pady=5)
+        # Section 4: Censoring Options
+        censoring_options_frame = tk.LabelFrame(self.main_frame, text="Censoring Options", padx=10, pady=10)
+        censoring_options_frame.grid(row=3, column=0, sticky="ew", padx=5, pady=5)
 
         self.censored_var = tk.BooleanVar(value=False)
-        self.censored_check = tk.Checkbutton(additional_options_frame, text="Censor Data?", variable=self.censored_var, command=self.toggle_censored_entries)
+        self.censored_check = tk.Checkbutton(censoring_options_frame, text="Censor Data?", variable=self.censored_var, command=self.toggle_censored_entries)
         self.censored_check.grid(row=0, column=0, sticky="w", pady=5)
 
-        # Trigger-related fields (appear when Censor Data is checked)
-        self.trigger_number_var = tk.StringVar(value='5')
-        self.trigger_number_label = tk.Label(additional_options_frame, text="Trigger Value (e.g., less than):")
-        self.trigger_number_entry = tk.Entry(additional_options_frame, textvariable=self.trigger_number_var, width=10)
+        # Censoring Mode (Column or Cell)
+        self.censor_mode_var = tk.StringVar(value="column")
+        self.column_censor_radio = tk.Radiobutton(censoring_options_frame, text="Column Censoring", variable=self.censor_mode_var, value="column")
+        self.cell_censor_radio = tk.Radiobutton(censoring_options_frame, text="Cell Censoring", variable=self.censor_mode_var, value="cell")
 
-        self.trigger_column_label = tk.Label(additional_options_frame, text="Trigger Column Number:")
-        self.trigger_column_entry = tk.Entry(additional_options_frame, width=10)
+        # Trigger-related fields (appear when Column mode is checked)
+        self.column_trigger_number_var = tk.StringVar(value='5')
+        self.column_trigger_number_label = tk.Label(censoring_options_frame, text="Trigger Value (e.g., less than):")
+        self.column_trigger_number_entry = tk.Entry(censoring_options_frame, textvariable=self.column_trigger_number_var, width=10)
 
-        self.affected_columns_label = tk.Label(additional_options_frame, text="Affected Column Numbers (e.g., 1,2,5):")
-        self.affected_columns_entry = tk.Entry(additional_options_frame, width=20)
+        self.trigger_column_label = tk.Label(censoring_options_frame, text="Trigger Column Number:")
+        self.trigger_column_entry = tk.Entry(censoring_options_frame, width=10)
+
+        self.affected_columns_label = tk.Label(censoring_options_frame, text="Affected Column Numbers (e.g., 1,2,5):")
+        self.affected_columns_entry = tk.Entry(censoring_options_frame, width=20)
+
+        # Trigger-related fields (appear when Cell mode is checked)
+        self.cell_trigger_number_var = tk.StringVar(value='5')
+        self.cell_trigger_number_label = tk.Label(censoring_options_frame, text="Trigger Value (e.g., less than):")
+        self.cell_trigger_number_entry = tk.Entry(censoring_options_frame, textvariable=self.cell_trigger_number_var, width=10)
+
+        self.affected_cells_var = tk.StringVar(value='1')
+        self.affected_cells_label = tk.Label(censoring_options_frame, text="Number of Affected cells:")
+        self.affected_cells_entry = tk.Entry(censoring_options_frame, textvariable=self.affected_cells_var, width=10)
 
         # Call toggle_censored_entries initially to set the correct visibility
         self.toggle_censored_entries()
+        self.censor_mode_var.trace_add("write", lambda *args: self.toggle_censored_entries())
 
-        # Additional options for formatting rows
+    #Step 5: Additional options for formatting
+        additional_options_frame = tk.LabelFrame(self.main_frame, text="Additional Options", padx=10, pady=10)
+        additional_options_frame.grid(row=4, column=0, sticky="ew", padx=5, pady=5)
+
         self.first_row_italic_var = tk.BooleanVar(value=False)
         self.first_row_italic_check = tk.Checkbutton(additional_options_frame, text="First Row Italic", variable=self.first_row_italic_var)
         self.first_row_italic_check.grid(row=4, column=0, sticky="w", pady=5)
@@ -123,24 +141,52 @@ class LaTeXTableGeneratorUI:
 
         # Section 5: Generate Button
         self.process_button = tk.Button(self.main_frame, text="Generate LaTeX Tables", command=self.process_directory)
-        self.process_button.grid(row=4, column=0, sticky="e", pady=10)
+        self.process_button.grid(row=7, column=0, sticky="e", pady=10)
         self.process_button.config(state=tk.DISABLED)
 
     def toggle_censored_entries(self):
         if self.censored_var.get():  # Check if the Censor checkbox is checked
-            self.trigger_number_label.grid(row=1, column=0, sticky="w", pady=5)
-            self.trigger_number_entry.grid(row=1, column=1, sticky="w", pady=5)
-            self.trigger_column_label.grid(row=2, column=0, sticky="w", pady=5)
-            self.trigger_column_entry.grid(row=2, column=1, sticky="w", pady=5)
-            self.affected_columns_label.grid(row=3, column=0, sticky="w", pady=5)
-            self.affected_columns_entry.grid(row=3, column=1, sticky="w", pady=5)
-        else:
-            self.trigger_number_label.grid_forget()
-            self.trigger_number_entry.grid_forget()
+            self.column_censor_radio.grid(row=1, column=0, sticky="w", pady=5)
+            self.cell_censor_radio.grid(row=1, column=1, sticky="w", pady=5)
+
+            self.column_trigger_number_label.grid_forget()
+            self.column_trigger_number_entry.grid_forget()
             self.trigger_column_label.grid_forget()
             self.trigger_column_entry.grid_forget()
             self.affected_columns_label.grid_forget()
             self.affected_columns_entry.grid_forget()
+            self.cell_trigger_number_label.grid_forget()
+            self.cell_trigger_number_entry.grid_forget()
+            self.affected_cells_label.grid_forget()
+            self.affected_cells_entry.grid_forget()
+
+            if self.censor_mode_var.get() == "column":
+                self.column_trigger_number_label.grid(row=2, column=0, sticky="w", pady=5)
+                self.column_trigger_number_entry.grid(row=2, column=1, sticky="w", pady=5)
+                self.trigger_column_label.grid(row=3, column=0, sticky="w", pady=5)
+                self.trigger_column_entry.grid(row=3, column=1, sticky="w", pady=5)
+                self.affected_columns_label.grid(row=4, column=0, sticky="w", pady=5)
+                self.affected_columns_entry.grid(row=4, column=1, sticky="w", pady=5)
+
+            elif self.censor_mode_var.get() == "cell":
+                self.cell_trigger_number_label.grid(row=5, column=0, sticky="w", pady=5)
+                self.cell_trigger_number_entry.grid(row=5, column=1, sticky="w", pady=5)
+                self.affected_cells_label.grid(row=3, column=0, sticky="w", pady=5)
+                self.affected_cells_entry.grid(row=3, column=1, sticky="w", pady=5)
+        else:
+            self.column_censor_radio.grid_forget()
+            self.cell_censor_radio.grid_forget()
+            self.column_trigger_number_label.grid_forget()
+            self.column_trigger_number_entry.grid_forget()
+            self.trigger_column_label.grid_forget()
+            self.trigger_column_entry.grid_forget()
+            self.affected_columns_label.grid_forget()
+            self.affected_columns_entry.grid_forget()
+            self.cell_trigger_number_label.grid_forget()
+            self.cell_trigger_number_entry.grid_forget()
+            self.affected_cells_label.grid_forget()
+            self.affected_cells_entry.grid_forget()
+
 
     def select_directory(self):
         self.directory_path = filedialog.askdirectory()
@@ -199,6 +245,7 @@ class LaTeXTableGeneratorUI:
             'Format': ('format_style_var', 'stringvar'),
             'Orientation': ('choose_which_var', 'orientation'),
             'Censoring': ('censored_var', 'booleanvar'),
+            # 'censoringMode':('censor_mode_var', )
             'TriggerValue': ('trigger_number_var', 'stringvar'),
             'TriggerColumn': ('trigger_column_entry', 'entry'),
             'AffectedColumns': ('affected_columns_entry', 'entry'),
