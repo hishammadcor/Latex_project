@@ -1,8 +1,8 @@
 import pandas as pd
 
 
-def censored_numbers(file, trigger_number: str, trigger_column: str, affected_columns: str):
-    data = file
+def column_censoring(data: pd.DataFrame, trigger_number: str, trigger_column: str, affected_columns: str)-> pd.DataFrame:
+
     data_columns = data.columns
     trigger_column = int(trigger_column) - 1
     affected_columns = affected_columns.split(',')
@@ -18,14 +18,22 @@ def censored_numbers(file, trigger_number: str, trigger_column: str, affected_co
 
     return data
 
+def cell_censoring(data: pd.DataFrame, trigger_number: str, affected_cells: str) -> pd.DataFrame:
 
-if __name__ == '__main__':
-    csv_file = pd.read_csv(
-        "C:/Users/s2hialii/Desktop/Latex_project/censor_test.csv",
-        delimiter=r'[\t]*;[\t]*',
-        engine='python'
-    )
-    trigger = '2'
-    affected = "10,11"
-    modified_data = censored_numbers(csv_file, trigger, affected)
+    trigger_number = int(trigger_number)
+    affected_cells = int(affected_cells)
+    for col in data.columns:
+        try:
+            i = 0
+            while i < len(data):
+                if pd.to_numeric(data.at[i, col], errors='coerce') < trigger_number:
+                    for j in range(1, affected_cells + 1):
+                        if i + j < len(data):
+                            data.at[i + j, col] = 'XXX'
+                    i += affected_cells
+                i += affected_cells
 
+        except (ValueError, TypeError):
+            continue
+
+    return data
