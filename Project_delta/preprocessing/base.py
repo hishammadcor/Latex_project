@@ -61,7 +61,7 @@ class Processing:
 
         if self.generator.horizontal_line:
             # tabular_header = '\\input{"setup/styles"}\n \\begin{tabularx}{\\textwidth}{' + ''.join(
-            tabular_header = '\\begin{tabularx}{\\textwidth}{' + ''.join(
+            tabular_header = '\\tblfont\n\\begin{tabularx}{\\textwidth}{' + ''.join(
 
                 column_definitions) + '}'
             tabular_body = "\n".join(body_commands)
@@ -88,7 +88,7 @@ class Processing:
 
         else:
             # tabular_header = '\\input{"setup/styles"}\n\\begin{tabularx}{\\textwidth}{' + ''.join(
-            tabular_header = '\\begin{tabularx}{\\textwidth}{' + ''.join(
+            tabular_header = '\\tblfont\n\\begin{tabularx}{\\textwidth}{' + ''.join(
 
                 column_definitions) + '}'
             tabular_body = "\n".join(body_commands)
