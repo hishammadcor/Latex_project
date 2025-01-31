@@ -16,10 +16,14 @@ class LaTeXTableGenerator:
             remove_table_headline:bool,
             choose_which: str,
             censored: bool,
-            trigger_number: str,
+            censor_mode: str,
+            column_trigger_number: str,
             trigger_column,
             affected_columns,
+            cell_trigger_number: str,
+            number_affected_cells: str,
             style_dir_path
+
     ) -> None:
 
         self.dir_path = dir_path
@@ -33,9 +37,12 @@ class LaTeXTableGenerator:
         self.remove_table_headline = remove_table_headline
         self.choose_which = choose_which
         self.censored = censored
-        self.trigger_number = trigger_number
+        self.censor_mode = censor_mode
+        self.column_trigger_number = column_trigger_number
         self.trigger_column = trigger_column
         self.affected_columns = affected_columns
+        self.cell_trigger_number = cell_trigger_number
+        self.number_affected_cells = number_affected_cells
         self.style_dir_path = style_dir_path
 
     @property

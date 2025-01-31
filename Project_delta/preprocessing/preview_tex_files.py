@@ -1,5 +1,6 @@
 import os
 
+
 class PreviewTexFiles:
     def __init__(self, base_directory, styles_absolute_path, output_file_name='main.tex'):
         self.base_directory = base_directory
@@ -39,6 +40,7 @@ class PreviewTexFiles:
         output_path = os.path.join(preview_dir, self.output_file_name)
         with open(output_path, 'w', encoding='utf-8') as output_file:
             output_file.write(self.main_tex_content)
+
 
 if __name__ == "__main__":
     # Example usage

@@ -30,7 +30,8 @@ class Processing:
 
         from .process_columns import ProcessColumns
         from .process_rows import ProcessRows
-        from .censored import censored_numbers
+        from .censored import column_censoring
+        from .censored import cell_censoring
 
         column_definitions, header_commands = ProcessColumns.normal_columns(column_names,
                                                                             self.generator.layout_style,
@@ -40,14 +41,24 @@ class Processing:
                                                                             )
 
         if self.generator.censored:
-            data = censored_numbers(main_data, self.generator.trigger_number, self.generator.trigger_column, self.generator.affected_columns)
+            if self.generator.censor_mode == 'column':
+                data = column_censoring(main_data, self.generator.column_trigger_number, self.generator.trigger_column,
+                                        self.generator.affected_columns)
+                if self.generator.choose_which == 'column':
+                    row_values = ProcessColumns.format_style(data, self.generator.format_style).values.tolist()
+                elif self.generator.choose_which == 'row':
+                    row_values = ProcessRows.format_style(data, self.generator.format_style).values.tolist()
+                else:
+                    row_values = data.values.tolist()
 
-            if self.generator.choose_which == 'column':
-                row_values = ProcessColumns.format_style(data, self.generator.format_style).values.tolist()
-            elif self.generator.choose_which == 'row':
-                row_values = ProcessRows.format_style(data, self.generator.format_style).values.tolist()
-            else:
-                row_values = data.values.tolist()
+            elif self.generator.censor_mode == 'cell':
+                data = cell_censoring(main_data, self.generator.cell_trigger_number, self.generator.number_affected_cells)
+                if self.generator.choose_which == 'column':
+                    row_values = ProcessColumns.format_style(data, self.generator.format_style).values.tolist()
+                elif self.generator.choose_which == 'row':
+                    row_values = ProcessRows.format_style(data, self.generator.format_style).values.tolist()
+                else:
+                    row_values = data.values.tolist()
 
         else:
             if self.generator.choose_which == 'column':
