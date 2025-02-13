@@ -208,28 +208,20 @@ class LaTeXTableGeneratorUI:
     @staticmethod
     def read_styles_file_column(csv_path):
         styles_data = {}
-
-        styles = pd.read_csv(csv_path, delimiter=';', encoding='utf-8', header=None, skip_blank_lines=False)
+        styles = pd.read_csv(csv_path, delimiter=';', encoding='utf-8', header=0, skip_blank_lines=False)
         styles = styles.fillna('').map(lambda x: str(x).strip())
 
-        for col in range(0, len(styles.columns), 2):  # Assuming style names and settings are in pairs of columns
-            style_column = col
-            value_column = col + 1 if col + 1 < len(styles.columns) else col
+        variable_column = styles.iloc[:, 0] # The first column contains variable names, the remaining columns represent styles
+        style_columns = styles.iloc[:, 1:]  # All columns after the first column are style values
 
-            style_name_indices = styles.index[(styles[style_column] != '') & (styles[value_column] == '')].tolist()
+        style_names = style_columns.columns
 
-            for idx, style_idx in enumerate(style_name_indices):
-                style_name = styles.loc[style_idx, style_column]
+        for style_name in style_names:
+            style_values = style_columns[style_name]
+            style_data = dict(zip(variable_column, style_values))
+            style_data = {k: v for k, v in style_data.items() if k }  # Remove empty keys
 
-                start = style_idx + 1
-                end = style_name_indices[idx + 1] if idx + 1 < len(style_name_indices) else len(styles)
-
-                settings_style = styles.iloc[start:end, [style_column, value_column]].copy()
-                settings_style = settings_style[
-                    (settings_style[style_column] != '') | (settings_style[value_column] != '')]
-
-                current_style = dict(zip(settings_style[style_column], settings_style[value_column]))
-                styles_data[style_name] = current_style
+            styles_data[style_name] = style_data
 
         return styles_data
 
@@ -247,7 +239,7 @@ class LaTeXTableGeneratorUI:
 
     def on_style_name_selected(self, event):
         selected_style = self.table_style_name_combobox.get()
-        if selected_style and selected_style in self.styles_data:
+        if selected_style in self.styles_data:
             settings = self.styles_data[selected_style]
             self.apply_style_settings(settings)
 
