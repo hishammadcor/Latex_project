@@ -79,22 +79,22 @@ class Processing:
 
             if self.generator.remove_table_caption and not self.generator.remove_table_headline:  # remove_caption & ^remove_headline
                 full_table = (
-                    f"\\tblheadline{{{header_title}}}\n{tabular_header}\n{' & '.join(header_commands)} \\\\ \n{tabular_body}\n\\end{{"
+                    f"\\begin{{table}}[htbp] \n\\tblheadline{{{header_title}}}\n{tabular_header}\n{' & '.join(header_commands)} \\\\ \n{tabular_body}\n\\end{{"
                     f"tabularx}} \n \\normalspacing \n \\vspace{{0.5cm}}")
 
             elif self.generator.remove_table_headline and not self.generator.remove_table_caption:  # ^remove_caption & remove_headline
                 full_table = (
-                    f'{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline \n{tabular_body}\n\\end{{'
+                    f'\\begin{{table}}[htbp] \n{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline \n{tabular_body}\n\\end{{'
                     f'tabularx}} \n \\tblcaption{{{caption}}}\n \\normalspacing \n \\vspace{{0.5cm}}')
 
             elif not self.generator.remove_table_headline and not self.generator.remove_table_caption:  # ^ remove_caption & ^remove_headline
                 full_table = (
-                    f"\\tblheadline{{{header_title}}}\n{tabular_header}\n{' & '.join(header_commands)} \\\\ \n{tabular_body}\n\\end{{"
+                    f"\\begin{{table}}[htbp] \n\\tblheadline{{{header_title}}}\n{tabular_header}\n{' & '.join(header_commands)} \\\\ \n{tabular_body}\n\\end{{"
                     f"tabularx}} \n \\tblcaption{{{caption}}} \n \\normalspacing \n \\vspace{{0.5cm}}")
 
             else:  # remove_caption & remove_headline
                 full_table = (
-                    f"{tabular_header}\n{' & '.join(header_commands)} \\\\ \n{tabular_body}\n\\end{{"
+                    f"\\begin{{table}}[htbp] \n{tabular_header}\n{' & '.join(header_commands)} \\\\ \n{tabular_body}\n\\end{{"
                     f"tabularx}}  \n \\normalspacing \n \\vspace{{0.5cm}}")
 
         else:
@@ -106,23 +106,23 @@ class Processing:
 
             if self.generator.remove_table_caption and not self.generator.remove_table_headline:  # remove_caption & ^remove_headline
                 full_table = (
-                    f'\\tblheadline{{{header_title}}}\n{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline \n{tabular_body}\n\\end{{'
+                    f'\\begin{{table}}[htbp] \n\\tblheadline{{{header_title}}}\n{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline \n{tabular_body}\n\\end{{'
                     f'tabularx}}\n \\normalspacing \n \\vspace{{0.5cm}}')
 
             elif self.generator.remove_table_headline and not self.generator.remove_table_caption:  # ^remove_caption & remove_headline
                 full_table = (
-                    f'{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline \n{tabular_body}\n\\end{{'
+                    f'\\begin{{table}}[htbp] \n{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline \n{tabular_body}\n\\end{{'
                     f'tabularx}}\n \\tblcaption{{{caption}}} \n \\normalspacing \n \\vspace{{0.5cm}}')
 
             elif not self.generator.remove_table_headline and not self.generator.remove_table_caption:  # ^ remove_caption & ^remove_headline
                 full_table = (
-                    f'\\tblheadline{{{header_title}}}\n{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline \n{tabular_body}\n\\end{{'
+                    f'\\begin{{table}}[htbp] \n \\tblheadline{{{header_title}}}\n{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline \n{tabular_body}\n\\end{{'
                     f'tabularx}} \n \\tblcaption{{{caption}}} \n \\normalspacing \n \\vspace{{0.5cm}}')
 
             else:  # remove_caption & remove_headline
                 full_table = (
-                    f'{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline \n{tabular_body}\n\\end{{'
-                    f'tabularx}} \n \\normalspacing \n \\vspace{{0.5cm}}')
+                    f'\\begin{{table}}[htbp] \n{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline \n{tabular_body}\n\\end{{'
+                    f'tabularx}} \n \\end{{table}} \n \\normalspacing \n \\vspace{{0.5cm}}')
 
         latex_file_name = os.path.splitext(self.file_name)[0] + '.tex'
         latex_file_path = os.path.join(self.generator.dir_path, latex_file_name)
