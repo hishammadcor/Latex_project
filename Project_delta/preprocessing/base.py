@@ -85,17 +85,17 @@ class Processing:
             elif self.generator.remove_table_headline and not self.generator.remove_table_caption:  # ^remove_caption & remove_headline
                 full_table = (
                     f'\\begin{{table}}[H] \n{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline \n{tabular_body}\n\\end{{'
-                    f'tabularx}}\n \\end{{table}} \n \\tblcaption{{{caption}}}\n \\normalspacing \n \\vspace{{0.5cm}}')
+                    f'tabularx}}\n \\tblcaption{{{caption}}} \n \\end{{table}} \n \\normalspacing \n \\vspace{{0.5cm}}')
 
             elif not self.generator.remove_table_headline and not self.generator.remove_table_caption:  # ^ remove_caption & ^remove_headline
                 full_table = (
                     f"\\begin{{table}}[H] \n\\tblheadline{{{header_title}}}\n{tabular_header}\n{' & '.join(header_commands)} \\\\ \n{tabular_body}\n\\end{{"
-                    f"tabularx}}\n \\end{{table}} \n \\tblcaption{{{caption}}} \n \\normalspacing \n \\vspace{{0.5cm}}")
+                    f"tabularx}} \n \\tblcaption{{{caption}}} \n \\end{{table}} \n \\normalspacing \n \\vspace{{0.5cm}}")
 
             else:  # remove_caption & remove_headline
                 full_table = (
                     f"\\begin{{table}}[H] \n{tabular_header}\n{' & '.join(header_commands)} \\\\ \n{tabular_body}\n\\end{{"
-                    f"tabularx}} \n \\end{{table}}  \n \\normalspacing \n \\vspace{{0.5cm}}")
+                    f"tabularx}} \n \\end{{table}} \n \\normalspacing \n \\vspace{{0.5cm}}")
 
         else:
             # tabular_header = '\\input{"setup/styles"}\n\\begin{tabularx}{\\textwidth}{' + ''.join(
@@ -112,12 +112,12 @@ class Processing:
             elif self.generator.remove_table_headline and not self.generator.remove_table_caption:  # ^remove_caption & remove_headline
                 full_table = (
                     f'\\begin{{table}}[H] \n{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline \n{tabular_body}\n\\end{{'
-                    f'tabularx}}\n \\end{{table}}\n \\tblcaption{{{caption}}} \n \\normalspacing \n \\vspace{{0.5cm}}')
+                    f'tabularx}}\n \\tblcaption{{{caption}}} \n \\end{{table}} \n \\normalspacing \n \\vspace{{0.5cm}}')
 
             elif not self.generator.remove_table_headline and not self.generator.remove_table_caption:  # ^ remove_caption & ^remove_headline
                 full_table = (
                     f'\\begin{{table}}[H] \n \\tblheadline{{{header_title}}}\n{tabular_header}\n{' & '.join(header_commands)} \\\\ \\hline \n{tabular_body}\n\\end{{'
-                    f'tabularx}} \n \\end{{table}} \n \\tblcaption{{{caption}}} \n \\normalspacing \n \\vspace{{0.5cm}}')
+                    f'tabularx}} \n \\tblcaption{{{caption}}} \n \\end{{table}} \n \\normalspacing \n \\vspace{{0.5cm}}')
 
             else:  # remove_caption & remove_headline
                 full_table = (

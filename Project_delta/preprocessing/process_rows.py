@@ -31,13 +31,15 @@ class ProcessRows:
     def format_style(data, format_string):
         def apply_format(value, style):
             try:
-                value = str(value).replace('%', '').replace(',','.')
-                float_value = float(value)
                 if style == '1':
+                    value = str(value)
+                    float_value = float(value)
                     if pd.isna(value) or pd.isna(float_value):
                         return ''
                     return str(value)
 
+                value = str(value).replace('%', '').replace(',', '.')
+                float_value = float(value)
                 if pd.isna(value) or pd.isna(float_value):
                     return '-'
                 elif style == '2':
