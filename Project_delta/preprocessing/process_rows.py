@@ -3,12 +3,12 @@ import locale
 
 
 class ProcessRows:
-
     try:
-        locale.setlocale(locale.LC_ALL, 'German_Germany.1252') # this is locale windows settings
+        locale.setlocale(locale.LC_ALL, 'German_Germany.1252')  # this is locale windows settings
         # locale.setlocale(locale.LC_ALL, 'de_DE.UTF-8') # I think this is linux/macOS locale settings # Adjust based on your system
     except locale.Error:
-        print("Locale not supported or settings are not correctly adjusted, return to class ProcessRows and ProcessColumns.")
+        print(
+            "Locale not supported or settings are not correctly adjusted, return to class ProcessRows and ProcessColumns.")
 
     @staticmethod
     def rows(row_values) -> list[str]:
@@ -39,19 +39,23 @@ class ProcessRows:
                     return str(value)
 
                 value = str(value).replace('%', '').replace(',', '.')
+                if value.count('.') > 1:
+                    last_dot_index = value.rfind('.')
+                    value = value[:last_dot_index].replace('.', '') + value[
+                                                                      last_dot_index:]  # Remove all dots in the substring except the last dot
                 float_value = float(value)
                 if pd.isna(value) or pd.isna(float_value):
                     return '-'
                 elif style == '2':
-                    return locale.format_string("%d",  round(float_value), grouping=True)
+                    return locale.format_string("%d", round(float_value), grouping=True)
                 elif style == '3':
-                    return locale.format_string("%d",  round(float_value), grouping=True) + '\\%'
+                    return locale.format_string("%d", round(float_value), grouping=True) + '\\%'
                 elif style == '4':
-                    return locale.format_string("%.1f",  round(float_value, 1), grouping=True)
+                    return locale.format_string("%.1f", round(float_value, 1), grouping=True)
                 elif style == '5':
-                    return locale.format_string("%.2f",  round(float_value, 2), grouping=True)
+                    return locale.format_string("%.2f", round(float_value, 2), grouping=True)
                 elif style == '6':
-                    return locale.format_string("%.2f",  round(float_value, 2), grouping=True) + '\\%'
+                    return locale.format_string("%.2f", round(float_value, 2), grouping=True) + '\\%'
                 else:
                     return str(value)
             except (ValueError, TypeError, OverflowError):
@@ -68,8 +72,8 @@ class ProcessRows:
         raise ValueError(
             "The format style is either contains non-numeric characters or empty. Please make sure that you enter only numeric values.")
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     csv_file = pd.read_csv(
         "tex/C-6-2_tbl10_Studienverlauf und -erfolg_GES_MA_1F_phil.csv",
         delimiter=r'[\t]*;[\t]*',

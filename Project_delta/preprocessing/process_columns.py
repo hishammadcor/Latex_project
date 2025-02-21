@@ -125,6 +125,9 @@ class ProcessColumns:
                     return str(value)
 
                 value = str(value).replace('%', '').replace(',', '.')
+                if value.count('.') > 1:
+                    last_dot_index = value.rfind('.')
+                    value = value[:last_dot_index].replace('.', '') + value[last_dot_index:]  # Remove all dots in the substring except the last dot
                 float_value = float(value)
                 if pd.isna(value) or pd.isna(float_value):
                     return '-'
