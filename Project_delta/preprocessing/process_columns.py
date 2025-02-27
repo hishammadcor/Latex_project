@@ -132,15 +132,17 @@ class ProcessColumns:
                 if pd.isna(value) or pd.isna(float_value):
                     return '-'
                 elif style == '2':
-                    return locale.format_string("%d", round(float_value), grouping=True)
+                    return f'\\rightalignbox{{{locale.format_string("%d", round(float_value), grouping=True)}}}'
                 elif style == '3':
-                    return locale.format_string("%d", round(float_value), grouping=True) + '\\%'
+                    return f'\\rightalignbox{{{locale.format_string("%d", round(float_value), grouping=True)}\\%}}'
                 elif style == '4':
-                    return locale.format_string("%.1f", round(float_value, 1), grouping=True)
+                    return f'\\rightalignbox{{{locale.format_string("%.1f", round(float_value, 1), grouping=True)}}}'
                 elif style == '5':
-                    return locale.format_string("%.2f", round(float_value, 2), grouping=True)
+                    return f'\\rightalignbox{{{locale.format_string("%.2f", round(float_value, 2), grouping=True)}}}'
                 elif style == '6':
-                    return locale.format_string("%.2f", round(float_value, 2), grouping=True) + '\\%'
+                    return f'\\rightalignbox{{{locale.format_string("%.2f", round(float_value, 2), grouping=True)}\\%}}'
+                elif style == '7':
+                    return f'\\rightalignbox{{{locale.format_string("%d", round(float_value, -2), grouping=True)}}}'
                 else:
                     return str(value)
             except (ValueError, TypeError, OverflowError):

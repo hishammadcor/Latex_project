@@ -23,18 +23,26 @@ This project is developed under the supervision of the Quality and Management de
 
 This table provides a description of the custom LaTeX column types, along with their corresponding format styles.
 
-| Layout Style | Description                                     | Format Style | Format Description                              |
-|--------------|-------------------------------------------------|--------------|-------------------------------------------------|
-| A            | Centered column with flexible width             | 1            | Normal Text                                     |
-| B            | Centered column with flexible width and green background | 2            | Normal Numbers with no decimal places (integers) |
-| C            | Left-aligned column with flexible width         | 3            | Percent numbers with no decimal places          |
-| D            | Left-aligned column with flexible width and green background | 4            | Decimal numbers with 1 decimal place            |
-| E            | Right-aligned column with flexible width        | 5            | Decimal numbers with 2 decimal places           |
-| F            | Right-aligned column with flexible width and green background | 6            | Percent numbers with 2 decimal places        |
-| G            | Left-aligned column with fixed width of 2cm     |              |                                                 |
-| H            | Left-aligned column with fixed width of 2cm and green background |              |                                                 |
-| I            | Left-aligned column with fixed width of 5cm     |              |                                                 |
-| J            | Left-aligned column with fixed width of 5cm and green background |              |                                                 |
+| Layout Style | Description                                                       | Format Style | Format Description                                                          |
+|--------------|-------------------------------------------------------------------|--------------|-----------------------------------------------------------------------------|
+| A            | Centered column with flexible width                               | 1            | Normal Text                                                                 |
+| B            | Centered column with flexible width and green background          | 2            | Normal Numbers with no decimal places (integers)                            |
+| C            | Left-aligned column with flexible width                           | 3            | Percent numbers with no decimal places                                      |
+| D            | Left-aligned column with flexible width and green background      | 4            | Decimal numbers with 1 decimal place                                        |
+| E            | Right-aligned column with flexible width                          | 5            | Decimal numbers with 2 decimal places                                       |
+| F            | Right-aligned column with flexible width and green background     | 6            | Percent numbers with 2 decimal places                                       |
+| G            | Left-aligned column with fixed width of 2cm                       | 7            | Normal Numbers with no decimal places rounded to the nearest 100 (integers) |
+| H            | Left-aligned column with fixed width of 2cm and green background  |              |                                                                             |
+| I            | Left-aligned column with fixed width of 5cm                       |              |                                                                             |
+| K            | Left-aligned column with fixed width of 12 cm                     |              |                                                                             |
+| L            | Left-aligned column with fixed width of 12cm and green background |              |                                                                             |
+| R            | Left-aligned column with fixed width of 7cm                       |              |                                                                             |
+| S            | Centered column with fixed width of 0.5cm and green background    |              |                                                                             |
+| T            | Centered column with fixed width of 0.5cm                         |              |                                                                             |
+| U            | Left-aligned column with fixed width of 10.5cm                    |              |                                                                             |
+| V            | Left-aligned column with fixed width of 2.5cm                     |              |                                                                             |
+| Y            | Left-aligned column with fixed width of 3.5cm                     |              |                                                                             |
+| Z            | Left-aligned column with fixed width of 4cm                       |              |                                                                             |
 
 ## Author:
 
