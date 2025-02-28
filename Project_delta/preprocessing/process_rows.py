@@ -2,7 +2,6 @@ import pandas as pd
 from ..utils.utils import apply_format
 
 class ProcessRows:
-
     @staticmethod
     def rows(row_values) -> list[str]:
         body_commands = []
@@ -33,8 +32,8 @@ class ProcessRows:
         raise ValueError(
             "The format style is either contains non-numeric characters or empty. Please make sure that you enter only numeric values.")
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     csv_file = pd.read_csv(
         "tex/C-6-2_tbl10_Studienverlauf und -erfolg_GES_MA_1F_phil.csv",
         delimiter=r'[\t]*;[\t]*',
