@@ -18,6 +18,7 @@ def column_censoring(data: pd.DataFrame, trigger_number: str, trigger_column: st
 
     return data
 
+
 def cell_censoring(data: pd.DataFrame, trigger_number: str, affected_cells: str) -> pd.DataFrame:
 
     trigger_number = int(trigger_number)
