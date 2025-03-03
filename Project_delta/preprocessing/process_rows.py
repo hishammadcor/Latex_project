@@ -1,5 +1,6 @@
 import pandas as pd
-from ..utils.utils import apply_format
+from ..utils.utils import (apply_format)
+
 
 class ProcessRows:
     @staticmethod
@@ -35,11 +36,16 @@ class ProcessRows:
 
 if __name__ == "__main__":
     csv_file = pd.read_csv(
-        "tex/C-6-2_tbl10_Studienverlauf und -erfolg_GES_MA_1F_phil.csv",
+        "U:/Latex_project/tex/A-4-5_tbl11_sächliche Ausstattung VWL.csv",
         delimiter=r'[\t]*;[\t]*',
         engine='python',
         encoding='utf-8'
     )
 
-    row_values = ProcessRows.format_style(csv_file, "33333").values.tolist()
-    print(row_values)
+    header_title = csv_file.columns[0]
+    caption = csv_file.columns[-1]
+    main_data = csv_file.drop(columns=[header_title, caption])
+    header_as_row = pd.DataFrame([main_data.columns.tolist()], columns=main_data.columns)
+    main_data = pd.concat([header_as_row, main_data], ignore_index=True)
+    main_data.columns = range(main_data.shape[1])
+    print(main_data)

@@ -22,7 +22,8 @@ class LaTeXTableGenerator:
             affected_columns,
             cell_trigger_number: str,
             number_affected_cells: str,
-            style_dir_path
+            style_dir_path,
+            column_names: bool
 
     ) -> None:
 
@@ -44,6 +45,7 @@ class LaTeXTableGenerator:
         self.cell_trigger_number = cell_trigger_number
         self.number_affected_cells = number_affected_cells
         self.style_dir_path = style_dir_path
+        self.column_names = column_names
 
     @property
     def generate_full_tabular(self):

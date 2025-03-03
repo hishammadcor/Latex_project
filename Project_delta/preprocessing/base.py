@@ -21,7 +21,16 @@ class Processing:
         header_title = csv_file.columns[0]
         caption = csv_file.columns[-1]
         main_data = csv_file.drop(columns=[header_title, caption])
-        column_names = main_data.columns.str.strip()
+
+        if self.generator.column_names:
+            column_names = []
+            header_as_row = pd.DataFrame([main_data.columns.tolist()], columns=main_data.columns)
+            main_data = pd.concat([header_as_row, main_data], ignore_index=True)
+            main_data.columns = range(main_data.shape[1])
+        else:
+            column_names = main_data.columns.str.strip()
+
+        columns_number = csv_file.shape[1]
 
         if not (header_title and not header_title.startswith('Unnamed')):
             header_title = ''
@@ -33,7 +42,7 @@ class Processing:
         from .censored import column_censoring
         from .censored import cell_censoring
 
-        column_definitions, header_commands = ProcessColumns.normal_columns(column_names,
+        column_definitions, header_commands = ProcessColumns.normal_columns(column_names, columns_number,
                                                                             self.generator.layout_style,
                                                                             self.generator.first_row_italic,
                                                                             self.generator.first_row_bold,

@@ -5,10 +5,10 @@ from ..utils.utils import apply_format
 class ProcessColumns:
 
     @staticmethod
-    def normal_columns(column_names, column_styles, first_row_italic, first_row_bold, first_row_90_degree) -> tuple[list[Any], list[str]]:
+    def normal_columns(column_names, columns_number, column_styles, first_row_italic, first_row_bold, first_row_90_degree) -> tuple[list[Any], list[str]]:
         if all(char.isalpha() for char in column_styles) and column_styles:
 
-            column_definitions = list(column_styles)[:len(column_names)]
+            column_definitions = list(column_styles)[:columns_number]
             header_commands = []
             real_column_index = 1
             i = 0
@@ -99,8 +99,8 @@ class ProcessColumns:
                 i += 1
 
             # Ensure column_definitions matches the number of columns
-            if len(column_definitions) < len(column_names):
-                column_definitions.extend(['X'] * (len(column_names) - len(column_definitions)))
+            if len(column_definitions) < columns_number:
+                column_definitions.extend(['X'] * (columns_number - len(column_definitions)))
 
             return column_definitions, header_commands
         raise ValueError(

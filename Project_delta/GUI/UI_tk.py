@@ -151,6 +151,11 @@ class LaTeXTableGeneratorUI:
                                                           variable=self.remove_table_headline_var)
         self.remove_table_headline_check.grid(row=6, column=1, sticky="w", pady=5)
 
+        self.remove_column_names_var = tk.BooleanVar(value=False)
+        self.remove_column_names_check = tk.Checkbutton(additional_options_frame, text="Table with no column names?",
+                                                        variable=self.remove_column_names_var)
+        self.remove_column_names_check.grid(row=7, column=0, sticky="w", pady=5)
+
         # Section 5: Generate Button
         self.process_button = tk.Button(self.main_frame, text="Generate LaTeX Tables", command=self.process_directory)
         self.process_button.grid(row=7, column=0, sticky="e", pady=10)
@@ -211,7 +216,7 @@ class LaTeXTableGeneratorUI:
         styles = pd.read_csv(csv_path, delimiter=';', encoding='utf-8', header=0, skip_blank_lines=False)
         styles = styles.fillna('').map(lambda x: str(x).strip())
 
-        variable_column = styles.iloc[:, 0] # The first column contains variable names, the remaining columns represent styles
+        variable_column = styles.iloc[:, 0]  # The first column contains variable names, the remaining columns represent styles
         style_columns = styles.iloc[:, 1:]  # All columns after the first column are style values
 
         style_names = style_columns.columns
@@ -219,7 +224,7 @@ class LaTeXTableGeneratorUI:
         for style_name in style_names:
             style_values = style_columns[style_name]
             style_data = dict(zip(variable_column, style_values))
-            style_data = {k: v for k, v in style_data.items() if k }  # Remove empty keys
+            style_data = {k: v for k, v in style_data.items() if k}  # Remove empty keys
 
             styles_data[style_name] = style_data
 
@@ -261,6 +266,7 @@ class LaTeXTableGeneratorUI:
             'RemoveHline': ('horizontal_line_var', 'booleanvar'),
             'RemoveCaption': ('remove_table_caption_var', 'booleanvar'),
             'RemoveHeadline': ('remove_table_headline_var', 'booleanvar'),
+            'RemoveColumnNames': ('remove_column_names_var', 'booleanvar')
         }
         for key, (ui_element_name, ui_element_type) in mapping.items():
             if key in settings:
@@ -314,6 +320,7 @@ class LaTeXTableGeneratorUI:
         cell_trigger_number: str = self.cell_trigger_number_var.get() if self.censored_var.get() else None
         number_affected_cells: str = self.number_affected_cells_var.get() if self.censored_var.get() else None
         styles_dir_path = self.styles_data_path
+        column_names: bool = self.remove_column_names_var.get()
         generator = LaTeXTableGenerator(self.directory_path,
                                         layout_style,
                                         format_style,
@@ -331,7 +338,8 @@ class LaTeXTableGeneratorUI:
                                         affected_columns,
                                         cell_trigger_number,
                                         number_affected_cells,
-                                        styles_dir_path
+                                        styles_dir_path,
+                                        column_names
                                         )
         result = generator.generate_full_tabular
         messagebox.showinfo('Result', result)
