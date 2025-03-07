@@ -4,11 +4,12 @@ from Project_delta.Generator.table_generator import LaTeXTableGenerator
 import pandas as pd
 import os
 
+APP_VERSION = "2.1.5"
 
 class LaTeXTableGeneratorUI:
     def __init__(self, root_window):
         self.root_window = root_window
-        self.root_window.title("LaTeX Table Generator")
+        self.root_window.title(f"LaTeX Table Generator v{APP_VERSION}")
         self.directory_path = ""
         self.styles_data = {}
         self.styles_data_path = ""
@@ -155,6 +156,9 @@ class LaTeXTableGeneratorUI:
         self.remove_column_names_check = tk.Checkbutton(additional_options_frame, text="Table with no column names?",
                                                         variable=self.remove_column_names_var)
         self.remove_column_names_check.grid(row=7, column=0, sticky="w", pady=5)
+
+        self.version_label = tk.Label(self.main_frame, text=f"Version {APP_VERSION}", font=("Arial", 10))
+        self.version_label.grid(row=6, column=0, sticky="se", pady=5)
 
         # Section 5: Generate Button
         self.process_button = tk.Button(self.main_frame, text="Generate LaTeX Tables", command=self.process_directory)
