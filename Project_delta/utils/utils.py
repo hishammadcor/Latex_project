@@ -29,7 +29,7 @@ def apply_format(value, style):
     try:
         if style == '1':
             value = str(value)
-            if pd.isna(value):
+            if pd.isna(value) or value == 'nan':
                 return ''
             return str(value)
 
@@ -63,11 +63,11 @@ def multi_row(rows_full):
     for index, row in enumerate(rows_full):
         row = row.split(' & ')
         first_entry = row[0]
-        if first_entry != '-' and not pd.isna(first_entry) and first_entry != 'nan':
+        if first_entry != '-' and not pd.isna(first_entry) and first_entry != 'nan' and first_entry != '':
             i = 1
             for next_row in rows_full[index + 1:]:
                 next_row = next_row.split(' & ')
-                if pd.isna(next_row[0]) or next_row[0] == '-' or next_row[0] == 'nan':
+                if pd.isna(next_row[0]) or next_row[0] == '-' or next_row[0] == 'nan' or next_row[0] == '':
                     i += 1
                 else:
                     break
@@ -81,7 +81,7 @@ def multi_row(rows_full):
         row_string = ' & '.join(row)
         if index < len(rows_full) - 1:
             next_first_entry = rows_full[index + 1].split(' & ')[0].strip()
-            if next_first_entry == '-' or next_first_entry.lower() == 'nan' or pd.isna(next_first_entry):
+            if next_first_entry == '-' or next_first_entry.lower() == 'nan' or pd.isna(next_first_entry) or next_first_entry == '':
                 row_string = row_string.replace('\\hline', '')
 
         modified_rows.append(row_string)

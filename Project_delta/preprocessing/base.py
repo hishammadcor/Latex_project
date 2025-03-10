@@ -30,7 +30,7 @@ class Processing:
         else:
             column_names = main_data.columns.str.strip()
 
-        columns_number = csv_file.shape[1]
+        columns_number = main_data.shape[1]
 
         if not (header_title and not header_title.startswith('Unnamed')):
             header_title = ''

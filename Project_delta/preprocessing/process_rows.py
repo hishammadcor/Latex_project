@@ -18,7 +18,6 @@ class ProcessRows:
             else:
                 body_commands.append(' & '.join(processed_row) + ' \\\\ \\hline')
 
-        print('body_commands:   ', body_commands)
         if multirow is True:
             return multi_row(body_commands)
 
