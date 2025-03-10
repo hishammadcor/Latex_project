@@ -1,10 +1,10 @@
 import pandas as pd
-from ..utils.utils import (apply_format)
+from Project_delta.utils.utils import apply_format, multi_row
 
 
 class ProcessRows:
     @staticmethod
-    def rows(row_values) -> list[str]:
+    def rows(row_values, multirow) -> list[str]:
         body_commands = []
         for i, row in enumerate(row_values):
             processed_row = []
@@ -17,6 +17,10 @@ class ProcessRows:
                 body_commands.append(' & '.join(processed_row) + " \\\\ ")
             else:
                 body_commands.append(' & '.join(processed_row) + ' \\\\ \\hline')
+
+        print('body_commands:   ', body_commands)
+        if multirow is True:
+            return multi_row(body_commands)
 
         return body_commands
 
@@ -34,9 +38,11 @@ class ProcessRows:
             "The format style is either contains non-numeric characters or empty. Please make sure that you enter only numeric values.")
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
+    from Project_delta.preprocessing.process_columns import ProcessColumns
+
     csv_file = pd.read_csv(
-        "U:/Latex_project/tex/A-4-5_tbl11_sächliche Ausstattung VWL.csv",
+        'U:/Latex_project/tex/A-3-1_Aktuelle Personalstruktur_Betriebswirtschaftslehre.csv',
         delimiter=r'[\t]*;[\t]*',
         engine='python',
         encoding='utf-8'
@@ -45,7 +51,9 @@ if __name__ == "__main__":
     header_title = csv_file.columns[0]
     caption = csv_file.columns[-1]
     main_data = csv_file.drop(columns=[header_title, caption])
-    header_as_row = pd.DataFrame([main_data.columns.tolist()], columns=main_data.columns)
-    main_data = pd.concat([header_as_row, main_data], ignore_index=True)
-    main_data.columns = range(main_data.shape[1])
-    print(main_data)
+    rows = ProcessColumns.format_style(main_data, '113112').values.tolist()
+    print("rows", rows)
+    row_values = ProcessRows.rows(rows, multirow=True)
+    print("rowvalues:   ", row_values)
+    tabular_body = "\n".join(row_values)
+    print("tbaular:  ", tabular_body)

@@ -4,7 +4,8 @@ from Project_delta.Generator.table_generator import LaTeXTableGenerator
 import pandas as pd
 import os
 
-APP_VERSION = "2.1.5"
+APP_VERSION = "2.2.0"
+
 
 class LaTeXTableGeneratorUI:
     def __init__(self, root_window):
@@ -157,6 +158,11 @@ class LaTeXTableGeneratorUI:
                                                         variable=self.remove_column_names_var)
         self.remove_column_names_check.grid(row=7, column=0, sticky="w", pady=5)
 
+        self.multirow_var = tk.BooleanVar(value=False)
+        self.multirow_check = tk.Checkbutton(additional_options_frame, text="Multirow",
+                                             variable=self.multirow_var)
+        self.multirow_check.grid(row=7, column=1, sticky="w", pady=5)
+
         self.version_label = tk.Label(self.main_frame, text=f"Version {APP_VERSION}", font=("Arial", 10))
         self.version_label.grid(row=6, column=0, sticky="se", pady=5)
 
@@ -270,7 +276,8 @@ class LaTeXTableGeneratorUI:
             'RemoveHline': ('horizontal_line_var', 'booleanvar'),
             'RemoveCaption': ('remove_table_caption_var', 'booleanvar'),
             'RemoveHeadline': ('remove_table_headline_var', 'booleanvar'),
-            'RemoveColumnNames': ('remove_column_names_var', 'booleanvar')
+            'RemoveColumnNames': ('remove_column_names_var', 'booleanvar'),
+            'MultiRow': ('multirow_var', 'booleanvar')
         }
         for key, (ui_element_name, ui_element_type) in mapping.items():
             if key in settings:
@@ -325,6 +332,7 @@ class LaTeXTableGeneratorUI:
         number_affected_cells: str = self.number_affected_cells_var.get() if self.censored_var.get() else None
         styles_dir_path = self.styles_data_path
         column_names: bool = self.remove_column_names_var.get()
+        multirow: bool = self.multirow_var.get()
         generator = LaTeXTableGenerator(self.directory_path,
                                         layout_style,
                                         format_style,
@@ -343,7 +351,8 @@ class LaTeXTableGeneratorUI:
                                         cell_trigger_number,
                                         number_affected_cells,
                                         styles_dir_path,
-                                        column_names
+                                        column_names,
+                                        multirow
                                         )
         result = generator.generate_full_tabular
         messagebox.showinfo('Result', result)
