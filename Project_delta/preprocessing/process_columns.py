@@ -1,5 +1,5 @@
 from typing import Any
-from ..utils.utils import apply_format
+from Project_delta.utils.utils import apply_format
 
 
 class ProcessColumns:
