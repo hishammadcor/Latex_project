@@ -326,7 +326,7 @@ class LaTeXTableGeneratorUI:
 
         # self.root_window.after(100, self.toggle_censored_entries)
         self.toggle_censored_entries()
-        return width
+
     def process_directory(self):
         layout_style: str = self.layout_style_var.get()
         format_style: str = self.format_style_var.get()
