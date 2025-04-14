@@ -56,7 +56,7 @@ def apply_format(value, style):
         return str(value)
 
 
-def multi_row(rows_full):
+def multi_row(rows_full, width):
     reference = None
     modified_rows = []
 
@@ -72,7 +72,7 @@ def multi_row(rows_full):
                 else:
                     break
 
-            reference = f'\\multirow{{{i}}}{{*}}{{{first_entry}}}'
+            reference = f'\\multirow{{{i}}}{{{width}mm}}{{{first_entry}}}'
             row[0] = str(reference)
         else:
             if reference:
@@ -81,11 +81,13 @@ def multi_row(rows_full):
         row_string = ' & '.join(row)
         if index < len(rows_full) - 1:
             next_first_entry = rows_full[index + 1].split(' & ')[0].strip()
-            if next_first_entry == '-' or next_first_entry.lower() == 'nan' or pd.isna(next_first_entry) or next_first_entry == '':
+            if next_first_entry == '-' or next_first_entry.lower() == 'nan' or pd.isna(
+                    next_first_entry) or next_first_entry == '':
                 row_string = row_string.replace('\\hline', '')
 
         modified_rows.append(row_string)
 
     return modified_rows
+
 
 set_locale()

@@ -4,7 +4,7 @@ from Project_delta.Generator.table_generator import LaTeXTableGenerator
 import pandas as pd
 import os
 
-APP_VERSION = "2.2.1"
+APP_VERSION = "2.3.1"
 
 
 class LaTeXTableGeneratorUI:
@@ -14,6 +14,7 @@ class LaTeXTableGeneratorUI:
         self.directory_path = ""
         self.styles_data = {}
         self.styles_data_path = ""
+        self.width = None
 
         # Configure grid layout for better structure
         self.root_window.columnconfigure(0, weight=1)
@@ -279,9 +280,22 @@ class LaTeXTableGeneratorUI:
             'RemoveColumnNames': ('remove_column_names_var', 'booleanvar'),
             'MultiRow': ('multirow_var', 'booleanvar')
         }
+
         for key, (ui_element_name, ui_element_type) in mapping.items():
             if key in settings:
                 value = settings[key]
+                if key == 'Layout' and value.startswith('A'):
+                    self.width = 20
+                elif key == 'Layout' and value.startswith('B'):
+                    self.width = 30
+                elif key == 'Layout' and value.startswith('C'):
+                    self.width = 40
+                elif key == 'Layout' and value.startswith('D'):
+                    self.width = 50
+                elif key == 'Layout' and value.startswith('E'):
+                    self.width = 70
+                elif key == 'Layout' and value.startswith('F'):
+                    self.width = 110
 
                 if ui_element_type == 'stringvar':
                     stringvar = getattr(self, ui_element_name)
@@ -312,7 +326,7 @@ class LaTeXTableGeneratorUI:
 
         # self.root_window.after(100, self.toggle_censored_entries)
         self.toggle_censored_entries()
-
+        return width
     def process_directory(self):
         layout_style: str = self.layout_style_var.get()
         format_style: str = self.format_style_var.get()
@@ -333,6 +347,7 @@ class LaTeXTableGeneratorUI:
         styles_dir_path = self.styles_data_path
         column_names: bool = self.remove_column_names_var.get()
         multirow: bool = self.multirow_var.get()
+        width = self.width
         generator = LaTeXTableGenerator(self.directory_path,
                                         layout_style,
                                         format_style,
@@ -352,7 +367,8 @@ class LaTeXTableGeneratorUI:
                                         number_affected_cells,
                                         styles_dir_path,
                                         column_names,
-                                        multirow
+                                        multirow,
+                                        width
                                         )
         result = generator.generate_full_tabular
         messagebox.showinfo('Result', result)
