@@ -77,7 +77,7 @@ class Processing:
             else:
                 row_values = main_data.values.tolist()
 
-        body_commands = ProcessRows.rows(row_values, self.generator.multirow)
+        body_commands = ProcessRows.rows(row_values, self.generator.multirow, self.generator.width)
 
         if self.generator.horizontal_line:
             # tabular_header = '\\input{"setup/styles"}\n \\begin{tabularx}{\\textwidth}{' + ''.join(

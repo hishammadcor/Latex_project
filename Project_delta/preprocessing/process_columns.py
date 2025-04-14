@@ -33,7 +33,7 @@ class ProcessColumns:
                                     header_commands.append(
                                         f"\\multicolumn{{{count}}}{{{'c'}}}{{\\rotatebox{{{'90'}}}{{\\textit{{{column_names[i]}}}}}}}")
                             else:
-                                header_commands.append(f"\\rotatebox{{{'90'}}}{{\\textit{{{column_names[i]}}}}}")
+                                header_commands.append(f"\\multicolumn{{{1}}}{{{'c'}}}{{\\rotatebox{{{'90'}}}{{\\textit{{{column_names[i]}}}}}}}")
 
                         elif first_row_bold:
                             if count > 1:
@@ -45,9 +45,9 @@ class ProcessColumns:
                                         f"\\multicolumn{{{count}}}{{{'c'}}}{{\\rotatebox{{{'90'}}}{{\\textbf{{{column_names[i]}}}}}}}")
                             else:
                                 if i % 2 == 0:  # Check if the index is even
-                                    header_commands.append(f"\\cellcolor{{{'green40'}}}\\rotatebox{{{'90'}}}{{\\textbf{{{column_names[i]}}}}}")
+                                    header_commands.append(f"\\multicolumn{{{1}}}{{{'c'}}}{{\\cellcolor{{{'green40'}}}\\rotatebox{{{'90'}}}{{\\textbf{{{column_names[i]}}}}}}}")
                                 else:
-                                    header_commands.append(f"\\rotatebox{{{'90'}}}{{\\textbf{{{column_names[i]}}}}}")
+                                    header_commands.append(f"\\multicolumn{{{1}}}{{{'c'}}}{{\\rotatebox{{{'90'}}}{{\\textbf{{{column_names[i]}}}}}}}")
 
                         else:
                             if count > 1:

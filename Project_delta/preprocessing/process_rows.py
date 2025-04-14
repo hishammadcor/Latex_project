@@ -4,7 +4,7 @@ from Project_delta.utils.utils import apply_format, multi_row
 
 class ProcessRows:
     @staticmethod
-    def rows(row_values, multirow) -> list[str]:
+    def rows(row_values, multirow, width) -> list[str]:
         body_commands = []
         for i, row in enumerate(row_values):
             processed_row = []
@@ -19,7 +19,7 @@ class ProcessRows:
                 body_commands.append(' & '.join(processed_row) + ' \\\\ \\hline')
 
         if multirow is True:
-            return multi_row(body_commands)
+            return multi_row(body_commands, width)
 
         return body_commands
 
