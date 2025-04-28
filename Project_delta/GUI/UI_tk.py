@@ -4,7 +4,7 @@ from Project_delta.Generator.table_generator import LaTeXTableGenerator
 import pandas as pd
 import os
 
-APP_VERSION = "2.3.1"
+APP_VERSION = "2.3.2"
 
 
 class LaTeXTableGeneratorUI:
@@ -251,7 +251,7 @@ class LaTeXTableGeneratorUI:
             # self.styles_data = self.read_styles_file_row(csv_file_path)
             style_names = list(self.styles_data.keys())
             self.table_style_name_combobox.config(values=style_names)
-            messagebox.showinfo("Success", "Table styles are loaded successfully")
+            # messagebox.showinfo("Success", "Table styles are loaded successfully")
 
     def on_style_name_selected(self, event):
         selected_style = self.table_style_name_combobox.get()
