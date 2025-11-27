@@ -33,6 +33,7 @@ This table provides a description of the custom LaTeX column types, along with t
 | F            | Right-aligned column with flexible width and green background     | 6            | Percent numbers with 2 decimal places                                       |
 | G            | Left-aligned column with fixed width of 2cm                       | 7            | Normal Numbers with no decimal places rounded to the nearest 100 (integers) |
 | H            | Left-aligned column with fixed width of 2cm and green background  |              |                                                                             |
+| J            | Left-aligned column with fixed width of 5cm and green background  |              |                                                                             |
 | I            | Left-aligned column with fixed width of 5cm                       |              |                                                                             |
 | K            | Left-aligned column with fixed width of 12 cm                     |              |                                                                             |
 | L            | Left-aligned column with fixed width of 12cm and green background |              |                                                                             |
