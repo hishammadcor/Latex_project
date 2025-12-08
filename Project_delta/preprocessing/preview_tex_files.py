@@ -1,4 +1,14 @@
 import os
+import re
+
+
+def natural_key(s: str):
+    """
+    Key for natural/human sorting:
+    'table2a.tex' < 'table10.tex' etc.
+    """
+    return [int(text) if text.isdigit() else text.lower()
+            for text in re.split(r'(\d+)', s)]
 
 
 class PreviewTexFiles:
@@ -27,6 +37,8 @@ class PreviewTexFiles:
 
     def generate_main_tex(self):
         tex_files = self.collect_tex_files(self.base_directory)
+        # Sort tables
+        tex_files = sorted(tex_files, key=natural_key)
 
         for tex_file in tex_files:
             self.main_tex_content += f"\\input{{{tex_file}}}\n"
