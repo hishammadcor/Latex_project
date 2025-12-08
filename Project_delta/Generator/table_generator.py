@@ -55,7 +55,8 @@ class LaTeXTableGenerator:
     def generate_full_tabular(self):
         try:
             for file_name in os.listdir(self.dir_path):
-                if file_name.endswith('.csv'):
+                name = file_name.lower()
+                if name.endswith(('.csv', '.xlsx', '.xls')):
                     Project_delta.Processing(file_name, self)
 
             # Generate the main.tex file in the same directory as the generated LaTeX files
