@@ -38,7 +38,7 @@ class LaTeXTableGeneratorUI:
         self.table_style_name_combobox.bind("<<ComboboxSelected>>", self.on_style_name_selected)
 
         # Section 2: Directory Selection
-        directory_frame = tk.LabelFrame(self.main_frame, text="CSV Directory Selection", padx=10, pady=10)
+        directory_frame = tk.LabelFrame(self.main_frame, text="CSV/Excel Directory Selection", padx=10, pady=10)
         directory_frame.grid(row=1, column=0, sticky="ew", padx=5, pady=5)
 
         self.select_button = tk.Button(directory_frame, text="Select Directory", command=self.select_directory)
@@ -224,10 +224,15 @@ class LaTeXTableGeneratorUI:
     @staticmethod
     def read_styles_file_column(csv_path):
         styles_data = {}
-        styles = pd.read_csv(csv_path, delimiter=';', encoding='utf-8', header=0, skip_blank_lines=False)
+        ext = os.path.splitext(csv_path)[1].lower()
+        if ext in [".xlsx", ".xls"]:
+            styles = pd.read_excel(csv_path, sheet_name=0)
+        else:
+            styles = pd.read_csv(csv_path, delimiter=';', encoding='utf-8', header=0, skip_blank_lines=False)
         styles = styles.fillna('').map(lambda x: str(x).strip())
 
-        variable_column = styles.iloc[:, 0]  # The first column contains variable names, the remaining columns represent styles
+        variable_column = styles.iloc[:,
+                          0]  # The first column contains variable names, the remaining columns represent styles
         style_columns = styles.iloc[:, 1:]  # All columns after the first column are style values
 
         style_names = style_columns.columns
@@ -242,7 +247,8 @@ class LaTeXTableGeneratorUI:
         return styles_data
 
     def load_style(self):
-        csv_file_path = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
+        csv_file_path = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv"),
+                                                              ("Excel files", "*.xlsx *.xls")])
         if csv_file_path:
             self.styles_data_path = os.path.dirname(os.path.abspath(csv_file_path))
             self.styles_label.config(text=f"Selected: {csv_file_path}")
