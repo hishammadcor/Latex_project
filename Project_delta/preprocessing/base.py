@@ -9,14 +9,19 @@ class Processing:
         self.process_file()
 
     def process_file(self) -> None:
+        file_path = os.path.join(self.generator.dir_path, self.file_name)
+        ext = os.path.splitext(self.file_name)[1].lower()
 
-        # noinspection PyTypeChecker
-        csv_file = pd.read_csv(
-            os.path.join(self.generator.dir_path, self.file_name),
-            delimiter=r'[\t]*;[\t]*',
-            engine='python',
-            encoding='utf-8'
-        )
+        if ext in [".xlsx", ".xls"]:
+            # read the first sheet
+            csv_file = pd.read_excel(file_path, sheet_name=0)
+        else:
+            csv_file = pd.read_csv(
+                file_path,
+                delimiter=r'[\t]*;[\t]*',
+                engine='python',
+                encoding='utf-8'
+                )
 
         header_title = csv_file.columns[0]
         caption = csv_file.columns[-1]
