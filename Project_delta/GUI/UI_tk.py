@@ -4,7 +4,7 @@ from Project_delta.Generator.table_generator import LaTeXTableGenerator
 import pandas as pd
 import os
 
-APP_VERSION = "2.3.2"
+APP_VERSION = "2.4.0"
 
 
 class LaTeXTableGeneratorUI:
