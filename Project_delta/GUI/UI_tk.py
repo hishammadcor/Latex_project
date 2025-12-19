@@ -92,6 +92,8 @@ class LaTeXTableGeneratorUI:
                                                   variable=self.censor_mode_var, value="column")
         self.cell_censor_radio = tk.Radiobutton(censoring_options_frame, text="Cell Censoring",
                                                 variable=self.censor_mode_var, value="cell")
+        self.row_censor_radio = tk.Radiobutton(censoring_options_frame, text="Row Censoring",
+                                               variable=self.censor_mode_var, value="row")
 
         # Trigger-related fields (appear when Column mode is checked)
         self.column_trigger_number_var = tk.StringVar(value='5')
@@ -115,6 +117,18 @@ class LaTeXTableGeneratorUI:
         self.number_affected_cells_label = tk.Label(censoring_options_frame, text="Number of Affected cells:")
         self.number_affected_cells_entry = tk.Entry(censoring_options_frame,
                                                     textvariable=self.number_affected_cells_var, width=10)
+
+        # Trigger-related fields (appear when row mode is checked)
+        self.row_trigger_number_var = tk.StringVar(value='5')
+        self.row_trigger_number_label = tk.Label(censoring_options_frame, text="Trigger Value (e.g., less than):")
+        self.row_trigger_number_entry = tk.Entry(censoring_options_frame,
+                                                 textvariable=self.row_trigger_number_var, width=10)
+
+        self.trigger_row_label = tk.Label(censoring_options_frame, text="Trigger Row Number:")
+        self.trigger_row_entry = tk.Entry(censoring_options_frame, width=10)
+
+        self.affected_row_label = tk.Label(censoring_options_frame, text="Affected Row Numbers (e.g., 1,2,5):")
+        self.affected_row_entry = tk.Entry(censoring_options_frame, width=20)
 
         # Call toggle_censored_entries initially to set the correct visibility
         self.toggle_censored_entries()
@@ -176,6 +190,7 @@ class LaTeXTableGeneratorUI:
         if self.censored_var.get():  # Check if the Censor checkbox is checked
             self.column_censor_radio.grid(row=1, column=0, sticky="w", pady=5)
             self.cell_censor_radio.grid(row=1, column=1, sticky="w", pady=5)
+            self.row_censor_radio.grid(row=1, column=2, sticky="w", pady=5)
 
             self.column_trigger_number_label.grid_forget()
             self.column_trigger_number_entry.grid_forget()
@@ -183,10 +198,18 @@ class LaTeXTableGeneratorUI:
             self.trigger_column_entry.grid_forget()
             self.affected_columns_label.grid_forget()
             self.affected_columns_entry.grid_forget()
+
             self.cell_trigger_number_label.grid_forget()
             self.cell_trigger_number_entry.grid_forget()
             self.number_affected_cells_label.grid_forget()
             self.number_affected_cells_entry.grid_forget()
+
+            self.row_trigger_number_label.grid_forget()
+            self.row_trigger_number_entry.grid_forget()
+            self.trigger_row_label.grid_forget()
+            self.trigger_row_entry.grid_forget()
+            self.affected_row_label.grid_forget()
+            self.affected_row_entry.grid_forget()
 
             if self.censor_mode_var.get() == "column":
                 self.column_trigger_number_label.grid(row=2, column=0, sticky="w", pady=5)
@@ -201,19 +224,37 @@ class LaTeXTableGeneratorUI:
                 self.cell_trigger_number_entry.grid(row=5, column=1, sticky="w", pady=5)
                 self.number_affected_cells_label.grid(row=3, column=0, sticky="w", pady=5)
                 self.number_affected_cells_entry.grid(row=3, column=1, sticky="w", pady=5)
+
+            elif self.censor_mode_var.get() == "row":
+                self.row_trigger_number_label.grid(row=2, column=0, sticky="w", pady=5)
+                self.row_trigger_number_entry.grid(row=2, column=1, sticky="w", pady=5)
+                self.trigger_row_label.grid(row=3, column=0, sticky="w", pady=5)
+                self.trigger_row_entry.grid(row=3, column=1, sticky="w", pady=5)
+                self.affected_row_label.grid(row=4, column=0, sticky="w", pady=5)
+                self.affected_row_entry.grid(row=4, column=1, sticky="w", pady=5)
         else:
             self.column_censor_radio.grid_forget()
             self.cell_censor_radio.grid_forget()
+            self.row_censor_radio.grid_forget()
+
             self.column_trigger_number_label.grid_forget()
             self.column_trigger_number_entry.grid_forget()
             self.trigger_column_label.grid_forget()
             self.trigger_column_entry.grid_forget()
             self.affected_columns_label.grid_forget()
             self.affected_columns_entry.grid_forget()
+
             self.cell_trigger_number_label.grid_forget()
             self.cell_trigger_number_entry.grid_forget()
             self.number_affected_cells_label.grid_forget()
             self.number_affected_cells_entry.grid_forget()
+
+            self.row_trigger_number_label.grid_forget()
+            self.row_trigger_number_entry.grid_forget()
+            self.trigger_row_label.grid_forget()
+            self.trigger_row_entry.grid_forget()
+            self.affected_row_label.grid_forget()
+            self.affected_row_entry.grid_forget()
 
     def select_directory(self):
         self.directory_path = filedialog.askdirectory()
@@ -327,6 +368,8 @@ class LaTeXTableGeneratorUI:
                         self.censor_mode_var.set('column')
                     elif mode in ('cells', 'cell'):
                         self.censor_mode_var.set('cell')
+                    elif mode in ('rows', 'row'):
+                        self.censor_mode_var.set('row')
                     else:
                         self.censor_mode_var.set('column')
 
