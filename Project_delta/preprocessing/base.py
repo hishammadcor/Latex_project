@@ -44,8 +44,7 @@ class Processing:
 
         from .process_columns import ProcessColumns
         from .process_rows import ProcessRows
-        from .censored import column_censoring
-        from .censored import cell_censoring
+        from .censored import column_censoring, cell_censoring, row_censoring
 
         column_definitions, header_commands = ProcessColumns.normal_columns(column_names, columns_number,
                                                                             self.generator.layout_style,
@@ -67,6 +66,15 @@ class Processing:
 
             elif self.generator.censor_mode == 'cell':
                 data = cell_censoring(main_data, self.generator.cell_trigger_number, self.generator.number_affected_cells)
+                if self.generator.choose_which == 'column':
+                    row_values = ProcessColumns.format_style(data, self.generator.format_style).values.tolist()
+                elif self.generator.choose_which == 'row':
+                    row_values = ProcessRows.format_style(data, self.generator.format_style).values.tolist()
+                else:
+                    row_values = data.values.tolist()
+            elif self.generator.censor_mode == 'row':
+                data = row_censoring(main_data, self.generator.row_trigger_number, self.generator.trigger_row,
+                                     self.generator.affected_rows)
                 if self.generator.choose_which == 'column':
                     row_values = ProcessColumns.format_style(data, self.generator.format_style).values.tolist()
                 elif self.generator.choose_which == 'row':

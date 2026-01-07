@@ -20,6 +20,9 @@ class LaTeXTableGenerator:
             column_trigger_number: str,
             trigger_column,
             affected_columns,
+            row_trigger_number,
+            trigger_row,
+            affected_rows,
             cell_trigger_number: str,
             number_affected_cells: str,
             style_dir_path,
@@ -44,6 +47,9 @@ class LaTeXTableGenerator:
         self.column_trigger_number = column_trigger_number
         self.trigger_column = trigger_column
         self.affected_columns = affected_columns
+        self.row_trigger_number = row_trigger_number
+        self.trigger_row = trigger_row
+        self.affected_rows = affected_rows
         self.cell_trigger_number = cell_trigger_number
         self.number_affected_cells = number_affected_cells
         self.style_dir_path = style_dir_path
