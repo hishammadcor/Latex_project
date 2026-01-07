@@ -316,6 +316,9 @@ class LaTeXTableGeneratorUI:
             'TriggerColumnValue': ('column_trigger_number_var', 'stringvar'),
             'TriggerColumn': ('trigger_column_entry', 'entry'),
             'AffectedColumns': ('affected_columns_entry', 'entry'),
+            'TriggerRowValue': ('row_trigger_number_var', 'stringvar'),
+            'TriggerRow': ('trigger_row_entry', 'entry'),
+            'AffectedRows': ('affected_rows_entry', 'entry'),
             'CellTriggerValue': ('cell_trigger_number_var', 'stringvar'),
             'NumberOfCells': ('number_affected_cells_var', 'stringvar'),
             'FirstRowItalics': ('first_row_italic_var', 'booleanvar'),
@@ -393,6 +396,9 @@ class LaTeXTableGeneratorUI:
         affected_columns = self.affected_columns_entry.get() if self.censored_var.get() else None
         cell_trigger_number: str = self.cell_trigger_number_var.get() if self.censored_var.get() else None
         number_affected_cells: str = self.number_affected_cells_var.get() if self.censored_var.get() else None
+        row_trigger_number: str = self.row_trigger_number_entry.get() if self.censored_var.get() else None
+        trigger_row = self.trigger_row_entry.get() if self.censored_var.get() else None
+        affected_rows = self.affected_row_entry.get() if self.censored_var.get() else None
         styles_dir_path = self.styles_data_path
         column_names: bool = self.remove_column_names_var.get()
         multirow: bool = self.multirow_var.get()
@@ -414,6 +420,9 @@ class LaTeXTableGeneratorUI:
                                         affected_columns,
                                         cell_trigger_number,
                                         number_affected_cells,
+                                        row_trigger_number,
+                                        trigger_row,
+                                        affected_rows,
                                         styles_dir_path,
                                         column_names,
                                         multirow,
