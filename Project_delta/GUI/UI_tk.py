@@ -4,7 +4,7 @@ from Project_delta.Generator.table_generator import LaTeXTableGenerator
 import pandas as pd
 import os
 
-APP_VERSION = "2.4.0"
+APP_VERSION = "2.5.3"
 
 
 class LaTeXTableGeneratorUI:
@@ -272,8 +272,7 @@ class LaTeXTableGeneratorUI:
             styles = pd.read_csv(csv_path, delimiter=';', encoding='utf-8', header=0, skip_blank_lines=False)
         styles = styles.fillna('').map(lambda x: str(x).strip())
 
-        variable_column = styles.iloc[:,
-                          0]  # The first column contains variable names, the remaining columns represent styles
+        variable_column = styles.iloc[:, 0]  # The first column contains variable names, the remaining columns represent styles
         style_columns = styles.iloc[:, 1:]  # All columns after the first column are style values
 
         style_names = style_columns.columns
@@ -318,7 +317,7 @@ class LaTeXTableGeneratorUI:
             'AffectedColumns': ('affected_columns_entry', 'entry'),
             'TriggerRowValue': ('row_trigger_number_var', 'stringvar'),
             'TriggerRow': ('trigger_row_entry', 'entry'),
-            'AffectedRows': ('affected_rows_entry', 'entry'),
+            'AffectedRows': ('affected_row_entry', 'entry'),
             'CellTriggerValue': ('cell_trigger_number_var', 'stringvar'),
             'NumberOfCells': ('number_affected_cells_var', 'stringvar'),
             'FirstRowItalics': ('first_row_italic_var', 'booleanvar'),
@@ -365,7 +364,7 @@ class LaTeXTableGeneratorUI:
                         self.choose_which_var.set('row')
                     else:
                         self.choose_which_var.set('column')
-                elif ui_element_type == 'mode':
+                elif ui_element_type == 'censormode':
                     mode = value.strip().lower()
                     if mode in ('columns', 'column'):
                         self.censor_mode_var.set('column')
