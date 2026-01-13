@@ -21,7 +21,7 @@ class Processing:
                 delimiter=r'[\t]*;[\t]*',
                 engine='python',
                 encoding='utf-8'
-                )
+            )
 
         header_title = csv_file.columns[0]
         caption = csv_file.columns[-1]
@@ -29,13 +29,31 @@ class Processing:
 
         if self.generator.column_names:
             column_names = []
-            header_as_row = pd.DataFrame([main_data.columns.tolist()], columns=main_data.columns)
+
+            # Clean the header labels before pushing them into the first row
+            def _clean_label(c):
+                if pd.isna(c):
+                    return ""
+                s = str(c).replace("\ufeff", "").strip()
+                return "" if s.startswith("Unnamed") else s
+
+            recovered_headers = [_clean_label(c) for c in main_data.columns]
+
+            header_as_row = pd.DataFrame([recovered_headers], columns=main_data.columns)
             main_data = pd.concat([header_as_row, main_data], ignore_index=True)
             main_data.columns = range(main_data.shape[1])
         else:
-            column_names = main_data.columns.str.strip()
+            # Normalize to clean strings so the "Table with no column names?" checkbox can stay OFF.
+            column_names = [
+                ("" if pd.isna(c) else str(c)).replace("\ufeff", "").strip()
+                for c in main_data.columns
+            ]
 
         columns_number = main_data.shape[1]
+
+        # Header title / caption can also be non-strings depending on how the file was exported.
+        header_title = ("" if pd.isna(header_title) else str(header_title)).replace("\ufeff", "").strip()
+        caption = ("" if pd.isna(caption) else str(caption)).replace("\ufeff", "").strip()
 
         if not (header_title and not header_title.startswith('Unnamed')):
             header_title = ''
@@ -52,6 +70,8 @@ class Processing:
                                                                             self.generator.first_row_bold,
                                                                             self.generator.first_row_90_degree
                                                                             )
+        if self.generator.column_names:
+            header_commands = [""] * columns_number
 
         if self.generator.censored:
             if self.generator.censor_mode == 'column':
@@ -65,7 +85,8 @@ class Processing:
                     row_values = data.values.tolist()
 
             elif self.generator.censor_mode == 'cell':
-                data = cell_censoring(main_data, self.generator.cell_trigger_number, self.generator.number_affected_cells)
+                data = cell_censoring(main_data, self.generator.cell_trigger_number,
+                                      self.generator.number_affected_cells)
                 if self.generator.choose_which == 'column':
                     row_values = ProcessColumns.format_style(data, self.generator.format_style).values.tolist()
                 elif self.generator.choose_which == 'row':
