@@ -25,14 +25,31 @@ class PreviewTexFiles:
 """
         self.generate_main_tex()
 
+    @staticmethod
+    def _has_matching_source_file(dir_path: str, tex_filename: str) -> bool:
+        """Only include generated table .tex files (those with a matching csv/xlsx/... source)."""
+        base, _ = os.path.splitext(tex_filename)
+        source_exts = ('.csv', '.xlsx', '.xls', '.xlsm', '.tsv')
+        return any(os.path.exists(os.path.join(dir_path, base + ext)) for ext in source_exts)
+
     def collect_tex_files(self, current_dir):
         tex_files = []
         for root, dirs, files in os.walk(current_dir):
-            dirs[:] = [d for d in dirs if d != "setup"]  # Exclude the "setup" directory
+            # Don’t scan internal folders
+            dirs[:] = [d for d in dirs if d not in {"setup", "preview"}]
+
             for file in files:
-                if file.endswith('.tex') and file != self.output_file_name:
-                    full_path = os.path.relpath(os.path.join(root, file), self.base_directory)
-                    tex_files.append(os.path.join('..', full_path).replace(os.sep, '/'))
+                if not file.endswith('.tex'):
+                    continue
+                if file == self.output_file_name:
+                    continue
+
+                # Only include converted tables, not arbitrary .tex (like a section-file)
+                if not self._has_matching_source_file(root, file):
+                    continue
+
+                full_path = os.path.relpath(os.path.join(root, file), self.base_directory)
+                tex_files.append(os.path.join('..', full_path).replace(os.sep, '/'))
         return tex_files
 
     def generate_main_tex(self):
