@@ -4,7 +4,7 @@ from Project_delta.Generator.table_generator import LaTeXTableGenerator
 import pandas as pd
 import os
 
-APP_VERSION = "2.5.3"
+APP_VERSION = "2.5.4"
 
 
 class LaTeXTableGeneratorUI:
@@ -402,30 +402,32 @@ class LaTeXTableGeneratorUI:
         column_names: bool = self.remove_column_names_var.get()
         multirow: bool = self.multirow_var.get()
         width = self.width
-        generator = LaTeXTableGenerator(self.directory_path,
-                                        layout_style,
-                                        format_style,
-                                        first_row_italic,
-                                        first_row_bold,
-                                        first_row_90_degree,
-                                        horizontal_line,
-                                        remove_table_caption,
-                                        remove_table_headline,
-                                        choose_which,
-                                        censored,
-                                        censor_mode,
-                                        column_trigger_number,
-                                        trigger_column,
-                                        affected_columns,
-                                        cell_trigger_number,
-                                        number_affected_cells,
-                                        row_trigger_number,
-                                        trigger_row,
-                                        affected_rows,
-                                        styles_dir_path,
-                                        column_names,
-                                        multirow,
-                                        width
-                                        )
+
+        generator = LaTeXTableGenerator(
+            dir_path=self.directory_path,
+            layout_style=layout_style,
+            format_style=format_style,
+            first_row_italic=first_row_italic,
+            first_row_bold=first_row_bold,
+            first_row_90_degree=first_row_90_degree,
+            horizontal_line=horizontal_line,
+            remove_table_caption=remove_table_caption,
+            remove_table_headline=remove_table_headline,
+            choose_which=choose_which,
+            censored=censored,
+            censor_mode=censor_mode,
+            column_trigger_number=column_trigger_number,
+            trigger_column=trigger_column,
+            affected_columns=affected_columns,
+            row_trigger_number=row_trigger_number,
+            trigger_row=trigger_row,
+            affected_rows=affected_rows,
+            cell_trigger_number=cell_trigger_number,
+            number_affected_cells=number_affected_cells,
+            style_dir_path=styles_dir_path,
+            column_names=column_names,
+            multirow=multirow,
+            width=width
+        )
         result = generator.generate_full_tabular
         messagebox.showinfo('Result', result)
