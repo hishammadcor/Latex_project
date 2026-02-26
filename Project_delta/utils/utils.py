@@ -15,7 +15,7 @@ def set_locale():
 
 
 def remove_dots(value):
-    after_value = str(value).replace('%', '').replace(',', '.')
+    after_value = str(value).strip().replace('%', '').replace(',', '.')
     if after_value.count('.') > 1:
         last_dot_index = after_value.rfind('.')
         end_value = after_value[:last_dot_index].replace('.', '') + after_value[

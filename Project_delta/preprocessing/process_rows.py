@@ -39,20 +39,24 @@ class ProcessRows:
 
 if __name__ == '__main__':
     from Project_delta.preprocessing.process_columns import ProcessColumns
+    import pandas as pd
 
-    csv_file = pd.read_csv(
-        'U:/Latex_project/tex/A-3-1_Aktuelle Personalstruktur_Betriebswirtschaftslehre.csv',
-        delimiter=r'[\t]*;[\t]*',
-        engine='python',
-        encoding='utf-8'
-    )
+    # Change the file path to your Excel file
+    excel_file_path = 'U:/Latex_project/tex/C-2-2_Rechtswissenschaft_ES.xlsx'
 
-    header_title = csv_file.columns[0]
-    caption = csv_file.columns[-1]
-    main_data = csv_file.drop(columns=[header_title, caption])
-    rows = ProcessColumns.format_style(main_data, '113112').values.tolist()
-    print("rows", rows)
-    row_values = ProcessRows.rows(rows, multirow=True)
+    # Read the Excel file (first sheet)
+    excel_file = pd.read_excel(excel_file_path, sheet_name=0, engine='openpyxl')
+
+    # Extract the header and caption, assuming first and last columns are header and caption respectively
+    header_title = excel_file.columns[0]
+    caption = excel_file.columns[-1]
+
+    # Drop the first and last columns
+    main_data = excel_file.drop(columns=[header_title, caption])
+    print(main_data)
+    row_values = ProcessRows.format_style(main_data, '233333')
     print("rowvalues:   ", row_values)
+
+    # Generate the tabular body and print it
     tabular_body = "\n".join(row_values)
-    print("tbaular:  ", tabular_body)
+    print("tabular:  ", tabular_body)
